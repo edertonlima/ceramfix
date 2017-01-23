@@ -1,3 +1,5 @@
+@import 'bootstrap.min.css';
+
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, img, abbr, acronym, address, big, cite, code, hr, del, dfn, font, ins, kbd, q, s, samp, small, strike, tt, var, center,  dl, dt, dd, ol, ul, li, fieldset, form, label, legend, select, input, button, textarea, table, caption, tbody, tfoot, thead, tr, th, td { margin: 0; padding: 0; border: 0; outline: 0; vertical-align: baseline; text-decoration:none; outline: 0; }
 h1, h2, h3, h4, h5, h6 { font-weight: normal; }
 li { list-style: none; }
@@ -136,7 +138,7 @@ body * {
 }
 
 .container {
-	max-width: 1280px;
+	max-width: 1280px; 
 	width: 100%;
 	padding: 0 80px;
 	margin: 0 auto;
@@ -153,8 +155,105 @@ body * {
 	}
 }
 
+.row {
+	margin-right: -15px;
+	margin-left: -15px;
+	display: block;
+	@include clear();
+
+	[class*="col-"] {
+		float: left;
+		padding-right: 15px;
+		padding-left: 15px;
+		@include box-sizing();
+
+		img {
+			max-width: 100%;
+		}
+	}
+
+
+	@for $i from 1 through 12 {
+		.col-#{$i} {
+			width: $i*(100%/12);
+		}
+	}
+}
+
 form {
 	margin-top: 30px;
+	width: 100%;
+	@include clear();
+
+	input, textarea {
+		max-width: 100%;
+	}
+
+	label {
+		font-size: 1.5rem; 
+		color: $verde;
+		font-weight: $light;
+		line-height: 35px;
+		padding-top: 20px;
+		padding-bottom: 20px;
+	}
+
+	input[type='text'] {
+		background-color: transparent;
+		font-size: 1.5rem; 
+		color: $verde;
+		font-weight: $light;
+		line-height: 35px;
+		box-sizing: border-box;
+	}
+
+	textarea {
+		background-color: transparent;
+		font-size: 1.5rem; 
+		color: $verde;
+		font-weight: $light;
+		border: 2px solid #5a5758;
+		width: 100%;
+		height: 115px;
+		padding: 20px;
+		resize: vertical;
+		@include box-sizing();
+	}
+
+	button {
+		width: 100%;
+		height: 55px;
+		line-height: 55px;
+		background-color: $verde;
+		color: #ffffff;
+		font-weight: $bold;
+		font-size: 1.75rem;
+		text-align: center;
+		@include animacao('','');
+
+		&:hover {
+			background-color: darken($verde, 10%);
+		}
+	}
+
+	fieldset {
+		span {
+			border: 2px solid #5a5758;
+			border-width: 0 0 2px;
+			padding-top: 20px;
+			padding-bottom: 20px;
+			display: block;
+		}
+		margin-top: 20px;
+	}
+}
+
+::-webkit-input-placeholder, :-moz-placeholder, ::-moz-placeholder, :-ms-input-placeholder {  
+	opacity: 1;
+	color: $verde;
+	font-weight: $light;
+	line-height: 35px;
+	font-size: 1.5rem; 
 }
 
 .msg-form {
@@ -162,146 +261,6 @@ form {
 	font-size: 1rem;
 }
 
-input, textarea, button, .button, .select2, .bootstrap-filestyle {
-	color: $cor-txt;
-	background-color: #dedede;
-	font-size: 1rem;
-	padding: 0 10px;
-	font-weight: $light;
-	text-transform: uppercase;
-	width: 100%;
-	box-sizing: border-box;
-	margin-bottom: 15px;
-
-	&:last-child {
-		margin: 0px;
-	}
-}
-
-input {
-	line-height: 35px;
-	height: 35px;
-}
-
-.bootstrap-filestyle {
-	margin-bottom: 15px;
-	padding: 0px;
-
-	.form-control {
-		border: medium none transparent;
-		background-color: transparent;
-		border-radius: 0px;
-		box-shadow: none;
-	}
-	
-	.group-span-filestyle {
-
-		.btn-default {
-			padding: 0px 10px;
-			border-radius: 0px;
-			border: medium none;
-
-			.icon-span-filestyle {
-				font-size: 1rem;
-				margin-right: 4px;
-				color: #ffffff;
-				top: -1px;
-			}
-
-			.buttonText {
-				font-size: 1rem;
-				color: #ffffff;
-				font-weight: $light;
-				position: relative;
-				top: -2px;
-			}
-		}
-	}
-}
-
-.select2-container {
-	width: 100% !important;
-	height: 35px;
-	margin-bottom: 15px!important;
-
-	.selection {
-		display: block;
-		margin-top: 3px;
-		background: transparent;
-		border: medium none;
-	}
-
-	&.select2-container--default {
-		.select2-selection--single {
-			background-color: transparent;
-			border: none;
-
-			.select2-selection__rendered {
-				padding: 0;
-				padding: 0px;
-				color: $cor-txt;
-				font-weight: $light;
-
-				.select2-selection__placeholder {
-					opacity: .5;
-					color: $cor-txt;
-					font-weight: $light;
-				}
-			}
-
-			.select2-selection__arrow {
-
-				b {
-					top: 14px;
-					width: 26px;
-					height: 13px;
-					background: url('../images/select.png') no-repeat;
-					border: none;
-					left: auto;
-					right: 10px;
-				}
-			}
-		}
-	}
-
-	&.select2-container--open {
-		.select2-selection__arrow {
-			b {
-				@include rotacao(180);
-			}
-		}
-	}
-}
-
-textarea {
-	resize: none;
-	height: 130px;
-	padding-top: 10px;
-	padding-bottom: 10px;
-
-	&.row-4 {
-		height: 185px;
-	}
-
-	&.row-5 {
-		height: 235px;
-	}
-}
-
-::-webkit-input-placeholder, :-moz-placeholder, ::-moz-placeholder, :-ms-input-placeholder {  
-	color: $cor-txt;
-}
-
-button, .btn-default, .button {
-	background-color: #c66b6b;
-	font-size: 1.5rem;
-	color: #ffffff;
-	@include animacao('','');
-
-	&:hover {
-		background-color: darken(#c66b6b, 25%)
-	}
-}
 
 strong {
 	font-weight: $bold;
@@ -423,7 +382,7 @@ p {
 
 			&.ativo, &:hover {
 				text-decoration: none;
-				border-color: $laranja;
+				border-color: $laranja; 
 			}
 		}
 	}
@@ -706,6 +665,14 @@ $hSlide: 80vh;
 			.seta {
 				&:before {
 					border-bottom-color: $verde;
+				}
+			}
+
+			.contato-home {
+				margin-bottom: 40px;
+
+				button {
+					margin-top: 20px;
 				}
 			}
 		}
