@@ -7,7 +7,7 @@
 <div class="box-menu">
 	<div class="info">
 		<span class="info-tel">0800 7045049</span>
-		<div class="idiomas">
+		<div class="region">
 			<a href="#" class="" title="EN">EN</a>
 			<a href="#" class="ativo" title="PT">PT</a>
 			<a href="#" class="" title="ES">ES</a>
