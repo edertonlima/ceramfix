@@ -116,6 +116,7 @@ $vermelho: #df1939;
 $roxo: #793f84;
 $verde: #319b42;
 $rosa: #ed1651;
+$roxo: #8C4799;
 
 $light: 300;
 $regular: 500;
@@ -253,6 +254,47 @@ form {
 			display: block;
 		}
 		margin-top: 20px;
+	}
+}
+
+/* hover style just for information */
+label:hover:before {
+  border: 1px solid #4778d9!important;
+}
+
+.select {
+	background-color: #e6e7e8;
+	line-height: 44px;
+	height: 40px;
+	padding: 0 0 0 10px;
+	margin-bottom: 20px;
+	display: block;
+	position: relative;
+	@include box-sizing();
+
+	select {
+		width: 100%;
+		padding-right: 20px;
+		background-color: transparent;
+		font-weight: $bold;
+		font-size: 1.125rem;
+		color: $roxo;
+		box-sizing: content-box;
+		position: relative;
+		z-index: 999;
+		cursor: pointer;
+	}
+
+	&:after {
+		content: "\f107";
+		position: absolute;
+		right: 13px;
+		top: 12px;
+		font: normal normal normal 46px/1 FontAwesome;
+		cursor: pointer;
+		height: 15px;
+		line-height: 15px;
+		z-index: 0;
 	}
 }
 
@@ -427,6 +469,13 @@ p {
 					@include animacao('','');
 				}
 
+				&:hover {
+					ul {
+						display: block!important;
+						visibility: visible!important;
+					}
+				}
+
 
 				ul {
 					display: none;
@@ -478,19 +527,58 @@ p {
 							border-color: #D31939; 
 						}
 					}
+
+					ul {
+						background-color: #D31939;
+
+						li {
+							a {
+								&:after {
+									margin-left: 99815px;
+								}
+
+								&:hover {
+									background-color: darken(#D31939, 5%);
+								}
+							}
+
+							&:nth-child(1){
+								a {
+									background-image: url(../images/icon/menu/simuladores/simulador-cores.png);
+
+									&:after {
+										content: 'SIMULADOR DE CORES';
+										width: 140px;
+										display: table-cell;
+										text-indent: 0;
+										top: -13px;
+										position: relative;
+									}
+								}
+							}
+
+							&:nth-child(2){
+								a {
+									background-image: url(../images/icon/menu/simuladores/calculadora-consumo.png);
+
+									&:after {
+										content: 'CALCULADORA DE CONSUMO';
+										width: 170px;
+										display: table-cell;
+										text-indent: 0;
+										top: -13px;
+										position: relative;
+									}
+								}
+							}
+						}
+					}
 				}
 
 				&:nth-child(3){
 					&.active, &.active-trail, &:hover {
 						a {
 							border-color: $laranja; 
-						}
-					}
-
-					&:hover {
-						ul {
-							display: block!important;
-							visibility: visible!important;
 						}
 					}
 
@@ -504,7 +592,7 @@ p {
 								}
 
 								&:hover {
-									background-color: darken($laranja, 10%);
+									background-color: darken($laranja, 5%);
 								}
 							}
 
@@ -572,17 +660,136 @@ p {
 				}
 
 				&:nth-child(4){
-					&.active, &:hover {
+					&.active, &.active-trail, &:hover {
 						a {
 							border-color: $verde; 
+						}
+					}
+
+					ul {
+						background-color: $verde;
+
+						li {
+							a {
+								&:after {
+									margin-left: 99815px;
+								}
+
+								&:hover {
+									background-color: darken($verde, 5%);
+								}
+							}
+
+							&:nth-child(1){
+								a {
+									background-image: url(../images/icon/menu/contato/matriz-filiais.png);
+
+									&:after {
+										content: 'MATRIZ E FILIAIS';
+										width: 120px;
+										display: table-cell;
+										text-indent: 0;
+										top: -13px;
+										position: relative;
+									}
+								}
+							}
+
+							&:nth-child(2){
+								a {
+									background-image: url(../images/icon/menu/contato/fale-conosco.png);
+
+									&:after {
+										content: 'FALE CONOSCO';
+										width: 120px;
+										display: table-cell;
+										text-indent: 0;
+										top: -13px;
+										position: relative;
+									}
+								}
+							}
+
+							&:nth-child(3){
+								a {
+									background-image: url(../images/icon/menu/contato/trabalhe-conosco.png);
+
+									&:after {
+										content: 'TRABALHE CONOSCO';
+										width: 120px;
+										display: table-cell;
+										text-indent: 0;
+										top: -13px;
+										position: relative;
+									}
+								}
+							}
 						}
 					}
 				}
 
 				&:nth-child(5){
-					&.active, &:hover {
+					&.active, &.active-trail, &:hover {
 						a {
-							border-color: #8C4799; 
+							border-color: $roxo; 
+						}
+					}
+
+					ul {
+						background-color: $roxo;
+
+						li {
+							a {
+								&:after {
+									margin-left: 99815px;
+								}
+
+								&:hover {
+									background-color: darken($roxo, 5%);
+								}
+							}
+
+							&:nth-child(1){
+								a {
+									background-image: url(../images/icon/menu/midia/release.png);
+
+									&:after {
+										content: 'RELEASES';
+										display: table-cell;
+										text-indent: 0;
+										top: -13px;
+										position: relative;
+									}
+								}
+							}
+
+							&:nth-child(2){
+								a {
+									background-image: url(../images/icon/menu/midia/namidia.png);
+
+									&:after {
+										content: 'NA MIDIA';
+										display: table-cell;
+										text-indent: 0;
+										top: -13px;
+										position: relative;
+									}
+								}
+							}
+
+							&:nth-child(3){
+								a {
+									background-image: url(../images/icon/menu/midia/download.png);
+
+									&:after {
+										content: 'DOWNLOAD';
+										display: table-cell;
+										text-indent: 0;
+										top: -13px;
+										position: relative;
+									}
+								}
+							}
 						}
 					}
 				}
@@ -833,7 +1040,7 @@ $hSlide: 80vh;
 	}
 }
 
-.contato {
+.contato:not(.menuparent) {
 	border-color: $verde;
 	position: relative;
 	@include clear();
@@ -1156,17 +1363,346 @@ $hSlide: 80vh;
 			}
 		}
 
-		&.laranja {
-			background-color: $laranja;
+		&.box-release {
+			padding-bottom: 50px;
 
-			h2, h3, p {
-				color: #ffffff;
+			.date, h2, h3, a {
+				color: $roxo;
+				display: block;
+			}
+
+			h2 {
+				text-align: left;
+			}
+
+			.date {
+				font-size: 1rem;
+				margin-top: 10px;
+			}
+
+			p {
+				font-size: 1.125rem;
+				line-height: 1.525rem;
+				text-align: justify;
+			}
+
+			.img-release {
+				display: block;
+				width: auto;
+				max-width: 100%;
+				margin: 0 auto;
+			}
+
+			iframe.img-release {
+				width: 100%;
+				max-width: 800px;
+				height: 40vh;
+			}
+
+			.conteudo {
+				padding: 0;
+				margin-bottom: 60px;
+
+				h2 {
+					font-size: 2rem;
+					margin: 20px 0 60px;
+				}
+			}
+
+			.sub-conteudo {
+				margin: 20px 0 0;
+				@include clear();
+
+				.item {
+					margin-bottom: 70px;
+
+					.info-item {
+						border-bottom: 1px solid #1fa7b3;
+						padding-bottom: 20px;
+					}
+
+					h3 {
+						margin: 5px 0 10px;
+
+						a {
+							font-weight: $light;
+						}
+					}
+
+					.saiba-mais {
+						font-size: 1.125rem;
+						font-weight: $bold;
+						margin-top: 10px;
+						width: 105px;
+					}
+
+					&:nth-child(2n-1){
+						padding-right: 40px;
+						padding-left: 0;
+					}
+
+					&:nth-child(2n){
+						padding-left: 40px;
+						padding-right: 0px;
+					}
+				}
+
+				&.galeria {
+					.info-item {
+						border: none;
+					}
+					p.mini {
+						font-size: 1rem;
+						line-height: 1.25rem;
+					}
+				}
+			}
+
+			&.na-midia {
+				.img-item {
+					background-color: #b3252c;
+
+					a {
+						width: 100%;
+						height: 50%;
+						display: block;
+						line-height: 50%;
+						text-align: center;
+
+						.fa-play {
+							font-size: 10vh;
+							color: #ffffff;
+							padding: 7vh 0px;
+						}
+					}
+				}
+			}
+
+			.paginacao {
+				a, span {
+					background-color: $roxo;
+					color: #ffffff;
+				}
+
+				i {
+					color: #ffffff;
+				}
+
+				a:hover {
+					background-color: darken($roxo, 10%);
+				}
+
+				a.off:hover {
+					background-color: $roxo;						
+				}
+
+				a.active, a.active:hover {
+					background-color: #1fa7b3;
+				}
+			}
+
+			&.box-download {
+				.desc-donwload {
+					color: $roxo;
+					float: left;
+					width: 100%;
+					margin-bottom: 60px;
+					clear: both;
+				}
+
+				.tit-baixar {
+					width: 100%;
+					padding: 0 10px;
+					margin-top: 50px;
+					@include clear();
+
+					span {
+						color: $roxo;
+						font-weight: $light;
+						text-transform: uppercase;
+					}
+
+					button {
+						background: url('../images/baixar.png') no-repeat 10px 10px transparent;
+						float: right;
+						padding: 10px 10px 10px 55px;
+						height: 52px;
+						width: 120px;
+						line-height: 35px;
+						color: $roxo;
+						font-weight: $light;
+						font-size: 1.25rem;
+						display: none;
+						position: relative;
+						top: -10px;
+						@include animacao('','');
+
+						&:hover {
+							background-color: #e6e7e8;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+.box-download {
+	.list-download {
+		margin-top: 30px;
+
+		.item-download {
+			border-bottom: 3px solid $roxo;
+			padding-bottom: 20px;
+			margin-bottom: 20px;
+			display: table;
+
+			img, h4, fieldset, .mockups {
+				display: table-cell;
+				vertical-align: middle;
+			}
+
+			img {
+				width: 65px;
+				margin: 0 50px 0 25px;
+			}
+
+			h4 {
+				span {
+					margin-right: 50px;
+					color: #0077c8;
+					font-weight: $light;
+					font-size: 1.25rem;
+				}
+			}
+
+			fieldset {
+				font-size: 1.25rem;
+				margin-right: 50px;
+
+				label {
+					cursor: pointer;
+				}
+
+				input {
+					position: absolute;
+					left: -10000000px;
+				}
+
+				.checkbox {
+					border: 2px solid $roxo;
+					width: 20px;
+					height: 20px;
+					margin: 0;
+					display: inline-block;
+					position: relative;
+					top: 2px;
+
+					i {
+						font-size: .9rem;
+						position: absolute;
+						top: 1px;
+						left: 1px;
+						color: $roxo;
+					}
+				}
+			}
+
+			.mockups {
+				h3 {
+					display: block;
+					width: 10%;
+					color: $roxo;
+					font-size: 1.75rem;
+					font-weight: $light;
+				}
+
+				fieldset {
+					display: inline-block;
+				}
 			}
 		}
 	}
 }
 
 
+.tab {
+	margin: 40px 0;
+	width: 100%;
+	@include box-sizing();
+
+	.item {
+		width: 25%;
+		line-height: 40px;
+		text-align: center;
+		color: $roxo;
+		float: left;
+		cursor: pointer;
+		font-weight: $light;
+		font-size: 1.125rem;
+		@include animacao('','');
+
+		&:hover, &.active {
+			background-color: $roxo;
+			color: #ffffff;
+		}
+
+		&.active {
+			cursor: default;
+		}
+	}
+
+	.tab-content {
+		width: 100%;
+		display: none;
+		margin-top: 30px;
+		overflow: hidden;
+		float: left;
+		@include clear();
+
+		.select {
+			clear: both;
+			&:after {
+				color: $roxo;
+			}
+		}
+
+		&.active {
+			display: block;
+		}
+	}
+}
+
+/* paginação */
+.paginacao {
+	display: block;
+	text-align: center;
+
+	li {
+		display: inline-block;
+
+		a, span {
+			display: block;
+			width: 40px;
+			height: 40px;
+			line-height: 40px;
+			font-size: 1rem;
+			@include animacao('','');
+
+			&.active, &.off {
+				cursor: default;
+			}
+
+			&.off {
+				opacity: .25;
+			}
+		}
+	}
+
+	a {
+		text-decoration: none;
+	}
+}
 
 
 /* footer */
@@ -1211,8 +1747,4 @@ $hSlide: 80vh;
 			}
 		}
 	}
-}
-
-li.midia ul, li.contato ul, li.simuladores ul {
-	display: none!important;
 }
