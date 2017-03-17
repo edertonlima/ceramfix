@@ -76,6 +76,77 @@
 	add_action('init', 'myprefix_unregister_tags');
 	// end Remove tags
 
+
+	// PRODUTOS
+	add_action( 'init', 'create_post_type_produto' );
+	function create_post_type_produto() {
+
+		$labels = array(
+		    'name' => _x('Produtos', 'post type general name'),
+		    'singular_name' => _x('Produto', 'post type singular name'),
+		    'add_new' => _x('Adicionar Nova', 'Produto'),
+		    'add_new_item' => __('Add New Produto'),
+		    'edit_item' => __('Edit Produto'),
+		    'new_item' => __('New Produto'),
+		    'all_items' => __('Todas as Produto'),
+		    'view_item' => __('View Produto'),
+		    'search_items' => __('Search Produto'),
+		    'not_found' =>  __('No Produto found'),
+		    'not_found_in_trash' => __('No Produto found in Trash'),
+		    'parent_item_colon' => '',
+		    'menu_name' => 'Produtos'
+		);
+		$args = array(
+		    'labels' => $labels,
+		    'public' => true,
+		    'publicly_queryable' => true,
+		    'show_ui' => true,
+		    'show_in_menu' => true,
+		    'rewrite' => true,
+		    'capability_type' => 'post',
+		    'has_archive' => true,
+		    'hierarchical' => false,
+		    'menu_position' => null,
+		    'menu_icon' => 'dashicons-tag',
+		    'supports' => array('title','thumbnail')
+		  );
+
+	    register_post_type( 'produto', $args );
+	}
+
+	add_action( 'init', 'create_taxonomy_categoria_produto' );
+	function create_taxonomy_categoria_produto() {
+
+		$labels = array(
+		    'name' => _x( 'Categorias de Produto', 'taxonomy general name' ),
+		    'singular_name' => _x( 'Categorias', 'taxonomy singular name' ),
+		    'search_items' =>  __( 'Search Categorias' ),
+		    'all_items' => __( 'All Categories' ),
+		    'parent_item' => __( 'Parent Categorias' ),
+		    'parent_item_colon' => __( 'Parent Categorias:' ),
+		    'edit_item' => __( 'Edit Categorias' ),
+		    'update_item' => __( 'Update Categorias' ),
+		    'add_new_item' => __( 'Add New Categorias' ),
+		    'new_item_name' => __( 'New Categorias Name' ),
+		    'menu_name' => __( 'Categorias' ),
+		);
+
+	    register_taxonomy( 'categoria_produto', array( 'produto' ), array(
+	        'hierarchical' => true,
+	        'labels' => $labels,
+	        'show_ui' => true,
+	        'show_in_tag_cloud' => true,
+	        'query_var' => true,
+			'has_archive' => 'produto',
+			'rewrite' => array(
+			    'slug' => 'produto',
+			    'with_front' => false,
+				),
+	        )
+	    );
+	}
+
+
 	// SERVIÇOS
 	/*
 	add_action('init', 'type_post_servicos');
@@ -153,46 +224,6 @@
 	}
 	*/
 
-
-
-	// PRODUTOS
-	/*
-	add_action( 'init', 'create_post_type_importacao' );
-	function create_post_type_importacao() {
-
-		$labels = array(
-		    'name' => _x('Importações', 'post type general name'),
-		    'singular_name' => _x('Importação', 'post type singular name'),
-		    'add_new' => _x('Adicionar Nova', 'Importação'),
-		    'add_new_item' => __('Add New Importação'),
-		    'edit_item' => __('Edit Importação'),
-		    'new_item' => __('New Importação'),
-		    'all_items' => __('Todas as Importação'),
-		    'view_item' => __('View Importação'),
-		    'search_items' => __('Search Importação'),
-		    'not_found' =>  __('No Importação found'),
-		    'not_found_in_trash' => __('No Importação found in Trash'),
-		    'parent_item_colon' => '',
-		    'menu_name' => 'Importação'
-		);
-		$args = array(
-		    'labels' => $labels,
-		    'public' => true,
-		    'publicly_queryable' => true,
-		    'show_ui' => true,
-		    'show_in_menu' => true,
-		    'rewrite' => true,
-		    'capability_type' => 'post',
-		    'has_archive' => true,
-		    'hierarchical' => false,
-		    'menu_position' => null,
-		    'menu_icon' => 'dashicons-tag',
-		    'supports' => array('title','editor','thumbnail')
-		  );
-
-	    register_post_type( 'importacao', $args );
-	}
-	*/
 
 	// exportação
 	/*
@@ -627,6 +658,20 @@ if( function_exists('acf_add_options_page') ) {
 		'parent_slug'	=> 'configuracoes-geral',
 	));
 	
+	acf_add_options_sub_page(array(
+		'page_title' 	=> 'Slide de Produto',
+		'menu_title'	=> 'Slide de Produto',
+		'menu_slug' 	=> 'slide-produto',
+		'parent_slug'	=> 'configuracoes-geral',
+	));
+
+	acf_add_options_sub_page(array(
+		'page_title' 	=> 'Imagem Categoria de Produto',
+		'menu_title'	=> 'Imagem Categoria de Produto',
+		'menu_slug' 	=> 'imagem-categoria-produto',
+		'parent_slug'	=> 'configuracoes-geral',
+	));
+
 	acf_add_options_sub_page(array(
 		'page_title' 	=> 'Configurações de Redes sociais',
 		'menu_title'	=> 'Redes sociais',

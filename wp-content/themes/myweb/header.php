@@ -146,7 +146,7 @@
 					<nav class="nav">
 						<ul>
 							<li class="">
-								<a href="#" title="PRODUTOS" class="ativo">PRODUTOS</a>
+								<a href="<?php echo get_home_url(); ?>?post_type=produto" title="PRODUTOS" class="ativo">PRODUTOS</a>
 							</li>
 							<li class="">
 								<a href="#" title="SIMULADORES">SIMULADORES</a>
