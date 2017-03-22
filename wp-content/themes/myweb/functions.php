@@ -20,8 +20,12 @@
 	  register_nav_menu( 'primary', __( 'Primary Menu', 'header' ) );
 	}
 
+	/* ADICIONA CLASSE */
+	add_filter( 'body_class', function( $classes ) {
+	    return array_merge( $classes, array( 'page' ) );
+	} );
 
-	// slide
+	// muda nome post
 	function change_post_label() {
 	    global $menu;
 	    global $submenu;
@@ -51,7 +55,7 @@
 	 
 	add_action( 'admin_menu', 'change_post_label' );
 	add_action( 'init', 'change_post_object' );
-	// slide
+	// muda nome post
 
 	// remove itens padrões
 	add_action( 'init', 'my_custom_init' );
@@ -147,13 +151,12 @@
 	}
 
 
-	// SERVIÇOS
-	/*
-	add_action('init', 'type_post_servicos');
-	function type_post_servicos() {
+	// matriz e filiais
+	add_action('init', 'type_post_matriz_filiais');
+	function type_post_matriz_filiais() {
 		$labels = array(
-			'name' => _x('Serviços', 'post type general name'),
-			'singular_name' => _x('Serviços', 'post type singular name'),
+			'name' => _x('Matriz e Filiais', 'post type general name'),
+			'singular_name' => _x('Matriz e Filiais', 'post type singular name'),
 			'add_new' => _x('Adicionar Novo', 'Novo item'),
 			'add_new_item' => __('Novo Item'),
 			'edit_item' => __('Editar Item'),
@@ -163,7 +166,7 @@
 			'not_found' => __('Nenhum registro encontrado'),
 			'not_found_in_trash' => __('Nenhum registro encontrado na lixeira'),
 			'parent_item_colon' => '',
-			'menu_name' => 'Serviços'
+			'menu_name' => 'Matriz e Filiais'
 		);
 
 		$args = array(
@@ -176,14 +179,13 @@
 			'capability_type' => 'post',
 			'has_archive' => true,
 			'hierarchical' => false,
-			'menu_icon' => 'dashicons-hammer',
-			'supports' => array('title', 'excerpt', 'thumbnail')
+			'menu_icon' => 'dashicons-admin-multisite',
+			'supports' => array('title', 'thumbnail')
 		);
 
-		register_post_type( 'servicos' , $args );
+		register_post_type( 'matriz_filiais' , $args );
 		flush_rewrite_rules();
 	}
-	*/
 
 
 	// CLIENTES

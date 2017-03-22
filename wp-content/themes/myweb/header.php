@@ -98,25 +98,26 @@
 <script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/assets/js/bootstrap.min.js"></script>
 
 <script type="text/javascript">
-
-	$(document).ready(function(){
-
-	});	
-
-	$(window).resize(function(){
-
-	});
-
-</script>
-
-<script type="text/javascript">
 	jQuery.noConflict();
 
 	jQuery(document).ready(function(){
+		/* MAPA GOOGLE */
+		jQuery('.mapa-google').click(function () {
+		    jQuery('.mapa-google').css("pointer-events", "auto");
+		});
+		jQuery('.mapa-google').mouseleave(function() {
+		  	jQuery('.mapa-google').css("pointer-events", "none"); 
+		});
+
+		/* SETA */
 		jQuery(".seta").click(function(){
 			var scroll = jQuery(this).attr('rel');
 		    jQuery("html, body").animate({ scrollTop: jQuery(scroll).offset().top }, 1000);
 		});
+	});	
+
+	jQuery(window).resize(function(){
+
 	});
 </script>
 
@@ -149,34 +150,34 @@
 								<a href="<?php echo get_home_url(); ?>?post_type=produto" title="PRODUTOS" class="ativo">PRODUTOS</a>
 							</li>
 							<li class="">
-								<a href="#" title="SIMULADORES">SIMULADORES</a>
+								<a href="javascript:" title="SIMULADORES">SIMULADORES</a>
 								<ul class="submenu">
 									<li class="matriz-filiais"><a href="#" title="SIMULADOR DE CORES">SIMULADOR<br>DE CORES</a></li>		
 									<li class="trabalhe-conosco"><a href="#" title="CALCULADORA DE CONSUMO">CALCULADORA<br>DE CONSUMO</a></li>	
 								</ul>
 							</li>
 							<li class="">
-								<a href="<?php echo get_permalink(49); ?>" title="EMPRESA">EMPRESA</a>
+								<a href="<?php echo get_permalink(get_page_by_path('empresa')); ?>" title="EMPRESA">EMPRESA</a>
 								<ul class="submenu">
-									<li class="matriz-filiais"><a href="#" title="MATRIZ E FILIAIS">MATRIZ E<br>FILIAIS</a></li>		
-									<li class="trabalhe-conosco"><a href="#" title="TRABALHE CONOSCO">TRABALHE<br>CONOSCO</a></li>		
-									<li class="premios"><a href="<?php echo get_permalink(49); ?>#premios" title="PRÊMIOS">PRÊMIOS</a></li>				
-									<li class="ideologia-corporativa"><a href="<?php echo get_permalink(49); ?>#ideologia-corporativa" title="IDEOLOGIA CORPORATIVA">IDEOLOGIA<br>CORPORATIVA</a></li>
+									<li class="matriz-filiais"><a href="<?php echo get_permalink(get_page_by_path('matriz-filiais')); ?>" title="MATRIZ E FILIAIS">MATRIZ E<br>FILIAIS</a></li>		
+									<li class="trabalhe-conosco"><a href="<?php echo get_permalink(get_page_by_path('trabalhe-conosco')); ?>" title="TRABALHE CONOSCO">TRABALHE<br>CONOSCO</a></li>		
+									<li class="premios"><a href="<?php echo get_permalink(get_page_by_path('empresa')); ?>#premios" title="PRÊMIOS">PRÊMIOS</a></li>				
+									<li class="ideologia-corporativa"><a href="<?php echo get_permalink(get_page_by_path('empresa')); ?>#ideologia-corporativa" title="IDEOLOGIA CORPORATIVA">IDEOLOGIA<br>CORPORATIVA</a></li>
 								</ul>
 							</li>
 							<li class="">
-								<a href="#" title="CONTATO">CONTATO</a>
+								<a href="javascript:" title="CONTATO">CONTATO</a>
 								<ul class="submenu">
-									<li class="matriz-filiais"><a href="#" title="MATRIZ E FILIAIS">MATRIZ E<br>FILIAIS</a></li>		
-									<li class="trabalhe-conosco"><a href="#" title="FALE CONOSCO">FALE<br>CONOSCO</a></li>		
-									<li class="trabalhe-conosco"><a href="#" title="TRABALHE CONOSCO">TRABALHE<br>CONOSCO</a></li>
+									<li class="matriz-filiais"><a href="<?php echo get_permalink(get_page_by_path('matriz-filiais')); ?>" title="MATRIZ E FILIAIS">MATRIZ E<br>FILIAIS</a></li>		
+									<li class="trabalhe-conosco"><a href="<?php echo get_permalink(get_page_by_path('fale-conosco')); ?>" title="FALE CONOSCO">FALE<br>CONOSCO</a></li>		
+									<li class="trabalhe-conosco"><a href="<?php echo get_permalink(get_page_by_path('trabalhe-conosco')); ?>" title="TRABALHE CONOSCO">TRABALHE<br>CONOSCO</a></li>
 								</ul>
 							</li>
 							<li class="">
-								<a href="#" title="MÍDIA">MÍDIA</a>
+								<a href="javascript:" title="MÍDIA">MÍDIA</a>
 								<ul class="submenu">
-									<li class="matriz-filiais"><a href="#" title="RELEASES">RELEASES</a></li>		
-									<li class="trabalhe-conosco"><a href="#" title="NA MÍDIA">NA MÍDIA</a></li>		
+									<li class="matriz-filiais"><a href="<?php echo get_home_url(); ?>?cat=1" title="RELEASES">RELEASES</a></li>		
+									<li class="trabalhe-conosco"><a href="<?php echo get_home_url(); ?>?cat=5" title="NA MÍDIA">NA MÍDIA</a></li>		
 									<li class="premios"><a href="#" title="DOWNLOAD">DOWNLOAD</a></li>				
 								</ul>
 							</li>

@@ -211,6 +211,10 @@ form {
 		line-height: 35px;
 		padding-top: 20px;
 		padding-bottom: 20px;
+
+		&[for='mensagem'] {
+			opacity: 0.6;
+		}
 	}
 
 	input[type='text'], input[type='email'] {
@@ -373,6 +377,10 @@ p {
 }
 .no-margim {
 	margin: 0!important;
+}
+
+.mapa-google {
+	pointer-events: none;
 }
 
 
@@ -1502,6 +1510,10 @@ $hSlide: 90vh;
 				text-align: left;
 			}
 
+			h2 {
+				text-transform: uppercase;
+			}
+
 			.view-content {
 				width: 100%;
 				display: block;
@@ -1604,6 +1616,19 @@ $hSlide: 90vh;
 			h2 {
 				text-align: left;
 				margin-bottom: 40px;
+
+				.post-categories {
+					a {
+						text-transform: uppercase;
+						text-decoration: none;
+						display: inline-block;
+						font-weight: $light;
+
+						&:hover {
+							color: darken($roxo, 10%);
+						}
+					}
+				}
 			}
 
 			span.date-display-single {
@@ -1633,11 +1658,14 @@ $hSlide: 90vh;
 
 			.conteudo {
 				padding: 0;
-				margin-bottom: 60px;
 
 				h2 {
 					font-size: 2rem;
 					margin: 20px 0 60px;
+				}
+
+				iframe {
+					height: 68vh;
 				}
 			}
 
@@ -1709,31 +1737,62 @@ $hSlide: 90vh;
 				}
 
 				&.galeria {
+					margin-top: 0px;
+
+					.item {
+						margin: 30px 0 0;
+					}
+
 					.info-item {
 						border: none;
 					}
 					p.mini {
-						font-size: 1rem;
+						font-size: 0.75rem;
 						line-height: 1.25rem;
 					}
 				}
 			}
 
-			&.na-midia {
+			.na-midia {
 				.img-item {
-					background-color: #b3252c;
+					margin-bottom: 15px;
 
 					a {
 						width: 100%;
-						height: 30vh;
 						display: block;
-						line-height: 30vh;
 						text-align: center;
+						height: 30vh;
+						line-height: 30vh;
+						background-color: #b3252c;
+						position: relative;
+						@include animacao('','');
+
+						span {
+							width: 100%;
+							display: block;
+							height: 30vh;
+							opacity: .5;
+							background-repeat: no-repeat;
+							background-size: cover;
+							@include animacao('','');
+						}
 
 						.fa-play {
-							font-size: 15vh;
+							font-size: 13vh;
 							color: #ffffff;
+							position: absolute;
+							z-index: 999;
 							line-height: 30vh;
+							left: 0;
+							top: 0;
+							width: 100%;
+						}
+
+						&:hover {
+							background-color: darken(#b3252c, 20%);
+							span {
+								opacity: .3;
+							}
 						}
 					}
 				}

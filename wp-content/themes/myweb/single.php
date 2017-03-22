@@ -1,33 +1,29 @@
 <?php get_header(); ?>
 
-<session class="post-det">
+<section class="box-container box-release">
 	<div class="container">
+		<h2><?php the_category(); ?></h2>
 
-		<div class="row">
-			<div class="col-8 content-page">
+		<div class="conteudo">
 
-				<?php while ( have_posts() ) : the_post();
+			<?php while ( have_posts() ) : the_post();
 
-					get_template_part( 'content', get_post_format() ); ?>
+				get_template_part( 'content', get_post_format() ); ?>
 
-					<?php /* if ( comments_open() || get_comments_number() ) :
-						comments_template();
-					endif; */ ?>
-					
-					<?php the_post_navigation( array(
-						'prev_text' => '<span class="prev"><i class="fa fa-long-arrow-left"></i> %title</span>',
-						'next_text' => '<span class="next">%title <i class="fa fa-long-arrow-right"></i></span>',
-					)); ?>
+				<?php /* if ( comments_open() || get_comments_number() ) :
+					comments_template();
+				endif; */ ?>
+				
+				<?php /*the_post_navigation( array(
+					'prev_text' => '<span class="prev"><i class="fa fa-long-arrow-left"></i> %title</span>',
+					'next_text' => '<span class="next">%title <i class="fa fa-long-arrow-right"></i></span>',
+				)); */?>
 
-				<?php endwhile; ?>
+			<?php endwhile; ?>
 
-			</div>
-			<div class="col-4 content-sidebar">
-				<?php include 'sidebar.php'; ?>
-			</div>
 		</div>
 
 	</div>
-</session>
+</section>
 
 <?php get_footer(); ?>
