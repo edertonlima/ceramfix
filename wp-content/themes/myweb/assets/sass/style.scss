@@ -286,7 +286,7 @@ label:hover:before {
 		width: 100%;
 		padding-right: 20px;
 		background-color: transparent;
-		font-weight: $bold;
+		font-weight: $regular;
 		font-size: 1.125rem;
 		color: $roxo;
 		box-sizing: content-box;
@@ -1834,6 +1834,7 @@ $hSlide: 90vh;
 					width: 100%;
 					padding: 0 10px;
 					margin-top: 50px;
+					display: none;
 					@include clear();
 
 					span {
@@ -1852,7 +1853,6 @@ $hSlide: 90vh;
 						color: $roxo;
 						font-weight: $light;
 						font-size: 1.25rem;
-						display: none;
 						position: relative;
 						top: -10px;
 						@include animacao('','');
@@ -1909,33 +1909,35 @@ $hSlide: 90vh;
 		margin-top: 30px;
 
 		.item-download {
-			border-bottom: 3px solid $roxo;
-			padding-bottom: 20px;
+			border-bottom: 2px solid $roxo;
+			padding: 0 70px 20px;
 			margin-bottom: 20px;
 			display: table;
 
 			img, h4, fieldset, .mockups {
-				display: table-cell;
+				display: inline-block;
 				vertical-align: middle;
 			}
 
 			img {
-				width: 65px;
-				margin: 0 50px 0 25px;
+				width: 100px;
+				margin-right: 10px; 
 			}
 
 			h4 {
+				width: 300px;
+				padding-right: 80px;
+				text-transform: uppercase;
 				span {
-					margin-right: 50px;
-					color: #0077c8;
+					color: $azul;
 					font-weight: $light;
 					font-size: 1.25rem;
 				}
 			}
 
 			fieldset {
-				font-size: 1.25rem;
-				margin-right: 50px;
+				font-size: 1rem;
+				width: 100%;
 
 				label {
 					cursor: pointer;
@@ -1953,7 +1955,8 @@ $hSlide: 90vh;
 					margin: 0;
 					display: inline-block;
 					position: relative;
-					top: 2px;
+					top: 4px;
+					margin-right: 5px;
 
 					i {
 						font-size: .9rem;
@@ -1966,16 +1969,26 @@ $hSlide: 90vh;
 			}
 
 			.mockups {
+				width: 250px;
 				h3 {
 					display: block;
 					width: 10%;
 					color: $roxo;
-					font-size: 1.75rem;
-					font-weight: $light;
+					font-size: 1.5rem;
+					font-weight: $regular;
+					margin-bottom: 5px;
 				}
 
 				fieldset {
 					display: inline-block;
+				}
+
+				&.mockups-img {
+					width: 350px;
+
+					fieldset {
+						width: (100%)/3;
+					}
 				}
 			}
 		}
@@ -2318,6 +2331,10 @@ $hSlide: 90vh;
 		&:hover, &.active {
 			background-color: $roxo;
 			color: #ffffff;
+		}
+
+		&:first-child {
+			border-left: 1px solid $roxo;
 		}
 
 		&.active {

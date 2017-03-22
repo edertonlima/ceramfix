@@ -638,6 +638,15 @@ if( function_exists('acf_add_options_page') ) {
 	));
 
 	acf_add_options_page(array(
+		'page_title' 	=> 'Downloads',
+		'menu_title'	=> 'Downloads',
+		'menu_slug' 	=> 'Downloads',
+		'capability'	=> 'edit_posts',
+		'redirect'		=> false,
+		'icon_url' 		=> 'dashicons-paperclip'
+	));
+
+	acf_add_options_page(array(
 		'page_title' 	=> 'Formulários',
 		'menu_title'	=> 'Formulários',
 		'menu_slug' 	=> 'formularios',

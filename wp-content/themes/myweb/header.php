@@ -137,7 +137,7 @@
 				<div class="box-menu">
 					<div class="info">
 						<span class="info-tel">0800 7045049</span>
-						<div class="region">
+						<div class="region" style="opacity: 0;">
 							<a href="#" class="" title="EN">EN</a>
 							<a href="#" class="ativo" title="PT">PT</a>
 							<a href="#" class="" title="ES">ES</a>
@@ -178,7 +178,7 @@
 								<ul class="submenu">
 									<li class="matriz-filiais"><a href="<?php echo get_home_url(); ?>?cat=1" title="RELEASES">RELEASES</a></li>		
 									<li class="trabalhe-conosco"><a href="<?php echo get_home_url(); ?>?cat=5" title="NA MÍDIA">NA MÍDIA</a></li>		
-									<li class="premios"><a href="#" title="DOWNLOAD">DOWNLOAD</a></li>				
+									<li class="premios"><a href="<?php echo get_permalink(get_page_by_path('downloads')); ?>" title="DOWNLOAD">DOWNLOAD</a></li>				
 								</ul>
 							</li>
 						</ul>
