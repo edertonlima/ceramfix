@@ -640,10 +640,22 @@ if( function_exists('acf_add_options_page') ) {
 	acf_add_options_page(array(
 		'page_title' 	=> 'Downloads',
 		'menu_title'	=> 'Downloads',
-		'menu_slug' 	=> 'Downloads',
+		'menu_slug' 	=> 'downloads',
 		'capability'	=> 'edit_posts',
-		'redirect'		=> false,
+		'redirect'		=> true,
 		'icon_url' 		=> 'dashicons-paperclip'
+	));
+
+	acf_add_options_sub_page(array(
+		'page_title' 	=> 'Anúncios',
+		'menu_title'	=> 'Anúncios',
+		'parent_slug'	=> 'downloads',
+	));
+
+	acf_add_options_sub_page(array(
+		'page_title' 	=> 'Catálogos',
+		'menu_title'	=> 'Catálogos',
+		'parent_slug'	=> 'downloads',
 	));
 
 	acf_add_options_page(array(

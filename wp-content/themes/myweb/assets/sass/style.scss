@@ -1862,6 +1862,15 @@ $hSlide: 90vh;
 						}
 					}
 				}
+
+				#catalogos, #anuncios {
+					.list-download {
+						margin-top: 0px;
+					}
+					.tit-baixar {
+						display: block;
+					}
+				}
 			}
 		}
 
@@ -1925,13 +1934,20 @@ $hSlide: 90vh;
 			}
 
 			h4 {
-				width: 300px;
+				width: 400px;
 				padding-right: 80px;
 				text-transform: uppercase;
 				span {
 					color: $azul;
 					font-weight: $light;
 					font-size: 1.25rem;
+				}
+			}
+
+			&.no-image {
+				min-height: 100px;
+				h4 {
+					width: 515px;
 				}
 			}
 
@@ -1966,10 +1982,17 @@ $hSlide: 90vh;
 						color: $roxo;
 					}
 				}
+
+				&.off {
+					opacity: .3;
+					label {
+						cursor: default;
+					}
+				}
 			}
 
 			.mockups {
-				width: 250px;
+				width: 100px;
 				h3 {
 					display: block;
 					width: 10%;
@@ -1980,11 +2003,12 @@ $hSlide: 90vh;
 				}
 
 				fieldset {
-					display: inline-block;
+					display: inline-block; 
 				}
 
 				&.mockups-img {
-					width: 350px;
+					width: 500px;
+					padding-left: 150px;
 
 					fieldset {
 						width: (100%)/3;

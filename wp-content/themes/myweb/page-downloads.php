@@ -8,141 +8,81 @@
 	<div class="container">
 
 		<div class="tab">
-			<div class="item" rel="anuncio">ANÚNCIOS</div>
-			<div class="item" rel="catalogo">CATÁLOGOS</div>
-			<div class="item active" rel="produtos">PRODUTOS</div>
+			<div class="item" rel="#anuncios">ANÚNCIOS</div>
+			<div class="item" rel="#catalogos">CATÁLOGOS</div>
+			<div class="item active" rel="#produtos">PRODUTOS</div>
 
 			<!-- ANUNCIOS -->
 			<div class="tab-content" id="anuncios">
 
-				<p class="desc-donwload">Selecione a linha a que o produto e o tipo de material que deseja baixar.<br>Pode selecionar vários materiais juntos para baixar simultaneamente.</p>
+				<p class="desc-donwload">Selecione o anúncio que deseja baixar.<br>Pode selecionar vários anúncios juntos para baixar simultaneamente.</p>
 
-				<?php /*<span class="select">
-					<select name="marca-produto">
-						<option selected="selected">ESCOLHA A MARCA</option>
-						<option value="CERAMFIX">CERAMFIX</option>
-					</select>
-				</span>*/ ?>
+				<?php if( have_rows('anuncios','option') ): ?>
+					<h3 class="tit-baixar">
+						<span id="tit-anuncios"></span>
+						<button id="baixar-produto">baixar</button>
+					</h3>
 
-				<span class="select">
-					<select name="linha-produto">
-						<option selected="selected">ESCOLHA A LINHA DE PRODUTO</option>
-					</select>
-				</span>
+					<div class="row list-download">
 
-				<h3 class="tit-baixar">
-					<span id="tit-anuncios"></span>
-					<button id="baixar-produto">baixar</button>
-				</h3>
+						<?php while ( have_rows('anuncios','option') ) : the_row(); ?>
 
-				<div class="row list-download">
+							<div class="col-12 item-download <?php if(!get_sub_field('imagem','option')){ echo 'no-image'; } ?>">
+								<?php if(get_sub_field('imagem','option')){ ?>
+									<img src="<?php the_sub_field('imagem','option'); ?>" alt="<?php the_sub_field('titulo','option'); ?>">
+								<?php } ?>
+								<h4><span><?php the_sub_field('titulo','option'); ?></span></h4>
+								<div class="mockups">
+									<fieldset class="arteFinal">
+										<label>
+											<input type="checkbox" name="arteFinal">
+											<span class="checkbox"></span>
+											BAIXAR
+										</label>
+									</fieldset>
+								</div>
+							</div>
 
-					<div class="col-12 item-download">
-						<img src="assets/images/img-download.png" alt="">
-						<h4><span>PORCELANATOS E PEDRAS NATURAIS</span></h4>
-						<div class="mockups">
-							<fieldset class="arteFinal">
-								<label>
-									<input type="checkbox" name="arteFinal">
-									<span class="checkbox"></span>
-									ARTE FINAL
-								</label>
-							</fieldset>
-						</div>
-						<div class="mockups">
-							<h3>MOCKUPS</h3>
-							<fieldset class="arteFinal">
-								<label>
-									<input type="checkbox" name="tiff">
-									<span class="checkbox"></span>
-									TIFF
-								</label>
-							</fieldset>
-							<fieldset class="arteFinal">
-								<label>
-									<input type="checkbox" name="jpg">
-									<span class="checkbox"></span>
-									JPG
-								</label>
-							</fieldset>
-							<fieldset class="arteFinal">
-								<label>
-									<input type="checkbox" name="png">
-									<span class="checkbox"></span>
-									PNG
-								</label>
-							</fieldset>
-						</div>
+						<?php endwhile; ?>
 					</div>
-
-				</div>
+				<?php endif; ?>
 
 			</div>	
 
 			<!-- CATÁLOGOS	 -->
 			<div class="tab-content" id="catalogos">
 
-				<p class="desc-donwload">Selecione a marca, a linha a que o produto e o tipo de material que deseja baixar.<br>Pode selecionar vários materiais juntos para baixar simultaneamente.</p>
+				<p class="desc-donwload">Selecione o catalogo que deseja baixar.<br>Pode selecionar vários catálogos juntos para baixar simultaneamente.</p>
 
-				<span class="select">
-					<select name="marca-produto">
-						<option selected="selected">ESCOLHA A MARCA</option>
-						<option value="CERAMFIX">CERAMFIX</option>
-					</select>
-				</span>
+				<?php if( have_rows('catalogos','option') ): ?>
+					<h3 class="tit-baixar">
+						<span id="tit-catalogos"></span>
+						<button id="baixar-produto">baixar</button>
+					</h3>
 
-				<span class="select">
-					<select name="linha-produto">
-						<option selected="selected">ESCOLHA A LINHA DE PRODUTO</option>
-					</select>
-				</span>
+					<div class="row list-download">
 
-				<h3 class="tit-baixar">
-					<span id="tit-catalogos"></span>
-					<button id="baixar-produto">baixar</button>
-				</h3>
+						<?php while ( have_rows('catalogos','option') ) : the_row(); ?>
 
-				<div class="row list-download">
+							<div class="col-12 item-download <?php if(!get_sub_field('imagem','option')){ echo 'no-image'; } ?>">
+								<?php if(get_sub_field('imagem','option')){ ?>
+									<img src="<?php the_sub_field('imagem','option'); ?>" alt="<?php the_sub_field('titulo','option'); ?>">
+								<?php } ?>
+								<h4><span><?php the_sub_field('titulo','option'); ?></span></h4>
+								<div class="mockups">
+									<fieldset class="arteFinal">
+										<label>
+											<input type="checkbox" name="arteFinal">
+											<span class="checkbox"></span>
+											BAIXAR
+										</label>
+									</fieldset>
+								</div>
+							</div>
 
-					<div class="col-12 item-download">
-						<img src="assets/images/img-download.png" alt="">
-						<h4><span>PORCELANATOS E PEDRAS NATURAIS</span></h4>
-						<div class="mockups">
-							<fieldset class="arteFinal">
-								<label>
-									<input type="checkbox" name="arteFinal">
-									<span class="checkbox"></span>
-									ARTE FINAL
-								</label>
-							</fieldset>
-						</div>
-						<div class="mockups">
-							<h3>MOCKUPS</h3>
-							<fieldset class="arteFinal">
-								<label>
-									<input type="checkbox" name="tiff">
-									<span class="checkbox"></span>
-									TIFF
-								</label>
-							</fieldset>
-							<fieldset class="arteFinal">
-								<label>
-									<input type="checkbox" name="jpg">
-									<span class="checkbox"></span>
-									JPG
-								</label>
-							</fieldset>
-							<fieldset class="arteFinal">
-								<label>
-									<input type="checkbox" name="png">
-									<span class="checkbox"></span>
-									PNG
-								</label>
-							</fieldset>
-						</div>
+						<?php endwhile; ?>
 					</div>
-
-				</div>
+				<?php endif; ?>
 
 			</div>	
 
@@ -192,14 +132,13 @@
 
 									while($posts->have_posts()) : $posts->the_post();
 										
-										if((get_field('arte_final')) or (get_field('tiff')) or (get_field('jpg')) or (get_field('png'))){
+										if((get_field('tiff')) or (get_field('jpg')) or (get_field('png'))){
 											$download = $download+1;
 											$imagem = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), 'thumbnail' );
 
 											$produto[$category->term_id][$post->ID]['id'] = $post->ID;
 											$produto[$category->term_id][$post->ID]['nome'] = get_the_title();
 											$produto[$category->term_id][$post->ID]['img'] = $imagem[0];
-											$produto[$category->term_id][$post->ID]['artefinal'] = get_field('arte_final');
 											$produto[$category->term_id][$post->ID]['tiff'] = get_field('tiff');
 											$produto[$category->term_id][$post->ID]['jpg'] = get_field('jpg');
 											$produto[$category->term_id][$post->ID]['png'] = get_field('png');
@@ -235,10 +174,27 @@
 <?php //print_r($produto); ?>
 
 <script type="text/javascript">
-var produto = <?php echo json_encode($produto); ?>;
-//alert(produto[4][159]['nome']);
+	var produto = <?php echo json_encode($produto); ?>;
+	//alert(produto[4][159]['nome']);
 
-jQuery(document).ready(function() {
+	jQuery(document).ready(function(){
+
+		jQuery('.tab .item').click(function(){
+			jQuery('.tab .item').removeClass('active');
+			jQuery(this).addClass('active');
+			jQuery('.tab-content').removeClass('active');
+			jQuery(jQuery(this).attr('rel')).addClass('active');
+		});
+
+		jQuery('fieldset:not(.off) label').click(function(){
+			if(jQuery('input[type="checkbox"]',this).is(':checked')){
+				jQuery('input[type="checkbox"]',this).prop( "checked", false );
+				jQuery('.checkbox',this).html('');
+			}else{
+				jQuery('input[type="checkbox"]',this).prop( "checked", true );
+				jQuery('.checkbox',this).html('<i class="fa fa-check" aria-hidden="true"></i>');
+			}
+		});
 
 		/*
 		jQuery('select[name="marca-produto"]').change(function(){
@@ -266,28 +222,44 @@ jQuery(document).ready(function() {
 				  	jQuery('#list-prod').append('<div class="col-12 item-download" id="'+prod+'"></div>');
 				  	jQuery('#'+prod).append('<img src="'+label.img+'" class="img-produto" alt="">');
 				  	jQuery('#'+prod).append('<h4><span>'+label.nome+'</span></h4>');
-				  	jQuery('#'+prod).append('<div class="mockups"><fieldset class="arteFinal"><label><input type="checkbox" name="arteFinal" value="'+label.artefinal+'"><span class="checkbox"></span>ARTE FINAL</label></fieldset></div>');
+				  	
+				  	/*if(label.artefinal){
+				  		jQuery('#'+prod).append('<div class="mockups"><fieldset class="arteFinal"><label><input type="checkbox" name="arteFinal" value="'+label.artefinal+'"><span class="checkbox"></span>ARTE FINAL</label></fieldset></div>');
+				  	}*/
+				  	
+				  	jQuery('#'+prod).append('<div class="mockups mockups-img"></div>');
+				  	if((label.png) || (label.tiff) || (label.jpg)){
+				  		jQuery('#'+prod+' .mockups-img').append('<h3>MOCKUPS</h3>');
+				  	}
+				  	
+				  	if(label.tiff){
+				  		jQuery('#'+prod+' .mockups-img').append('<fieldset class="arteFinal"><label><input type="checkbox" name="tiff" value="'+label.tiff+'"><span class="checkbox"></span>TIFF</label></fieldset>');
+				  	}
+				  	
 
-				  	jQuery('#'+prod).append('<div class="mockups mockups-img"><h3>MOCKUPS</h3></div>');
-				  	jQuery('#'+prod+' .mockups-img').append('<fieldset class="arteFinal"><label><input type="checkbox" name="tiff" value="'+label.tiff+'"><span class="checkbox"></span>TIFF</label></fieldset>');
-				  	jQuery('#'+prod+' .mockups-img').append('<fieldset class="arteFinal"><label><input type="checkbox" name="jpg" value="'+label.jpg+'"><span class="checkbox"></span>JPG</label></fieldset>');
-				  	jQuery('#'+prod+' .mockups-img').append('<fieldset class="arteFinal"><label><input type="checkbox" name="png" value="'+label.png+'"><span class="checkbox"></span>PNG</label></fieldset>');
-				});
+				  	if(label.jpg){
+				  		jQuery('#'+prod+' .mockups-img').append('<fieldset class="arteFinal"><label><input type="checkbox" name="jpg" value="'+label.jpg+'"><span class="checkbox"></span>JPG</label></fieldset>');
+				  	}
+				  	
 
-				jQuery('#download-prod').show();
+				  	if(label.png){
+				  		jQuery('#'+prod+' .mockups-img').append('<fieldset class="arteFinal"><label><input type="checkbox" name="png" value="'+label.png+'"><span class="checkbox"></span>PNG</label></fieldset>');
+				  	}
 
-				jQuery('label').click(function(){
-					if(jQuery('input[type="checkbox"]',this).is(':checked')){
-						jQuery('input[type="checkbox"]',this).prop( "checked", false );
-						jQuery('.checkbox',this).html('');
-					}else{
-						jQuery('input[type="checkbox"]',this).prop( "checked", true );
-						jQuery('.checkbox',this).html('<i class="fa fa-check" aria-hidden="true"></i>');
-					}
+					jQuery('#download-prod').show();
+
+					jQuery('fieldset:not(.off) label').click(function(){
+						if(jQuery('input[type="checkbox"]',this).is(':checked')){
+							jQuery('input[type="checkbox"]',this).prop( "checked", false );
+							jQuery('.checkbox',this).html('');
+						}else{
+							jQuery('input[type="checkbox"]',this).prop( "checked", true );
+							jQuery('.checkbox',this).html('<i class="fa fa-check" aria-hidden="true"></i>');
+						}
+					});
 				});
 			}
 		});
-		
 	});
 </script>
 
