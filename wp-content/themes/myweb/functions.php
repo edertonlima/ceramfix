@@ -624,8 +624,32 @@ if( function_exists('acf_add_options_page') ) {
 		'menu_title'	=> 'Simuladores',
 		'menu_slug' 	=> 'simuladores',
 		'capability'	=> 'edit_posts',
-		'redirect'		=> false,
+		'redirect'		=> true,
 		'icon_url' 		=> 'dashicons-editor-table'
+	));
+
+	acf_add_options_sub_page(array(
+		'page_title' 	=> 'Simuladores Sala',
+		'menu_title'	=> 'Sala',
+		'parent_slug'	=> 'simuladores',
+	));
+
+	acf_add_options_sub_page(array(
+		'page_title' 	=> 'Simuladores Cozinha',
+		'menu_title'	=> 'Cozinha',
+		'parent_slug'	=> 'simuladores',
+	));
+
+	acf_add_options_sub_page(array(
+		'page_title' 	=> 'Simuladores Banheiro',
+		'menu_title'	=> 'Banheiro',
+		'parent_slug'	=> 'simuladores',
+	));
+
+	acf_add_options_sub_page(array(
+		'page_title' 	=> 'Simuladores Piscina',
+		'menu_title'	=> 'Piscina',
+		'parent_slug'	=> 'simuladores',
 	));
 
 	acf_add_options_page(array(

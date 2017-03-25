@@ -2905,6 +2905,10 @@ $hSlide: 90vh;
 	}
 }
 
+.option-produto {
+	display: none;
+}
+
 .slide-cor {
 	span.tit-cores {
 		margin-left: 60px;
@@ -2915,13 +2919,14 @@ $hSlide: 90vh;
 	}
 
 	.slide-item-cor {
-		padding: 0px 41px;
-		margin: 5px 0 50px 0;
+		padding: 0px 20px;
+		margin: 5px 0 20px 0;
 		position: relative;
 
 		.owl-stage-outer{
 			width: 100%;
 			overflow: hidden;
+			padding: 0 21px 30px;
 			@include clear();
 		}
 
@@ -2934,7 +2939,7 @@ $hSlide: 90vh;
 
 			div {
 				width: 20px;
-				height: 52px;
+				height: 48px;
 				position: absolute;
 				background-color: #D31939;
 				color: #e6e7e8;
@@ -2948,9 +2953,9 @@ $hSlide: 90vh;
 					font: normal normal normal 25px/1 FontAwesome;
 					font-weight: $bold;
 					cursor: pointer;
-					height: 52px;
+					height: 48px;
 					width: 20px;
-					line-height: 52px;
+					line-height: 48px;
 					z-index: 0;
 					text-align: center;
 					color: #ffffff;
@@ -2985,6 +2990,7 @@ $hSlide: 90vh;
 			background: none;
 			border: none;
 			position: relative;
+			width: auto;
 			.cor {
 				display: block;
 				border: 1px solid #e6e7e8;
@@ -3000,9 +3006,9 @@ $hSlide: 90vh;
 				display: block;
 				line-height: .625rem;
 				position: absolute;
-				width: 100px;
+				width: 80px;
 				left: 50%;
-				margin-left: -50px;
+				margin-left: -40px;
 				margin-top: 5px;
 				display: none;
 			}

@@ -13,205 +13,446 @@
 			<div class="item item-ambiente" rel="#piscina">PISCINA</div>
 
 			<div class="tab-content active" id="sala">
-				<div class="simulador base" style="background-image: url('<?php echo get_template_directory_uri(); ?>/assets/images/simuladores/base-sala.png');">
+				<div class="simulador base" style="background-image: url('<?php the_field('base-sala','option'); ?>">
 					<div class="piso">
 						<div class="parede">
-							<div class="moveis" style="background-image: url('<?php echo get_template_directory_uri(); ?>/assets/images/simuladores/moveis-sala.png');">
-								<div class="mask" style="background-image: url('<?php echo get_template_directory_uri(); ?>/assets/images/simuladores/mask.png');"></div>
+							<div class="moveis" style="background-image: url('<?php the_field('moveis-sala','option'); ?>">
+								<div class="mask" style="background-image: url('<?php the_field('mask-sala','option'); ?>');"></div>
 							</div>
 						</div>
 					</div>
 				</div>
 
-				<div class="bg-select">
-					<span class="select">
-						<select name="produto">
-							<option value="null" selected="selected">ESCOLHA UM PRODUTO</option>
-							<?php
-								$produto = [];
-								$args = array(
-								    'taxonomy'      => 'categoria_produto',
-								    'parent'        => 0,
-								    'orderby'       => 'name',
-								    'order'         => 'ASC',
-								    'hierarchical'  => 1,
-								    'pad_counts'    => 0
-								);
-								$categories = get_categories( $args );
-								foreach ( $categories as $category ){
+				<?php 
+					if( have_rows('produto-sala','option') ):
+						$produto_ambiente = []; ?>
 
-									$download = 0; 
-							        $getPosts = array(
-							            'post_type'   => 'produto',
-							            'post_status' => 'any',
-										'tax_query' => array(
-										    array(
-										        'taxonomy' => 'categoria_produto',
-										        'terms' => $category->term_id,
-										        'include_children' => false,
-										        'operator' => 'IN'
-										    )
-										),
-							        );
-							        $posts = new WP_Query( $getPosts );
-							        if(count($posts) > 0){
+						<div class="bg-select">
+							<span class="select">
+								<select name="produto" class="select-produto" rel="sala">
+									<option value="null" selected="selected">ESCOLHA UM PRODUTO</option>
 
-										while($posts->have_posts()) : $posts->the_post();
-											
-											if((get_field('tiff')) or (get_field('jpg')) or (get_field('png'))){
-												$download = $download+1;
-												$imagem = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), 'thumbnail' );
 
-												$produto[$category->term_id][$post->ID]['id'] = $post->ID;
-												$produto[$category->term_id][$post->ID]['nome'] = get_the_title();
-												$produto[$category->term_id][$post->ID]['img'] = $imagem[0];
-												$produto[$category->term_id][$post->ID]['tiff'] = get_field('tiff');
-												$produto[$category->term_id][$post->ID]['jpg'] = get_field('jpg');
-												$produto[$category->term_id][$post->ID]['png'] = get_field('png');
-											}			
-												
-										endwhile;
+									<?php while ( have_rows('produto-sala','option') ) : the_row();
 
-							        }
+									    $produto = get_sub_field('produto','option');
+										if (!array_key_exists($produto->ID, $produto_ambiente)):											
+										
+										    echo '<option value="'.$produto->ID.'">'.$produto->post_title.'</option>';
 
-								    if($download > 0){ ?>
-								    	<option value="<?php echo $category->term_id; ?>"><?php echo strtoupper($category->name); ?></option>
-								    <?php }
-								}
-							?>
-						</select>
-					</span>
-				</div>
+										    // info produto
+										    $produto_ambiente[$produto->ID]['id'] = $produto->ID;
+										    $produto_ambiente[$produto->ID]['nome'] = $produto->post_title;
 
-				<div class="slide-cor">
-					<span class="tit-cores">SELECIONE A COR DO REJUNTE:</span>
-					<div class="slide-item-cor cor-rejunte">
-						<?php for($i=0;$i<3;$i++){ ?>
-							<div class="item">
-								<span class="cor" style="background-color: #231F20"></span>
-								<span class="nome-cor">PRETO</span>
-							</div>
-							<div class="item">
-								<span class="cor" style="background-color: #8F8E8C"></span>
-								<span class="nome-cor">CINZA</span>
-							</div>
-							<div class="item">
-								<span class="cor" style="background-color: #FFFFFF"></span>
-								<span class="nome-cor">BRANCO</span>
-							</div>
-							<div class="item">
-								<span class="cor" style="background-color: #7C604B"></span>
-								<span class="nome-cor">MARROM</span>
-							</div>
-							<div class="item">
-								<span class="cor" style="background-color: #DDC8B5"></span>
-								<span class="nome-cor">BEGE</span>
-							</div>
-							<div class="item">
-								<span class="cor" style="background-color: #CB9557"></span>
-								<span class="nome-cor">BEGE ESCURO</span>
-							</div>
-							<div class="item">
-								<span class="cor" style="background-color: #EADCC1"></span>
-								<span class="nome-cor">BEGE CLARO mais claro</span>
-							</div>
-						<?php } ?>
-					</div>
-				</div>
+										    // rejunte
+										    if( have_rows('rejunte','option') ):
+										    	while ( have_rows('rejunte','option') ) : the_row();
 
-				<div class="slide-cor">
-					<span class="tit-cores">SELECIONE A COR DO REJUNTE:</span>
-					<div class="slide-item-cor cor-piso">
-						<?php for($i=0;$i<3;$i++){ ?>
-							<div class="item">
-								<span class="cor" style="background-color: #231F20"></span>
-								<span class="nome-cor">PRETO</span>
-							</div>
-							<div class="item">
-								<span class="cor" style="background-color: #8F8E8C"></span>
-								<span class="nome-cor">CINZA</span>
-							</div>
-							<div class="item">
-								<span class="cor" style="background-color: #FFFFFF"></span>
-								<span class="nome-cor">BRANCO</span>
-							</div>
-							<div class="item">
-								<span class="cor" style="background-color: #7C604B"></span>
-								<span class="nome-cor">MARROM</span>
-							</div>
-							<div class="item">
-								<span class="cor" style="background-color: #DDC8B5"></span>
-								<span class="nome-cor">BEGE</span>
-							</div>
-							<div class="item">
-								<span class="cor" style="background-color: #CB9557"></span>
-								<span class="nome-cor">BEGE ESCURO</span>
-							</div>
-							<div class="item">
-								<span class="cor" style="background-color: #EADCC1"></span>
-								<span class="nome-cor">BEGE CLARO mais claro</span>
-							</div>
-						<?php } ?>
-					</div>
-				</div>
+										    		$produto_ambiente[$produto->ID]['rejunte'][] = array(
+										    			'nome' => get_sub_field('nome','option'),
+										    			'cor' => get_sub_field('hexa','option'),
+										    			'imagem' => get_sub_field('imagem','option')
+										    		);
+
+												endwhile;
+											endif;
+
+										    // piso
+										    if( have_rows('piso','option') ):
+										    	while ( have_rows('piso','option') ) : the_row();
+
+										    		$produto_ambiente[$produto->ID]['piso'][] = array(
+										    			'nome' => get_sub_field('nome','option'),
+										    			'cor' => get_sub_field('hexa','option'),
+										    			'imagem' => get_sub_field('imagem','option')
+										    		);
+
+												endwhile;
+											endif;
+
+										endif;
+
+									endwhile; ?>
+
+								</select>
+							</span>
+						</div>
+
+					<?php endif; 
+				?>
+
+				<?php
+					if(count($produto_ambiente)):
+						foreach ($produto_ambiente as $produto){ ?>
+						    <div class="option-produto" id="sala-<?php echo $produto['id']; ?>">
+						    	<?php if(count($produto['rejunte'])): ?>
+									<div class="slide-cor rejunte">
+										<span class="tit-cores">SELECIONE A COR DO REJUNTE:</span>
+										<div class="slide-item-cor cor-rejunte">
+
+											<?php foreach ($produto['rejunte'] as $rejunte){ ?>
+												<div class="item" rel="<?php echo $rejunte['imagem']; ?>" ambiente="sala" local="parede">
+													<span class="cor" style="background-color: <?php echo $rejunte['cor']; ?>"></span>
+													<span class="nome-cor"><?php echo $rejunte['nome']; ?></span>
+												</div>
+											<?php } ?>
+
+										</div>
+									</div>
+								<?php endif; ?>
+
+								<?php if(count($produto['piso'])): ?>
+									<div class="slide-cor piso">
+										<span class="tit-cores">SELECIONE A COR DO PISO:</span>
+										<div class="slide-item-cor cor-piso">
+
+											<?php foreach ($produto['piso'] as $piso){ ?>
+												<div class="item" rel="<?php echo $piso['imagem']; ?>" ambiente="sala" local="piso">
+													<span class="cor" style="background-color: <?php echo $piso['cor']; ?>"></span>
+													<span class="nome-cor"><?php echo $piso['nome']; ?></span>
+												</div>
+											<?php } ?>
+
+										</div>
+									</div>
+								<?php endif; ?>
+						    </div>
+						<?php } 
+					endif;
+				?>
 			</div>
 
 			<div class="tab-content" id="cozinha">
-				<div class="simulador base" style="background-image: url('<?php echo get_template_directory_uri(); ?>/assets/images/simuladores/base-cozinha.png');">
+				<div class="simulador base" style="background-image: url('<?php the_field('base-cozinha','option'); ?>">
 					<div class="piso">
 						<div class="parede">
-							<div class="moveis" style="background-image: url('<?php echo get_template_directory_uri(); ?>/assets/images/simuladores/moveis-cozinha.png');">
-								<div class="mask" style="background-image: url('<?php echo get_template_directory_uri(); ?>/assets/images/simuladores/mask.png');"></div>
+							<div class="moveis" style="background-image: url('<?php the_field('moveis-cozinha','option'); ?>">
+								<div class="mask" style="background-image: url('<?php the_field('mask-cozinha','option'); ?>');"></div>
 							</div>
 						</div>
 					</div>
 				</div>
+
+				<?php 
+					if( have_rows('produto-cozinha','option') ):
+						$produto_ambiente = []; ?>
+
+						<div class="bg-select">
+							<span class="select">
+								<select name="produto" class="select-produto" rel="cozinha">
+									<option value="null" selected="selected">ESCOLHA UM PRODUTO</option>
+
+									<?php while ( have_rows('produto-cozinha','option') ) : the_row();
+
+									    $produto = get_sub_field('produto','option');
+										if (!array_key_exists($produto->ID, $produto_ambiente)):											
+										
+										    echo '<option value="'.$produto->ID.'">'.$produto->post_title.'</option>';
+
+										    // info produto
+										    $produto_ambiente[$produto->ID]['id'] = $produto->ID;
+										    $produto_ambiente[$produto->ID]['nome'] = $produto->post_title;
+
+										    // rejunte
+										    if( have_rows('rejunte','option') ):
+										    	while ( have_rows('rejunte','option') ) : the_row();
+
+										    		$produto_ambiente[$produto->ID]['rejunte'][] = array(
+										    			'nome' => get_sub_field('nome','option'),
+										    			'cor' => get_sub_field('hexa','option'),
+										    			'imagem' => get_sub_field('imagem','option')
+										    		);
+
+												endwhile;
+											endif;
+
+										    // piso
+										    if( have_rows('piso','option') ):
+										    	while ( have_rows('piso','option') ) : the_row();
+
+										    		$produto_ambiente[$produto->ID]['piso'][] = array(
+										    			'nome' => get_sub_field('nome','option'),
+										    			'cor' => get_sub_field('hexa','option'),
+										    			'imagem' => get_sub_field('imagem','option')
+										    		);
+
+												endwhile;
+											endif;
+
+										endif;
+
+									endwhile; ?>
+
+								</select>
+							</span>
+						</div>
+
+					<?php endif; 
+				?>
+
+				<?php
+					if(count($produto_ambiente)):
+						foreach ($produto_ambiente as $produto){ ?>
+						    <div class="option-produto" id="cozinha-<?php echo $produto['id']; ?>">
+						    	<?php if(count($produto['rejunte'])): ?>
+									<div class="slide-cor rejunte">
+										<span class="tit-cores">SELECIONE A COR DO REJUNTE:</span>
+										<div class="slide-item-cor cor-rejunte">
+
+											<?php foreach ($produto['rejunte'] as $rejunte){ ?>
+												<div class="item" rel="<?php echo $rejunte['imagem']; ?>" ambiente="cozinha" local="parede">
+													<span class="cor" style="background-color: <?php echo $rejunte['cor']; ?>"></span>
+													<span class="nome-cor"><?php echo $rejunte['nome']; ?></span>
+												</div>
+											<?php } ?>
+
+										</div>
+									</div>
+								<?php endif; ?>
+
+								<?php if(count($produto['piso'])): ?>
+									<div class="slide-cor piso">
+										<span class="tit-cores">SELECIONE A COR DO PISO:</span>
+										<div class="slide-item-cor cor-piso">
+
+											<?php foreach ($produto['piso'] as $piso){ ?>
+												<div class="item" rel="<?php echo $piso['imagem']; ?>" ambiente="cozinha" local="piso">
+													<span class="cor" style="background-color: <?php echo $piso['cor']; ?>"></span>
+													<span class="nome-cor"><?php echo $piso['nome']; ?></span>
+												</div>
+											<?php } ?>
+
+										</div>
+									</div>
+								<?php endif; ?>
+						    </div>
+						<?php } 
+					endif;
+				?>
 			</div>
 
 			<div class="tab-content" id="banheiro">
-				<div class="simulador base" style="background-image: url('<?php echo get_template_directory_uri(); ?>/assets/images/simuladores/base-banheiro.png');">
+				<div class="simulador base" style="background-image: url('<?php the_field('base-banheiro','option'); ?>">
 					<div class="piso">
 						<div class="parede">
-							<div class="moveis" style="background-image: url('<?php echo get_template_directory_uri(); ?>/assets/images/simuladores/moveis-banheiro.png');">
-								<div class="mask" style="background-image: url('<?php echo get_template_directory_uri(); ?>/assets/images/simuladores/mask.png');"></div>
+							<div class="moveis" style="background-image: url('<?php the_field('moveis-banheiro','option'); ?>">
+								<div class="mask" style="background-image: url('<?php the_field('mask-banheiro','option'); ?>');"></div>
 							</div>
 						</div>
 					</div>
 				</div>
+
+				<?php 
+					if( have_rows('produto-banheiro','option') ):
+						$produto_ambiente = []; ?>
+
+						<div class="bg-select">
+							<span class="select">
+								<select name="produto" class="select-produto" rel="banheiro">
+									<option value="null" selected="selected">ESCOLHA UM PRODUTO</option>
+
+									<?php while ( have_rows('produto-banheiro','option') ) : the_row();
+
+									    $produto = get_sub_field('produto','option');
+										if (!array_key_exists($produto->ID, $produto_ambiente)):											
+										
+										    echo '<option value="'.$produto->ID.'">'.$produto->post_title.'</option>';
+
+										    // info produto
+										    $produto_ambiente[$produto->ID]['id'] = $produto->ID;
+										    $produto_ambiente[$produto->ID]['nome'] = $produto->post_title;
+
+										    // rejunte
+										    if( have_rows('rejunte','option') ):
+										    	while ( have_rows('rejunte','option') ) : the_row();
+
+										    		$produto_ambiente[$produto->ID]['rejunte'][] = array(
+										    			'nome' => get_sub_field('nome','option'),
+										    			'cor' => get_sub_field('hexa','option'),
+										    			'imagem' => get_sub_field('imagem','option')
+										    		);
+
+												endwhile;
+											endif;
+
+										    // piso
+										    if( have_rows('piso','option') ):
+										    	while ( have_rows('piso','option') ) : the_row();
+
+										    		$produto_ambiente[$produto->ID]['piso'][] = array(
+										    			'nome' => get_sub_field('nome','option'),
+										    			'cor' => get_sub_field('hexa','option'),
+										    			'imagem' => get_sub_field('imagem','option')
+										    		);
+
+												endwhile;
+											endif;
+
+										endif;
+
+									endwhile; ?>
+
+								</select>
+							</span>
+						</div>
+
+					<?php endif; 
+				?>
+
+				<?php
+					if(count($produto_ambiente)):
+						foreach ($produto_ambiente as $produto){ ?>
+						    <div class="option-produto" id="banheiro-<?php echo $produto['id']; ?>">
+						    	<?php if(count($produto['rejunte'])): ?>
+									<div class="slide-cor rejunte">
+										<span class="tit-cores">SELECIONE A COR DO REJUNTE:</span>
+										<div class="slide-item-cor cor-rejunte">
+
+											<?php foreach ($produto['rejunte'] as $rejunte){ ?>
+												<div class="item" rel="<?php echo $rejunte['imagem']; ?>" ambiente="banheiro" local="parede">
+													<span class="cor" style="background-color: <?php echo $rejunte['cor']; ?>"></span>
+													<span class="nome-cor"><?php echo $rejunte['nome']; ?></span>
+												</div>
+											<?php } ?>
+
+										</div>
+									</div>
+								<?php endif; ?>
+
+								<?php if(count($produto['piso'])): ?>
+									<div class="slide-cor piso">
+										<span class="tit-cores">SELECIONE A COR DO PISO:</span>
+										<div class="slide-item-cor cor-piso">
+
+											<?php foreach ($produto['piso'] as $piso){ ?>
+												<div class="item" rel="<?php echo $piso['imagem']; ?>" ambiente="banheiro" local="piso">
+													<span class="cor" style="background-color: <?php echo $piso['cor']; ?>"></span>
+													<span class="nome-cor"><?php echo $piso['nome']; ?></span>
+												</div>
+											<?php } ?>
+
+										</div>
+									</div>
+								<?php endif; ?>
+						    </div>
+						<?php } 
+					endif;
+				?>
 			</div>
 
 			<div class="tab-content" id="piscina">
-				<div class="simulador base" style="background-image: url('<?php echo get_template_directory_uri(); ?>/assets/images/simuladores/base-piscina.png');">
+				<div class="simulador base" style="background-image: url('<?php the_field('base-piscina','option'); ?>">
 					<div class="piso">
 						<div class="parede">
-							<div class="moveis" style="background-image: url('<?php echo get_template_directory_uri(); ?>/assets/images/simuladores/moveis-piscina.png');">
-								<div class="mask" style="background-image: url('<?php echo get_template_directory_uri(); ?>/assets/images/simuladores/mask.png');"></div>
+							<div class="moveis" style="background-image: url('<?php the_field('moveis-piscina','option'); ?>">
+								<div class="mask" style="background-image: url('<?php the_field('mask-piscina','option'); ?>');"></div>
 							</div>
 						</div>
 					</div>
 				</div>
+
+				<?php 
+					if( have_rows('produto-piscina','option') ):
+						$produto_ambiente = []; ?>
+
+						<div class="bg-select">
+							<span class="select">
+								<select name="produto" class="select-produto" rel="piscina">
+									<option value="null" selected="selected">ESCOLHA UM PRODUTO</option>
+
+									<?php while ( have_rows('produto-piscina','option') ) : the_row();
+
+									    $produto = get_sub_field('produto','option');
+										if (!array_key_exists($produto->ID, $produto_ambiente)):											
+										
+										    echo '<option value="'.$produto->ID.'">'.$produto->post_title.'</option>';
+
+										    // info produto
+										    $produto_ambiente[$produto->ID]['id'] = $produto->ID;
+										    $produto_ambiente[$produto->ID]['nome'] = $produto->post_title;
+
+										    // rejunte
+										    if( have_rows('rejunte','option') ):
+										    	while ( have_rows('rejunte','option') ) : the_row();
+
+										    		$produto_ambiente[$produto->ID]['rejunte'][] = array(
+										    			'nome' => get_sub_field('nome','option'),
+										    			'cor' => get_sub_field('hexa','option'),
+										    			'imagem' => get_sub_field('imagem','option')
+										    		);
+
+												endwhile;
+											endif;
+
+										    // piso
+										    if( have_rows('piso','option') ):
+										    	while ( have_rows('piso','option') ) : the_row();
+
+										    		$produto_ambiente[$produto->ID]['piso'][] = array(
+										    			'nome' => get_sub_field('nome','option'),
+										    			'cor' => get_sub_field('hexa','option'),
+										    			'imagem' => get_sub_field('imagem','option')
+										    		);
+
+												endwhile;
+											endif;
+
+										endif;
+
+									endwhile; ?>
+
+								</select>
+							</span>
+						</div>
+
+					<?php endif; 
+				?>
+							
+				<?php
+					if(count($produto_ambiente)):
+						foreach ($produto_ambiente as $produto){ ?>
+						    <div class="option-produto" id="piscina-<?php echo $produto['id']; ?>">
+						    	<?php if(count($produto['rejunte'])): ?>
+									<div class="slide-cor rejunte">
+										<span class="tit-cores">SELECIONE A COR DO REJUNTE:</span>
+										<div class="slide-item-cor cor-rejunte">
+
+											<?php foreach ($produto['rejunte'] as $rejunte){ ?>
+												<div class="item" rel="<?php echo $rejunte['imagem']; ?>" ambiente="piscina" local="parede">
+													<span class="cor" style="background-color: <?php echo $rejunte['cor']; ?>"></span>
+													<span class="nome-cor"><?php echo $rejunte['nome']; ?></span>
+												</div>
+											<?php } ?>
+
+										</div>
+									</div>
+								<?php endif; ?>
+
+								<?php if(count($produto['piso'])): ?>
+									<div class="slide-cor piso">
+										<span class="tit-cores">SELECIONE A COR DO PISO:</span>
+										<div class="slide-item-cor cor-piso">
+
+											<?php foreach ($produto['piso'] as $piso){ ?>
+												<div class="item" rel="<?php echo $piso['imagem']; ?>" ambiente="piscina" local="piso">
+													<span class="cor" style="background-color: <?php echo $piso['cor']; ?>"></span>
+													<span class="nome-cor"><?php echo $piso['nome']; ?></span>
+												</div>
+											<?php } ?>
+
+										</div>
+									</div>
+								<?php endif; ?>
+						    </div>
+						<?php } 
+					endif;
+				?>
 			</div>
 
 		</div>
 	</div>
 </section>
 
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
 <?php get_footer(); ?>
 
 <script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/assets/js/owl.carousel.min.js"></script>
@@ -233,20 +474,42 @@
 		loop: false
 	});
 
-	jQuery('.cor-rejunte .item').click(function(){
+	/*jQuery('.cor-rejunte .item').click(function(){
 		jQuery('.cor-rejunte .item').removeClass('active');
 		jQuery(this).addClass('active');
-	});
+	});*/
 
-	jQuery('.cor-piso .item').click(function(){
-		jQuery('.cor-piso .item').removeClass('active');
+	function cleanAmbiente(){
+		jQuery('.option-produto').hide();
+		jQuery('.simulador .piso').css('background-image','');
+		jQuery('.simulador .parede').css('background-image','');
+		jQuery('.slide-item-cor .item').removeClass('active');
+	}
+
+	jQuery('.slide-item-cor .item').click(function(){
+		jQuery('.slide-item-cor .item').removeClass('active');
 		jQuery(this).addClass('active');
+		ambiente = jQuery(this).attr('ambiente');
+		local = jQuery(this).attr('local');
+		imagem = 'url('+(jQuery(this).attr('rel'))+')';
+		simulador = '#'+ambiente+' .'+local;
+		jQuery(simulador).css('background-image',imagem);
 	});
 
 	jQuery('.tab .item-ambiente').click(function(){
+		cleanAmbiente();
+		jQuery('select.select-produto').val("null").change();
 		jQuery('.tab .item-ambiente').removeClass('active');
 		jQuery(this).addClass('active');
 		jQuery('.tab-content').removeClass('active');
 		jQuery(jQuery(this).attr('rel')).addClass('active');
+	});
+
+	jQuery('select.select-produto').change(function(){
+		cleanAmbiente();
+		if((jQuery(this).val()) != 'null'){			
+			option_produto = '#'+(jQuery(this).attr('rel'))+'-'+(jQuery(this).val());
+			jQuery(option_produto).show();	
+		}
 	});
 </script>
