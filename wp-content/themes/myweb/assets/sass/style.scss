@@ -2896,22 +2896,72 @@ $hSlide: 90vh;
 		}
 
 		&.moveis {
-			z-index: 3;
+			z-index: 4;
 		}
 
 		&.mask {
-			z-index: 4;
+			z-index: 3; 
+		}
+
+		&.cor-piso {
+			bottom: 0;
+			top: auto;
 		}
 	}
 }
 
+#piscina {
+	.cor-parede {
+		height: 32vh; 
+	}
+	.cor-piso {
+		height: 28vh;
+	}
+}
+
+#banheiro {
+	.cor-parede {
+		height: 32vh; 
+	}
+	.cor-piso {
+		height: 28vh;
+	}
+}
+
+#cozinha {
+	.cor-parede {
+		height: 32vh; 
+	}
+	.cor-piso {
+		height: 28vh;
+	}
+}
+
+#sala {
+	.cor-parede {
+		height: 41vh;
+	}
+	.cor-piso {
+		height: 19vh;
+	}
+}
+
 .option-produto {
+	width: 48%;
 	display: none;
+	&.esq {
+		float: left;
+		margin-right: 2%;
+	}
+	&.dir {
+		float: right;
+		margin-left: 2%;
+	}
 }
 
 .slide-cor {
 	span.tit-cores {
-		margin-left: 60px;
+		margin-left: 42px;
 		color: #D31939;
 		font-weight: $regular;
 		text-transform: uppercase;
@@ -2996,7 +3046,15 @@ $hSlide: 90vh;
 				border: 1px solid #e6e7e8;
 				width: 48px;
 				height: 48px;
+				cursor: pointer;
+				background-size: cover;
 				@include animacao('','');
+			}
+
+			&.active {
+				.cor {
+					cursor: default;
+				}
 			}
 			.nome-cor {
 				color: #D31939;
@@ -3011,6 +3069,7 @@ $hSlide: 90vh;
 				margin-left: -40px;
 				margin-top: 5px;
 				display: none;
+				text-align: center;
 			}
 
 			&:hover, &.active {

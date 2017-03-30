@@ -12,13 +12,13 @@
 			<div class="carousel-inner" role="listbox">
 
 				<?php if( have_rows('slide_home','option') ):
+					$slide = 0;
 					while ( have_rows('slide_home','option') ) : the_row();
-						$slide = 0;
 
 						if(get_sub_field('video','option')){
 							$slide = $slide+1; ?>
 
-							<div class="item video active">
+							<div class="item video <?php if($slide == 1){ echo 'active'; } ?>">
 								<video autoplay="true" loop="true" muted="true">
 									<source src="<?php the_sub_field('video','option'); ?>" type="video/mp4">
 								</video>
@@ -32,7 +32,7 @@
 							if(get_sub_field('imagem','option')){
 								$slide = $slide+1; ?>
 
-								<div class="item" style="background-image: url('<?php the_sub_field('imagem','option'); ?>');">
+								<div class="item <?php if($slide == 1){ echo 'active'; } ?>" style="background-image: url('<?php the_sub_field('imagem','option'); ?>');">
 
 									<?php if((get_sub_field('titulo','option')) or (get_sub_field('subtitulo','option'))){ ?>
 										<div class="tit-box-destaque right">
@@ -64,7 +64,7 @@
 
 			<ol class="carousel-indicators">
 				
-				<?php for($i=0; $i<=$slide; $i++){ ?>
+				<?php for($i=0; $i<$slide; $i++){ ?>
 					<li data-target="#slide" data-slide-to="<?php echo $i; ?>" class="<?php if($i == 0){ echo 'active'; } ?>"></li>
 				<?php } ?>
 				
