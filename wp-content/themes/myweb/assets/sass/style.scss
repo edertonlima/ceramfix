@@ -538,6 +538,9 @@ p {
 				}
 
 				&:nth-child(2){
+					> a {
+						cursor: default;
+					}
 					&.active, &.active-trail, &:hover {
 						a {
 							border-color: #D31939; 
@@ -549,6 +552,7 @@ p {
 
 						li {
 							a {
+								cursor: pointer;
 								&:after {
 									margin-left: 99815px;
 								}
@@ -592,6 +596,9 @@ p {
 				}
 
 				&:nth-child(3){
+					> a {
+						cursor: default;
+					}
 					&.active, &.active-trail, &:hover {
 						a {
 							border-color: $laranja; 
@@ -603,6 +610,7 @@ p {
 
 						li {
 							a {
+								cursor: pointer;
 								&:after {
 									//margin-left: 99815px;
 								}
@@ -676,6 +684,9 @@ p {
 				}
 
 				&:nth-child(4){
+					> a {
+						cursor: default;
+					}
 					&.active, &.active-trail, &:hover {
 						a {
 							border-color: $verde; 
@@ -687,6 +698,7 @@ p {
 
 						li {
 							a {
+								cursor: pointer;
 								&:after {
 									//margin-left: 99815px;
 								}
@@ -745,6 +757,9 @@ p {
 				}
 
 				&:nth-child(5){
+					> a {
+						cursor: default;
+					}
 					&.active, &.active-trail, &:hover {
 						a {
 							border-color: $roxo; 
@@ -756,6 +771,7 @@ p {
 
 						li {
 							a {
+								cursor: pointer;
 								&:after {
 									//margin-left: 99815px;
 								}
@@ -1184,6 +1200,17 @@ $hSlide: 90vh;
 		}
 	}
 
+	&.calculadora-consumo {
+		.info-contato {
+			float: none;
+			text-align: center;
+
+			a {
+				@include clear();
+			}
+		}
+	}
+
 	.seta {
 		&:before {
 			border-bottom-color: $verde;
@@ -1493,6 +1520,181 @@ $hSlide: 90vh;
 						color: #D31939;
 					}
 				}
+			}
+		}
+
+		&.box-calculadora-consumo {
+			h2 {
+				color: #D31939;
+				text-align: left;
+				text-transform: uppercase;
+			}
+
+			.bg-select {
+				display: block;
+				margin: 20px 20px 50px;
+
+				.select {
+					select {
+						color: #D31939;
+					}
+					&:after {
+						color: #D31939;
+					}
+				}
+			}
+
+			p {
+				margin-top: 40px;
+				font-size: 2rem;
+			}
+
+			.passos-calculadora {
+				width: 90%;
+				margin: 30px auto;
+				display: block;
+				position: relative;
+
+				.passo, .box-passos {
+					display: inline-block;
+				}
+
+				.passo {
+					background-color: #D31939;
+					border-radius: 50%;
+					width: 25px;
+					height: 25px;
+					line-height: 25px;
+					text-align: center;
+					position: absolute;
+					font-size: .875rem;
+					font-weight: $bold;
+					top: 16px;
+					left: 0px;
+					color: #ffffff;
+
+					&.first-passo {
+						top: 7px;
+					}
+				}
+
+				.box-passos {
+					width: 100%;
+					padding-left: 35px;
+					@include box-sizing();
+
+					.bg-select {
+						margin: 0px;
+						span {
+							margin: 0;
+						}
+					}
+
+					&.bg-passo {
+						background-color: #e6e7e8; 
+					}
+
+					.campos {
+						display: inline-block;
+						margin-top: 10px;
+						width: 100%;
+						@include clear();
+
+						input {
+							display: inline-block;
+							width: 35px;
+							padding: 2px 5px;
+							font-weight: 500;
+							@include box-sizing();
+						}
+
+						span {
+							display: inline-block;
+							color: #D31939;
+
+							&.label {
+								color: #58595b;
+								font-size: 1rem;
+								padding: 0 5px;
+								font-weight: $light;
+							}
+						}
+					}
+
+					.item-passo {
+						width: 25%;
+						background-color: #e6e7e8;
+						float: left;
+						padding: 10px;
+						position: relative;
+						@include box-sizing();
+
+						.tit-campo {
+							color: #D31939;
+							text-transform: uppercase;
+							font-size: .87rem;
+							width: 55%;
+							display: inline-block;
+							line-height: 1rem;
+							vertical-align: middle;
+						}
+
+						img {
+							height: 35px;
+							display: inline-block;
+							vertical-align: middle;
+						}
+
+						&:first-child {
+							//margin-left: 20px;
+						}
+
+						&:last-child {
+							//margin-right: 20px;
+						}
+
+						&.passo-2 {
+							width: 23%;
+							.tit-campo {
+								width: 115px;
+							}
+						}
+
+						&.passo-3 {
+							width: 24%;
+							padding-left: 35px;
+							.tit-campo {
+								width: 80px;
+							}
+						}
+
+						&.passo-4 {
+							width: 26.5%;
+							padding-left: 35px;
+							.tit-campo {
+								width: 110px;
+							}
+						}
+
+						&.passo-5 {
+							width: 26.5%;
+							padding-left: 35px;
+							.tit-campo {
+								width: 110px;
+							}
+						}
+					}
+				}
+			}
+			.calcular {
+				background-color: #D31939;
+				color: #ffffff; 
+				height: 50px;
+				line-height: 50px;
+				text-align: center;
+				width: 100%;
+				font-size: 1rem;
+				font-weight: $bold;
 			}
 		}
 

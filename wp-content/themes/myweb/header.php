@@ -153,7 +153,7 @@
 								<a href="javascript:" title="SIMULADORES">SIMULADORES</a>
 								<ul class="submenu">
 									<li class="matriz-filiais"><a href="<?php echo get_permalink(get_page_by_path('simulador-cores')); ?>" title="SIMULADOR DE CORES">SIMULADOR<br>DE CORES</a></li>		
-									<li class="trabalhe-conosco"><a href="#" title="CALCULADORA DE CONSUMO">CALCULADORA<br>DE CONSUMO</a></li>	
+									<li class="trabalhe-conosco"><a href="<?php echo get_permalink(get_page_by_path('calculadora-consumo')); ?>" title="CALCULADORA DE CONSUMO">CALCULADORA<br>DE CONSUMO</a></li>	
 								</ul>
 							</li>
 							<li class="">
