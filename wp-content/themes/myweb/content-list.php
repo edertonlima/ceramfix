@@ -1,7 +1,7 @@
-<article class="post <?php if(get_field('video_release')){ echo 'na-midia'; } ?>">
+<article class="post na-midia">
 	<?php $imagem = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), 'medium' );  ?>
 		
-	<header class="img-item">
+	<header class="img-item <?php if(get_field('video_release')){ echo 'video'; } ?>">
 		<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">
 			<?php if($imagem[0]){ ?>
 				<span style="background-image: url('<?php echo $imagem[0]; ?>');"></span>

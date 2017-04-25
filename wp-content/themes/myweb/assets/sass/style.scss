@@ -381,7 +381,11 @@ p {
 }
 
 .mapa-google {
-	pointer-events: none;
+	pointer-events: all !important;
+	height: 50vh;
+	width: 100%;
+	display: block;
+	@include clear();
 }
 
 
@@ -1773,8 +1777,12 @@ $hSlide: 90vh;
 
 			.item {
 				display: block;
-				margin-bottom: 20px;
-				width: 100%;
+				margin-bottom: 30px;
+				@include box-sizing();
+
+				&:nth-child(2n){
+					@include clear();
+				}
 
 				h3 {
 					font-weight: $light;
@@ -1784,11 +1792,15 @@ $hSlide: 90vh;
 				}
 
 				.img-item, .info-item {
-					width: 50%;
 					float: left;
 				}
 
+				.info-item {
+					width: 60%;
+				}
+
 				.img-item {
+					width: 40%;
 					img {
 						width: 100%;
 						height: auto;
@@ -1811,13 +1823,26 @@ $hSlide: 90vh;
 					}
 
 					h3, p {
-						font-size: 1.35rem;
-						line-height: 1.45rem;
+						font-size: 1.5rem;
+						line-height: 1.5rem;
 						padding: 0;
 					}
 
 					h3 {
-						margin: 20px 0 0;
+						margin: 0px 0 5px;
+						text-transform: uppercase;
+					}
+
+					p {
+						color: #000000;
+					}
+
+					span {
+						font-weight: $light;
+						font-size: 1rem;
+						line-height: 1rem;
+						margin: 4px 0 0 2px;
+						display: block;
 					}
 				}
 			}
@@ -1843,6 +1868,21 @@ $hSlide: 90vh;
 				    font-weight: $bold;
 				}
 			}
+
+			.box-info-marker {
+				width: 240px;
+
+				img {
+					width: 100%;
+				}
+
+				p {
+					font-size: .875rem;
+					line-height: 1.1rem;
+					display: block;
+				}
+			}
+
 		}
 
 		&.box-release {
@@ -1968,6 +2008,7 @@ $hSlide: 90vh;
 					&:nth-child(2n-1){
 						padding-right: 40px;
 						padding-left: 0;
+						@include clear();
 					}
 
 					&:nth-child(2n){
@@ -2003,35 +2044,44 @@ $hSlide: 90vh;
 						text-align: center;
 						height: 30vh;
 						line-height: 30vh;
-						background-color: #b3252c;
 						position: relative;
+						background-color: #8C4799;
 						@include animacao('','');
 
 						span {
 							width: 100%;
 							display: block;
 							height: 30vh;
-							opacity: .5;
 							background-repeat: no-repeat;
 							background-size: cover;
 							@include animacao('','');
 						}
 
-						.fa-play {
-							font-size: 13vh;
-							color: #ffffff;
-							position: absolute;
-							z-index: 999;
-							line-height: 30vh;
-							left: 0;
-							top: 0;
-							width: 100%;
-						}
-
 						&:hover {
-							background-color: darken(#b3252c, 20%);
+							background-color: darken(#8C4799, 20%);
 							span {
 								opacity: .3;
+							}
+						}
+					}
+
+					&.video {
+						a {
+							span {
+								opacity: .5;
+							}
+							.fa-play {
+								font-size: 13vh;
+								color: #ffffff;
+								position: absolute;
+								z-index: 999;
+								line-height: 30vh;
+								left: 0;
+								top: 0;
+								width: 100%;
+							}
+							&:hover {
+								background-color: darken(#8C4799, 20%);
 							}
 						}
 					}
@@ -2755,7 +2805,7 @@ $hSlide: 90vh;
 		    width: 78px;
 		    height: 16px;
 		    margin-top: 7px;
-			background: url('http://minhaarea.itismyweb.com.br/di20/ceramfix/front-end/assets/images/logo_di20.png') no-repeat 0 0;
+			background: url('../images/logo_di20.png') no-repeat 0 0;
 
 			img {
 				display: none;
@@ -3113,20 +3163,17 @@ $hSlide: 90vh;
 }
 
 #piscina {
-	.cor-parede {
-		height: 32vh; 
-	}
 	.cor-piso {
-		height: 28vh;
+		height: 60vh;
 	}
 }
 
 #banheiro {
 	.cor-parede {
-		height: 32vh; 
+		height: 39vh; 
 	}
 	.cor-piso {
-		height: 28vh;
+		height: 21vh;
 	}
 }
 

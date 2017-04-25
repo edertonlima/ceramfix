@@ -704,6 +704,12 @@ if( function_exists('acf_add_options_page') ) {
 		'menu_title'	=> 'Geral',
 		'parent_slug'	=> 'configuracoes-geral',
 	));
+
+	acf_add_options_sub_page(array(
+		'page_title' 	=> 'Matriz e Filiais',
+		'menu_title'	=> 'Matriz e Filiais',
+		'parent_slug'	=> 'configuracoes-geral',
+	));
 	
 	acf_add_options_sub_page(array(
 		'page_title' 	=> 'Slide de Produto',

@@ -99,7 +99,7 @@
 												endwhile;
 											endif;
 
-											echo '<option value="'.$produto->ID.'" parede="'.$parede.'" piso="'.$piso.'">'.$produto->post_title.'</option>';
+											echo '<option value="'.$produto->ID.'" parede="'.$parede.'" piso="'.$piso.'">'.strtoupper($produto->post_title).'</option>';
 
 										endif;
 
@@ -271,7 +271,7 @@
 												endwhile;
 											endif;
 
-											echo '<option value="'.$produto->ID.'" parede="'.$parede.'" piso="'.$piso.'">'.$produto->post_title.'</option>';
+											echo '<option value="'.$produto->ID.'" parede="'.$parede.'" piso="'.$piso.'">'.strtoupper($produto->post_title).'</option>';
 
 										endif;
 
@@ -443,7 +443,7 @@
 												endwhile;
 											endif;
 
-											echo '<option value="'.$produto->ID.'" parede="'.$parede.'" piso="'.$piso.'">'.$produto->post_title.'</option>';
+											echo '<option value="'.$produto->ID.'" parede="'.$parede.'" piso="'.$piso.'">'.strtoupper($produto->post_title).'</option>';
 
 										endif;
 
@@ -531,18 +531,14 @@
 			<!-- #piscina -->
 			<div class="tab-content" id="piscina">
 				<div class="simulador base">
-					<div class="cor-parede"></div>
 					<div class="cor-piso"></div>
 					<?php
 						$base = get_field('produto-piscina','option');
 						$piso = $base[0]['piso'][0]['imagem'];
-						$parede = $base[0]['parede'][0]['imagem'];
 					?>
 					<div class="piso" style="background-image: url('<?php echo $piso; ?>">
-						<div class="parede" style="background-image: url('<?php echo $parede; ?>">
-							<div class="moveis" style="background-image: url('<?php the_field('moveis-piscina','option'); ?>">
-								<div class="mask" style="background-image: url('<?php the_field('mask-piscina','option'); ?>');"></div>
-							</div>
+						<div class="moveis" style="background-image: url('<?php the_field('moveis-piscina','option'); ?>">
+							<div class="mask" style="background-image: url('<?php the_field('mask-piscina','option'); ?>');"></div>
 						</div>
 					</div>
 				</div>
@@ -579,22 +575,6 @@
 												endwhile;
 											endif;
 
-										    // imagem parede
-										    if( have_rows('parede','option') ):
-										    	$qtd_parede = 0;
-										    	while ( have_rows('parede','option') ) : the_row();
-										    		$qtd_parede = $qtd_parede+1;
-										    		$produto_ambiente[$produto->ID]['parede'][] = array(
-										    			'nome' => get_sub_field('nome','option'),
-										    			'imagem' => get_sub_field('imagem','option'),
-										    			'miniatura' => get_sub_field('miniatura','option')
-										    		);
-										    		if($qtd_parede == 1){
-										    			$parede = get_sub_field('imagem','option');
-										    		}
-												endwhile;
-											endif;
-
 										    // cor rejunte piso
 										    if( have_rows('rejunte-piso','option') ):
 										    	while ( have_rows('rejunte-piso','option') ) : the_row();
@@ -605,17 +585,7 @@
 												endwhile;
 											endif;
 
-										    // cor rejunte parede
-										    if( have_rows('rejunte-parede','option') ):
-										    	while ( have_rows('rejunte-parede','option') ) : the_row();
-										    		$produto_ambiente[$produto->ID]['rejunte-parede'][] = array(
-										    			'nome' => get_sub_field('nome','option'),
-										    			'cor' => get_sub_field('hexa','option')
-										    		);
-												endwhile;
-											endif;
-
-											echo '<option value="'.$produto->ID.'" parede="'.$parede.'" piso="'.$piso.'">'.$produto->post_title.'</option>';
+											echo '<option value="'.$produto->ID.'" piso="'.$piso.'">'.strtoupper($produto->post_title).'</option>';
 
 										endif;
 
@@ -629,56 +599,10 @@
 
 					if(count($produto_ambiente)):
 						foreach ($produto_ambiente as $produto){ ?>
-							<div class="option-produto esq <?php echo 'id-'.$produto['id']; ?>">			
+
+							<div class="option-produto esq <?php echo 'id-'.$produto['id']; ?> select-piso">			
 								<div class="slide-cor">
-									<span class="tit-cores">SELECIONE A COR DO REJUNTE DA PAREDE:</span>
-									<div class="slide-item-cor slide-simulacao">
-										<?php if(count($produto['rejunte-parede'])):
-											foreach ($produto['rejunte-parede'] as $rejunte_parede){ ?>
-												<div class="item" rel="<?php echo $rejunte_parede['cor']; ?>" ambiente="piscina" local="cor-parede">
-													<span class="cor" style="background-color: <?php echo $rejunte_parede['cor']; ?>"></span>
-													<span class="nome-cor"><?php echo $rejunte_parede['nome']; ?></span>
-												</div>
-											<?php }
-										endif; ?>
-									</div>
-								</div>		
-							</div>
-							<div class="option-produto dir <?php echo 'id-'.$produto['id']; ?>"">			
-								<div class="slide-cor">
-									<span class="tit-cores">SELECIONE A COR DO REJUNTE DO PISO:</span>
-									<div class="slide-item-cor slide-simulacao">
-										<?php if(count($produto['rejunte-piso'])):
-											foreach ($produto['rejunte-piso'] as $rejunte){ ?>
-												<div class="item" rel="<?php echo $rejunte['cor']; ?>" ambiente="piscina" local="cor-piso">
-													<span class="cor" style="background-color: <?php echo $rejunte['cor']; ?>"></span>
-													<span class="nome-cor"><?php echo $rejunte['nome']; ?></span>
-												</div>
-											<?php }
-										endif; ?>
-									</div>
-								</div>		
-							</div>
-							<div class="option-produto esq <?php echo 'id-'.$produto['id']; ?> select-parede">			
-								<div class="slide-cor">
-									<span class="tit-cores">SELECIONE A IMAGEM DA PAREDE:</span>
-									<div class="slide-item-cor slide-simulacao">
-										<?php if(count($produto['parede'])):
-											$i = 0;
-											foreach ($produto['parede'] as $parede){ 
-												$i = $i+1; ?>
-												<div class="item item-<?php echo $i; ?>" rel="<?php echo $parede['imagem']; ?>" ambiente="piscina" local="parede">
-													<span class="cor" style="background-image: url('<?php echo $parede['miniatura']; ?>');"></span>
-													<span class="nome-cor"><?php echo $parede['nome']; ?></span>
-												</div>
-											<?php }
-										endif; ?>
-									</div>
-								</div>		
-							</div>
-							<div class="option-produto dir <?php echo 'id-'.$produto['id']; ?> select-piso">			
-								<div class="slide-cor">
-									<span class="tit-cores">SELECIONE A IMAGEM DO PISO:</span>
+									<span class="tit-cores">SELECIONE A IMAGEM DA PASTILHA:</span>
 									<div class="slide-item-cor slide-simulacao">
 										<?php if(count($produto['piso'])):
 											$i = 0;
@@ -693,6 +617,23 @@
 									</div>
 								</div>		
 							</div>
+
+							<div class="option-produto dir <?php echo 'id-'.$produto['id']; ?>"">			
+								<div class="slide-cor">
+									<span class="tit-cores">SELECIONE A COR DO REJUNTE DA PASTILHA:</span>
+									<div class="slide-item-cor slide-simulacao">
+										<?php if(count($produto['rejunte-piso'])):
+											foreach ($produto['rejunte-piso'] as $rejunte){ ?>
+												<div class="item" rel="<?php echo $rejunte['cor']; ?>" ambiente="piscina" local="cor-piso">
+													<span class="cor" style="background-color: <?php echo $rejunte['cor']; ?>"></span>
+													<span class="nome-cor"><?php echo $rejunte['nome']; ?></span>
+												</div>
+											<?php }
+										endif; ?>
+									</div>
+								</div>		
+							</div>
+
 						<?php } 
 					endif;
 				?>

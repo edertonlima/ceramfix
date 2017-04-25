@@ -2,94 +2,105 @@
 
 <section class="box-container box-matriz-filiais">
 	<div class="container">
-		<h2>CONTATO<br>MATRIZ E FILIAIS</h2>
+		<h2>CONTATO<br>MATRIZ E UNIDADES</h2>
 	</div>
 	
-	<iframe src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d4250056.692573493!2d-52.35827815372753!3d-28.984551227381875!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spt-BR!2sbr!4v1485531119213" width="600" height="450" frameborder="0" style="border:0" allowfullscreen class="mapa-google"></iframe>
+	<div id="map" class="mapa-google"></div>
+
+    <script>
+
+		function initMap() {
+			var map = new google.maps.Map(document.getElementById('map'), {
+				zoom: 5,
+				center: {lat: -22.3513294, lng: -49.0868505}
+			});
+
+			<?php
+				$cont = 0;
+				while ( have_posts() ) : the_post();
+					if((get_field('Latitude')) && (get_field('longitude'))){
+
+						$cont = $cont+1; 
+
+						$imgPage = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), '' );
+						$imagem = '';
+						
+						if($imgPage){
+							$imagem = '<img src="'.$imgPage[0].'" class="" alt="">';
+						}
+						$contMarcador = '<div class="box-info-marker">'.$imagem.'<p><strong>'.get_field("cidade").' - '.get_field("estado").'</strong></p><p>'.get_field('telefone').'</p><p>'.get_field('endereco').'</p></div>'; ?>
+
+						var contentString<?php echo $cont; ?> = '<?php echo $contMarcador; ?>';
+
+						var infowindow<?php echo $cont; ?> = new google.maps.InfoWindow({
+							content: contentString<?php echo $cont; ?>
+						});
+
+						var marker<?php echo $cont; ?> = new google.maps.Marker({
+							position: new google.maps.LatLng(<?php the_field('Latitude') ?>, <?php the_field('longitude') ?>),
+							map: map,
+							icon: '<?php echo get_template_directory_uri(); ?>/assets/images/marcador.png',
+							title: '<?php if(get_field('cidade')){ the_field('cidade'); } if(get_field('estado')){ echo ' - '.get_field('estado'); } ?>'
+						});
+						marker<?php echo $cont; ?>.addListener('click', function() {
+							<?php for($i=1;$i <= $wp_the_query->post_count;$i++){ ?>
+								infowindow<?php echo $i; ?>.close();
+							<?php } ?>
+							infowindow<?php echo $cont; ?>.open(map, marker<?php echo $cont; ?>);
+						});
+
+						<?php
+					}
+				endwhile;
+			?>
+
+		}
+
+
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBgFPAcmDR1PFBimQax_CVbjOjbC0sGj8A&callback=initMap" async defer></script>
 
 	<div class="container">
-		<div class="conteudo">
-			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Exrcitation ullamco laboris nisi ut aliquip ex commodo.</p>
+		<?php if(get_field('descricao','options')){ ?>
+			<div class="conteudo">
+				<p><?php the_field('descricao','options') ?></p>
+			</div>
+		<?php } ?>
+
+		<div class="row sub-conteudo">
+			<?php 
+				$matriz = 0;
+				while ( have_posts() ) : the_post();
+
+					if(get_field('matriz')){
+						$matriz = $matriz+1;
+						if($matriz == 1){ ?>
+							<div class="col-12 item">
+								<h3>MATRIZ</h3>
+							</div>
+						<?php }
+						get_template_part( 'content-matriz_filiais', get_post_format() );
+					}
+				endwhile; 
+			?>
 		</div>
 
 		<div class="row sub-conteudo">
-			<div class="col-12 item">
-				<h3>MATRIZ</h3>
-			</div>
-			<div class="col-6 item">
-				<div class="img-item">
-					<img src="assets/images/img-matriz.jpg">
-				</div>
-				<div class="info-item">
-					<h3>GASPAR - SC</h3>
-					<p>(47) 2102.0511</p>
-				</div>
-			</div>
-		</div>
+			<?php 
+				$filiais = 0;
+				while ( have_posts() ) : the_post();
 
-		<div class="row sub-conteudo">
-			<div class="col-12 item">
-				<h3>FILIAIS</h3>
-			</div>
-			<div class="col-6 item">
-				<div class="img-item">
-					<img src="assets/images/img-matriz.jpg">
-				</div>
-				<div class="info-item">
-					<h3>ALTO PARANÁ - PR:</h3>
-					<p>(44) 3447.2859</p>
-				</div>
-			</div>
-
-			<div class="col-6 item">
-				<div class="img-item">
-					<img src="assets/images/img-matriz.jpg">
-				</div>
-				<div class="info-item">
-					<h3>SERRA - ES:</h3>
-					<p>(27) 3341.4786</p>
-				</div>
-			</div>
-
-			<div class="col-6 item">
-				<div class="img-item">
-					<img src="assets/images/img-matriz.jpg">
-				</div>
-				<div class="info-item">
-					<h3>GOIÂNIA - GO:</h3>
-					<p>(62) 3296.1874</p>
-				</div>
-			</div>
-
-			<div class="col-6 item">
-				<div class="img-item">
-					<img src="assets/images/img-matriz.jpg">
-				</div>
-				<div class="info-item">
-					<h3>OSÓRIO - RS:</h3>
-					<p>(51) 3103.0828</p>
-				</div>
-			</div>
-
-			<div class="col-6 item">
-				<div class="img-item">
-					<img src="assets/images/img-matriz.jpg">
-				</div>
-				<div class="info-item">
-					<h3>RIO CLARO - SP:</h3>
-					<p>(19) 3532.1942</p>
-				</div>
-			</div>
-
-			<div class="col-6 item">
-				<div class="img-item">
-					<img src="assets/images/img-matriz.jpg">
-				</div>
-				<div class="info-item">
-					<h3>CAMPO GRANDE - MS:</h3>
-					<p>(67) 3373.8448</p>
-				</div>
-			</div>
+					if(!get_field('matriz')){
+						$filiais = $filiais+1;
+						if($filiais == 1){ ?>
+							<div class="col-12 item">
+								<h3>UNIDADES</h3>
+							</div>
+						<?php }
+						get_template_part( 'content-matriz_filiais', get_post_format() );
+					}
+				endwhile; 
+			?>
 		</div>
 	</div>
 </section>	

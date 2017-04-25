@@ -159,7 +159,7 @@
 							<li class="">
 								<a href="<?php echo get_permalink(get_page_by_path('empresa')); ?>" title="EMPRESA">EMPRESA</a>
 								<ul class="submenu">
-									<li class="matriz-filiais"><a href="<?php echo get_permalink(get_page_by_path('matriz-filiais')); ?>" title="MATRIZ E FILIAIS">MATRIZ E<br>FILIAIS</a></li>		
+									<li class="matriz-filiais"><a href="<?php echo get_home_url(); ?>?post_type=matriz_filiais" title="MATRIZ E UNIDADES">MATRIZ E<br>UNIDADES</a></li>		
 									<li class="trabalhe-conosco"><a href="<?php echo get_permalink(get_page_by_path('trabalhe-conosco')); ?>" title="TRABALHE CONOSCO">TRABALHE<br>CONOSCO</a></li>		
 									<li class="premios"><a href="<?php echo get_permalink(get_page_by_path('empresa')); ?>#premios" title="PRÊMIOS">PRÊMIOS</a></li>				
 									<li class="ideologia-corporativa"><a href="<?php echo get_permalink(get_page_by_path('empresa')); ?>#ideologia-corporativa" title="IDEOLOGIA CORPORATIVA">IDEOLOGIA<br>CORPORATIVA</a></li>
@@ -168,7 +168,7 @@
 							<li class="">
 								<a href="javascript:" title="CONTATO">CONTATO</a>
 								<ul class="submenu">
-									<li class="matriz-filiais"><a href="<?php echo get_permalink(get_page_by_path('matriz-filiais')); ?>" title="MATRIZ E FILIAIS">MATRIZ E<br>FILIAIS</a></li>		
+									<li class="matriz-filiais"><a href="<?php echo get_home_url(); ?>?post_type=matriz_filiais" title="MATRIZ E UNIDADES">MATRIZ E<br>UNIDADES</a></li>		
 									<li class="trabalhe-conosco"><a href="<?php echo get_permalink(get_page_by_path('fale-conosco')); ?>" title="FALE CONOSCO">FALE<br>CONOSCO</a></li>		
 									<li class="trabalhe-conosco"><a href="<?php echo get_permalink(get_page_by_path('trabalhe-conosco')); ?>" title="TRABALHE CONOSCO">TRABALHE<br>CONOSCO</a></li>
 								</ul>

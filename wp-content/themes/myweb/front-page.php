@@ -83,9 +83,8 @@
 				<div class="item active" style="background-image: url('<?php the_field('imagem_simuladores','option'); ?>');">
 					<div class="tit-box-destaque left">
 						<h2><?php the_field('titulo_simuladores','option'); ?></h2>
-						<span>SIMULADOR DE CORES</span>
-						<span class="menor">CALCULADORA DE CONSUMO</span>
-						<a href="#" title="<?php the_field('titulo_link_simuladores','option'); ?>"><?php the_field('titulo_link_simuladores','option'); ?></a>
+						<?php the_field('subtitulo','option'); ?>
+						<a href="<?php echo get_permalink(get_page_by_path('simulador-cores')); ?>" title="<?php the_field('titulo_link_simuladores','option'); ?>"><?php the_field('titulo_link_simuladores','option'); ?></a>
 					</div>
 				</div>
 			</div>
