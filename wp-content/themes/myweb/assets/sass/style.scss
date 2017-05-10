@@ -106,6 +106,7 @@ em { text-decoration: italic; }
 }
 
 /* VARIAVEIS */ 
+$width: 1160px;
 $font-family: 'Roboto', sans-serif;
 
 $cor-txt: #231f20;
@@ -147,7 +148,7 @@ body * {
 }
 
 .container {
-	max-width: 1280px; 
+	max-width: $width; 
 	width: 100%;
 	padding: 0 80px;
 	margin: 0 auto;
@@ -1598,6 +1599,10 @@ $hSlide: 90vh;
 						background-color: #e6e7e8; 
 					}
 
+					.selectboxproduto.erro {
+						border: 1px solid #D31939;
+					}
+
 					.campos {
 						display: inline-block;
 						margin-top: 10px;
@@ -1610,6 +1615,11 @@ $hSlide: 90vh;
 							padding: 2px 5px;
 							font-weight: 500;
 							@include box-sizing();
+							@include animacao('','');
+
+							&.erro {
+								border: 1px solid #D31939;
+							}
 						}
 
 						span {
@@ -1699,6 +1709,27 @@ $hSlide: 90vh;
 				width: 100%;
 				font-size: 1rem;
 				font-weight: $bold;
+				@include animacao('','');
+
+				&:hover {
+					background-color: darken(#D31939, 10%)
+				}
+			}
+
+			#resultado {
+				display: none;
+				width: 100%;
+				text-align: center;
+				margin-top: 0px;
+				text-transform: none;
+				font-size: 2rem;
+				background: #e6e7e8;
+				padding: 30px;
+
+				span {
+					color: #D31939;
+					font-weight: $bold;
+				}
 			}
 		}
 
@@ -2461,6 +2492,7 @@ $hSlide: 90vh;
 			height: auto!important;
 			float: left;
 			margin-top: 20px;
+			@include animacao('','');
 			@include box-sizing();
 
 			a {
@@ -2483,7 +2515,8 @@ $hSlide: 90vh;
 					line-height: 1.8rem;
 					display: block;
 					font-weight: $light;
-					color: $cor-txt; 
+					color: $cor-txt;
+					@include animacao('','');
 				}
 
 				p {
@@ -2497,6 +2530,13 @@ $hSlide: 90vh;
 
 			&:nth-child(2n+2){
 				padding-left: 10px;
+			}
+		}
+
+		li:hover {
+			background-color: rgba(#0077c8,.1);
+			h3 {
+				color: $azul;
 			}
 		}
 
@@ -2605,16 +2645,160 @@ $hSlide: 90vh;
 				font-size: 1rem;
 				line-height: 1.25rem;
 				font-weight: $light;
-				text-transform: uppercase;
+				text-transform: none;
+			}
+		}
+	}
+
+	.link-prod {
+		margin: 20px 0 0 0;
+		float: left;
+		width: 100%;
+		@include clear();
+
+		.col-link {
+			position: relative;
+			width: 50%;
+			float: left;
+			@include box-sizing();
+
+			h2 {
+				position: absolute;
+				top: -45px;
+				width: 100%;
+				font-size: 1.75rem;
+				line-height: 2rem;
+				text-align: center;
+				text-transform: none;
+				margin: 0;
+			}
+
+			img, iframe {
+				width: 100%;
+			}
+
+			&:first-child {
+				padding-right: 6px;
+			}
+
+			a {
+				float: left;
+				width: 100%;
+				background-color: #D7DFE1;
+				background-repeat: no-repeat;
+				background-position: 10% center;
+				background-size: auto 65%;
+				padding-left: 25%;
+				text-decoration: none;
+				border: 1px solid #ffffff;
+				@include animacao('','');
+				@include box-sizing();
+
+				.box-link {
+					display: table;
+					height: 100%;
+					width: 100%;
+
+					span {
+						font-size: 1.125rem;
+						line-height: 1.25rem;
+						text-transform: uppercase;
+						margin: 0;
+						font-weight: $light;
+						display: table-cell;
+						vertical-align: middle;
+
+						span {
+							display: block;
+							width: 125px;
+						}
+					}
+				}
+
+				&.ficha-tecnica {
+					background-image: url(../images/icon/menu/produto/ficha-tecnica.png);
+				}
+
+				&.simulador {
+					background-image: url(../images/icon/menu/produto/simulador.png);
+				}
+
+				&.calculadora {
+					background-image: url(../images/icon/menu/produto/calculadora.png);
+				}
+
+				&:hover {
+					background-color: #ffffff;
+					color: $azul;
+				}
+
+				&:first-child {
+					border-width: 0 0 2px 0; 
+				}
+
+				&:last-child {
+					border-width: 2px 0 0 0;
+				}
+			}
+		}
+
+		&.no-ficha {
+			.col-link {
+				//width: 100%;
+			}
+		}
+
+		&.no-aplicacao {
+			.col-link {
+				width: 100%;
+				padding: 0;
+
+				a {
+					width: (100%)/3;
+					height: 10vh;
+					padding: 0;
+					border-width: 0 1px 0;
+					background-position: 30px center;
+
+					&.ficha-tecnica {
+						padding-left: 105px;
+					}
+
+					&.simulador {
+						padding-left: 107px;
+					}
+
+					&.calculadora {
+						padding-left: 90px;
+					}
+
+					&:first-child {
+						border-width: 0 2px 0 0; 
+					}
+
+					&:last-child {
+						border-width: 0 0  0 2px;
+					}
+				}
+
+			}
+		}
+
+		&.no-ficha.no-aplicacao {
+			a {
+				width: 50%;
+				height: 10vh;
+				float: left;
 			}
 		}
 	}
 
 	h2.outros-produtos {
 		margin-bottom: 40px;
-		font-size: 2rem;
-		line-height: 2rem;
+		font-size: 1.5rem;
+		line-height: 1.5rem;
 		text-align: center;
+		text-transform: none;
 	}
 }
 
@@ -2951,7 +3135,7 @@ $hSlide: 90vh;
 
 			section.produtos {
 				.container {
-					max-width: 1280px!important;
+					max-width: $width!important;
 					width: 100%!important;
 					padding: 0 80px!important;
 				}

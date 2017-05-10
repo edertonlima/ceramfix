@@ -17,9 +17,9 @@
 			<span class="passo first-passo">1</span>
 			<div class="box-passos">
 				<div class="bg-select">
-					<span class="select">
-						<select name="produto" class="select-produto">
-							<option value="null" selected="selected">ESCOLHA UM PRODUTO</option>
+					<span class="select selectboxproduto">
+						<select name="produto" id="produto" class="select-produto">
+							<option value="" selected="selected">ESCOLHA UM PRODUTO</option>
     <?php
         $getPosts = array(
             'post_type'   => 'produto',
@@ -29,11 +29,16 @@
         );
         $posts = new WP_Query( $getPosts );
         if(count($posts) > 0){ 
-        	while($posts->have_posts()) : $posts->the_post(); ?>
+        	while($posts->have_posts()) : $posts->the_post(); 
 
-				<option value="<?php echo $post->ID; ?>"><?php echo strtoupper(get_the_title()); ?></option>
+        		if(get_field('cr')){ ?>
 
-        <?php endwhile; }
+					<option value="<?php echo $post->ID; ?>" rel="<?php the_field('cr'); ?>"><?php echo strtoupper(get_the_title()); ?></option>
+
+        		<?php }
+
+        	endwhile;
+        }
     ?>
 						</select>
 					</span>
@@ -48,10 +53,10 @@
 					<span class="tit-campo">DIMENSÕES DO REVESTIMENTO</span>
 					<img src="<?php echo get_template_directory_uri(); ?>/assets/images/passo-2.png" alt="">
 					<div class="campos">
-						<input type="" name="">
+						<input type="text" name="a">
 						<span>cm</span>
 						<span class="label">X</span>
-						<input type="" name="">
+						<input type="text" name="b">
 						<span>cm</span>
 					</div>
 				</div>
@@ -61,7 +66,7 @@
 					<span class="tit-campo">LARGURA DA JUNTA</span>
 					<img src="<?php echo get_template_directory_uri(); ?>/assets/images/passo-3.png" alt="">
 					<div class="campos">
-						<input type="" name="">
+						<input type="text" name="l">
 						<span>mm</span>
 					</div>
 				</div>
@@ -71,7 +76,7 @@
 					<span class="tit-campo">ESPESSURA DO REVESTIMENTO</span>
 					<img src="<?php echo get_template_directory_uri(); ?>/assets/images/passo-4.png" alt="">
 					<div class="campos">
-						<input type="" name="">
+						<input type="text" name="e">
 						<span>mm</span>
 					</div>
 				</div>
@@ -81,7 +86,7 @@
 					<span class="tit-campo">ÁREA TOTAL A SER REVESTIDA</span>
 					<img src="<?php echo get_template_directory_uri(); ?>/assets/images/passo-5.png" alt="">
 					<div class="campos">
-						<input type="" name="">
+						<input type="text" name="m2">
 						<span>m²</span>
 					</div>
 				</div>
@@ -89,6 +94,8 @@
 		</div>
 
 		<button class="calcular">CALCULAR!</button>
+
+		<h2 id="resultado">O seu consumo médio será de <span></span> Kg.</h2>
 
 	</div>
 </section>	
@@ -111,6 +118,76 @@
 
 <?php get_footer(); ?>
 
-<script>
+<script type="text/javascript">
+	jQuery.noConflict();
 
+	jQuery('document').ready(function(){
+		jQuery('input').keypress(function(){
+			jQuery(this).removeClass('erro');
+			jQuery('#resultado span').html('');
+			jQuery('#resultado').hide();
+		});
+
+        jQuery('select').change(function(){
+        	jQuery('.selectboxproduto').removeClass('erro');
+        });
+
+		jQuery('input').click(function(){
+			jQuery('#resultado span').html('');
+			jQuery('#resultado').hide();
+		});
+	});
+
+	form_cal = true;
+	jQuery('.calcular').click(function(){
+		if(jQuery('#produto').val()){          		
+			cr = jQuery('#produto option:selected').attr('rel');
+		}else{
+			form_cal = false;
+			jQuery('.selectboxproduto').addClass('erro');
+		}
+
+		if(jQuery('input[name=a]').val()){          		
+			a = jQuery('input[name=a]').val();
+		}else{
+			form_cal = false;
+			jQuery('input[name=a]').addClass('erro');
+		}
+
+		if(jQuery('input[name=b]').val()){          		
+			b = jQuery('input[name=b]').val();
+		}else{
+			form_cal = false;
+			jQuery('input[name=b]').addClass('erro');
+		}
+
+		if(jQuery('input[name=e]').val()){          		
+			e = jQuery('input[name=e]').val();
+		}else{
+			form_cal = false;
+			jQuery('input[name=e]').addClass('erro');
+		}
+
+		if(jQuery('input[name=l]').val()){          		
+			l = jQuery('input[name=l]').val();
+		}else{
+			form_cal = false;
+			jQuery('input[name=l]').addClass('erro');
+		}
+
+		if(jQuery('input[name=m2]').val()){          		
+			m2 = jQuery('input[name=m2]').val();
+		}else{
+			form_cal = false;
+			jQuery('input[name=m2]').addClass('erro');
+		}
+
+		if(form_cal){
+			consumo = (((parseInt(a)+parseInt(b))*e*l*cr)/(a*b))*m2;
+			consumo = parseFloat((consumo).toFixed(2));
+
+			jQuery('#resultado span').html(consumo);
+			jQuery('#resultado').show();
+		}
+	});
 </script>
