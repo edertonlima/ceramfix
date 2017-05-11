@@ -205,7 +205,7 @@ form {
 		max-width: 100%;
 	}
 
-	label {
+	/*label {
 		font-size: 1.5rem; 
 		color: $verde;
 		font-weight: $light;
@@ -216,7 +216,7 @@ form {
 		&[for='mensagem'] {
 			opacity: 0.6;
 		}
-	}
+	}*/
 
 	input[type='text'], input[type='email'] {
 		background-color: transparent;
@@ -960,7 +960,6 @@ $hSlide: 90vh;
 		}
 	}
 }
-
 
 
 /* home */
@@ -2156,6 +2155,7 @@ $hSlide: 90vh;
 					padding: 0 10px;
 					margin-top: 50px;
 					display: none;
+					position: relative;
 					@include clear();
 
 					span {
@@ -2164,7 +2164,7 @@ $hSlide: 90vh;
 						text-transform: uppercase;
 					}
 
-					button {
+					button, a {
 						background: url('../images/baixar.png') no-repeat 10px 10px transparent;
 						float: right;
 						padding: 10px 10px 10px 55px;
@@ -2176,11 +2176,23 @@ $hSlide: 90vh;
 						font-size: 1.25rem;
 						position: relative;
 						top: -10px;
+						cursor: pointer;
 						@include animacao('','');
 
 						&:hover {
 							background-color: #e6e7e8;
 						}
+					}
+
+					.erro-download {
+						color: red;
+						font-size: 1rem;
+						text-transform: none;
+						position: absolute;
+						right: 140px;
+						top: 3px;
+						text-align: right;
+						display: none;
 					}
 				}
 
@@ -2255,7 +2267,7 @@ $hSlide: 90vh;
 			}
 
 			h4 {
-				width: 400px;
+				width: 380px;
 				padding-right: 80px;
 				text-transform: uppercase;
 				span {
@@ -2293,7 +2305,8 @@ $hSlide: 90vh;
 					display: inline-block;
 					position: relative;
 					top: 4px;
-					margin-right: 5px;
+					margin: 0 5px 0 auto;
+					padding: 0;
 
 					i {
 						font-size: .9rem;
@@ -2328,8 +2341,8 @@ $hSlide: 90vh;
 				}
 
 				&.mockups-img {
-					width: 500px;
-					padding-left: 150px;
+					width: 400px;
+					padding-left: 100px;
 
 					fieldset {
 						width: (100%)/3;
@@ -2526,6 +2539,7 @@ $hSlide: 90vh;
 
 			&:nth-child(2n+1){
 				padding-right: 10px;
+				@include clear();
 			}
 
 			&:nth-child(2n+2){
@@ -2533,7 +2547,7 @@ $hSlide: 90vh;
 			}
 		}
 
-		li:hover {
+		li:hover, .item:hover {
 			background-color: rgba(#0077c8,.1);
 			h3 {
 				color: $azul;
@@ -2541,7 +2555,7 @@ $hSlide: 90vh;
 		}
 
 		.item {
-			width: (100%)/3!important;
+			width: 100%!important;
 			.cont-list-prod {
 				h3 {
 					font-size: 1rem;
@@ -2554,11 +2568,44 @@ $hSlide: 90vh;
 				}
 			}
 		}
+
+		&.slide-produtos {
+			position: relative;
+			margin-top: 0px;
+		}
+		.owl-nav {
+			position: absolute;
+			top: 55px;
+			left: 0px;
+			width: 100%;
+			.owl-prev, .owl-next {
+				width: 15px;
+				height: 25px;
+				text-indent: -10000px;
+				display: block;
+				position: absolute;
+				@include animacao('','');
+
+				&.disabled {
+					display: none;
+				}
+
+				&:hover {
+					opacity: .5;
+				}
+			}
+			.owl-prev {
+				left: -30px;
+				background: url('../images/seta-produto-left.png') no-repeat 0 0;
+			}
+			.owl-next {
+				right: -30px;
+				background: url('../images/seta-produto-right.png') no-repeat 0 0;
+			}
+		}
 	}
 
 	.field {
-
-
 		&.field-name-field-imagem {
 			padding-right: 20px;
 			@include animacao('','');
@@ -2571,6 +2618,8 @@ $hSlide: 90vh;
 	}
 
 	.detalhe-produto {
+		margin-bottom: 36px;
+		overflow: hidden;
 
 		.img-produto {
 			width: 40%;
@@ -2793,14 +2842,47 @@ $hSlide: 90vh;
 		}
 	}
 
+	#lightbox .modal-content {
+	    display: inline-block;
+	    text-align: center;   
+	}
+
+	#lightbox .close {
+	    opacity: 1;
+	    color: rgb(255, 255, 255);
+	    background-color: rgb(25, 25, 25);
+	    border-radius: 50%;
+	    border: 2px solid rgb(255, 255, 255);
+	    position: absolute;
+	    top: -15px;
+	    right: -55px;
+	    width: 30px;
+	    height: 30px;
+	    line-height: 30px;
+	    text-align: center;
+	    z-index:1032;
+	    font-weight: $light;
+
+	    span {
+	    	position: relative;
+	    	top: -3px;
+	    	font-weight: $light;
+	    	color: #ffffff;
+	    }
+	}
+
 	h2.outros-produtos {
-		margin-bottom: 40px;
-		font-size: 1.5rem;
-		line-height: 1.5rem;
+		margin: 0px;
+		font-size: 1.75rem;
+		line-height: 1.75rem;
 		text-align: center;
 		text-transform: none;
 	}
 }
+
+/* SLIDE */
+
+
 
 .tab {
 	margin: 40px 0;

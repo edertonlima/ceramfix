@@ -2,7 +2,9 @@
 		
 	<?php $imgPage = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), '' ); ?>
 	<?php if($imgPage){ ?>
-		<img src="<?php if($imgPage[0]){ echo $imgPage[0]; } ?>" class="img-produto" alt="">
+		<a href="#" data-toggle="modal" data-target="#lightbox">
+			<img src="<?php if($imgPage[0]){ echo $imgPage[0]; } ?>" class="img-produto" alt="">
+		</a>
 	<?php } ?>
 
 	<div class="cont-detalhe-produto">
@@ -54,6 +56,17 @@
 
 </div>
 
+<div id="lightbox" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <button type="button" class="close hidden" data-dismiss="modal" aria-hidden="true"><span>×</span></button>
+        <div class="modal-content">
+            <div class="modal-body">
+                <img src="" alt="" />
+            </div>
+        </div>
+    </div>
+</div>
+
 <script type="text/javascript">
 	function heightAplicacao(){
 		<?php if((get_field('video_youtube_aplicacao')) or (get_field('imagem_aplicacao'))){
@@ -62,9 +75,9 @@
 				jQuery('.aplicacao iframe').height(hAplicacao);
 			<?php }else{ ?>
 				var hAplicacao = jQuery('.aplicacao img').height();
-			<?php }
-		} ?>
-		jQuery('.col-link a').height(((hAplicacao)/3)-2);		
+			<?php } ?>
+			jQuery('.col-link a').height(((hAplicacao)/3)-2);
+		<?php } ?>
 	}
 
 	jQuery('document').ready(function(){
@@ -75,8 +88,30 @@
 		heightAplicacao();
 	});
 
-	jQuery(document).on('click', '[data-toggle="lightbox"]', function(event) {
-	    event.preventDefault();
-	    jQuery(this).ekkoLightbox();
+
+	jQuery(document).ready(function() {
+	    var lightbox = jQuery('#lightbox');
+	    
+	    jQuery('[data-target="#lightbox"]').on('click', function(event) {
+	        var img = jQuery(this).find('img'), 
+	            src = img.attr('src'),
+	            alt = img.attr('alt'),
+	            css = {
+	                'maxWidth': jQuery(window).width() - 100,
+	                'maxHeight': jQuery(window).height() - 100
+	            };
+	    
+	        lightbox.find('.close').addClass('hidden');
+	        lightbox.find('img').attr('src', src);
+	        lightbox.find('img').attr('alt', alt);
+	        lightbox.find('img').css(css);
+	    });
+	    
+	    lightbox.on('shown.bs.modal', function (e) {
+	        var img = lightbox.find('img');
+	            
+	        lightbox.find('.modal-dialog').css({'width': img.width()});
+	        lightbox.find('.close').removeClass('hidden');
+	    });
 	});
 </script>

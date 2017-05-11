@@ -14,155 +14,164 @@
 
 			<!-- ANUNCIOS -->
 			<div class="tab-content" id="anuncios">
+				<form action="<?php echo get_template_directory_uri(); ?>/compactar.php" method="post" id="form-anuncios">
 
-				<p class="desc-donwload">Selecione o anúncio que deseja baixar.<br>Pode selecionar vários anúncios juntos para baixar simultaneamente.</p>
+					<p class="desc-donwload">Selecione o anúncio que deseja baixar.<br>Pode selecionar vários anúncios juntos para baixar simultaneamente.</p>
 
-				<?php if( have_rows('anuncios','option') ): ?>
-					<h3 class="tit-baixar">
-						<span id="tit-anuncios"></span>
-						<button id="baixar-produto">baixar</button>
-					</h3>
+					<?php if( have_rows('anuncios','option') ): ?>
+						<h3 class="tit-baixar">
+							<span id="tit-anuncios"></span>
+							<span class="erro-download">É preciso selecionar um arquivo.</span>
+							<a class="baixar-produto" rel="#form-anuncios">baixar</a>
+						</h3>
 
-					<div class="row list-download">
+						<div class="row list-download">
 
-						<?php while ( have_rows('anuncios','option') ) : the_row(); ?>
+							<?php $itemAnuncio = 0; while ( have_rows('anuncios','option') ) : the_row(); ?>
 
-							<div class="col-12 item-download <?php if(!get_sub_field('imagem','option')){ echo 'no-image'; } ?>">
-								<?php if(get_sub_field('imagem','option')){ ?>
-									<img src="<?php the_sub_field('imagem','option'); ?>" alt="<?php the_sub_field('titulo','option'); ?>">
-								<?php } ?>
-								<h4><span><?php the_sub_field('titulo','option'); ?></span></h4>
-								<div class="mockups">
-									<fieldset class="arteFinal">
-										<label>
-											<input type="checkbox" name="arteFinal">
-											<span class="checkbox"></span>
-											BAIXAR
-										</label>
-									</fieldset>
+								<div class="col-12 item-download <?php if(!get_sub_field('imagem','option')){ echo 'no-image'; } ?>">
+									<?php if(get_sub_field('imagem','option')){ ?>
+										<img src="<?php the_sub_field('imagem','option'); ?>" alt="<?php the_sub_field('titulo','option'); ?>">
+									<?php } ?>
+									<h4><span><?php the_sub_field('titulo','option'); ?></span></h4>
+									<div class="mockups">
+										<fieldset class="arteFinal">
+											<label>
+												<input type="checkbox" name="arquivo-<?php echo $itemAnuncio; ?>" value="<?php the_sub_field('arquivo','option'); ?>">
+												<span class="checkbox"></span>
+												BAIXAR
+											</label>
+										</fieldset>
+									</div>
 								</div>
-							</div>
 
-						<?php endwhile; ?>
-					</div>
-				<?php endif; ?>
+							<?php $itemAnuncio = $itemAnuncio+1; endwhile; ?>
+						</div>
+					<?php endif; ?>
 
+				</form>
 			</div>	
 
 			<!-- CATÁLOGOS	 -->
 			<div class="tab-content" id="catalogos">
+				<form action="<?php echo get_template_directory_uri(); ?>/compactar.php" method="post" id="form-catalogo">
 
-				<p class="desc-donwload">Selecione o catalogo que deseja baixar.<br>Pode selecionar vários catálogos juntos para baixar simultaneamente.</p>
+					<p class="desc-donwload">Selecione o catalogo que deseja baixar.<br>Pode selecionar vários catálogos juntos para baixar simultaneamente.</p>
 
-				<?php if( have_rows('catalogos','option') ): ?>
-					<h3 class="tit-baixar">
-						<span id="tit-catalogos"></span>
-						<button id="baixar-produto">baixar</button>
-					</h3>
+					<?php if( have_rows('catalogos','option') ): ?>
+						<h3 class="tit-baixar">
+							<span id="tit-catalogos"></span>
+							<span class="erro-download">É preciso selecionar um arquivo.</span>
+							<a class="baixar-produto" rel="#form-catalogo">baixar</a>
+						</h3>
 
-					<div class="row list-download">
+						<div class="row list-download">
 
-						<?php while ( have_rows('catalogos','option') ) : the_row(); ?>
+							<?php $itemCatalogo = 0; while ( have_rows('catalogos','option') ) : the_row(); ?>
 
-							<div class="col-12 item-download <?php if(!get_sub_field('imagem','option')){ echo 'no-image'; } ?>">
-								<?php if(get_sub_field('imagem','option')){ ?>
-									<img src="<?php the_sub_field('imagem','option'); ?>" alt="<?php the_sub_field('titulo','option'); ?>">
-								<?php } ?>
-								<h4><span><?php the_sub_field('titulo','option'); ?></span></h4>
-								<div class="mockups">
-									<fieldset class="arteFinal">
-										<label>
-											<input type="checkbox" name="arteFinal">
-											<span class="checkbox"></span>
-											BAIXAR
-										</label>
-									</fieldset>
+								<div class="col-12 item-download <?php if(!get_sub_field('imagem','option')){ echo 'no-image'; } ?>">
+									<?php if(get_sub_field('imagem','option')){ ?>
+										<img src="<?php the_sub_field('imagem','option'); ?>" alt="<?php the_sub_field('titulo','option'); ?>">
+									<?php } ?>
+									<h4><span><?php the_sub_field('titulo','option'); ?></span></h4>
+									<div class="mockups">
+										<fieldset class="arteFinal">
+											<label>
+												<input type="checkbox" name="arteFinal-<?php echo $itemCatalogo; ?>" value="<?php the_sub_field('arquivo','option'); ?>">
+												<span class="checkbox"></span>
+												BAIXAR
+											</label>
+										</fieldset>
+									</div>
 								</div>
-							</div>
 
-						<?php endwhile; ?>
-					</div>
-				<?php endif; ?>
+							<?php $itemCatalogo = $itemCatalogo+1; endwhile; ?>
+						</div>
+					<?php endif; ?>
 
+				</form>
 			</div>	
 
 			<!-- PRODUTOS -->
 			<div class="tab-content active" id="produtos">
+				<form action="<?php echo get_template_directory_uri(); ?>/compactar.php" method="post" id="form-produto">
 
-				<p class="desc-donwload">Selecione a linha a que o produto e o tipo de material que deseja baixar.<br>Pode selecionar vários materiais juntos para baixar simultaneamente.</p>
+					<p class="desc-donwload">Selecione a linha a que o produto e o tipo de material que deseja baixar.<br>Pode selecionar vários materiais juntos para baixar simultaneamente.</p>
 
-				<?php /*<span class="select">
-					<select name="marca-produto">
-						<option selected="selected">ESCOLHA A MARCA</option>
-						<option value="CERAMFIX">CERAMFIX</option>
-					</select>
-				</span>*/ ?>
+					<?php /*<span class="select">
+						<select name="marca-produto">
+							<option selected="selected">ESCOLHA A MARCA</option>
+							<option value="CERAMFIX">CERAMFIX</option>
+						</select>
+					</span>*/ ?>
 
-				<span class="select">
-					<select name="linha-produto">
-						<option value="null" selected="selected">ESCOLHA A LINHA DE PRODUTO</option>
-						<?php
-							$produto = [];
-							$args = array(
-							    'taxonomy'      => 'categoria_produto',
-							    'parent'        => 0, // get top level categories
-							    'orderby'       => 'name',
-							    'order'         => 'ASC',
-							    'hierarchical'  => 1,
-							    'pad_counts'    => 0
-							);
-							$categories = get_categories( $args );
-							foreach ( $categories as $category ){
+					<span class="select">
+						<select name="linha-produto">
+							<option value="null" selected="selected">ESCOLHA A LINHA DE PRODUTO</option>
+							<?php
+								$produto = [];
+								$args = array(
+								    'taxonomy'      => 'categoria_produto',
+								    'parent'        => 0, // get top level categories
+								    'orderby'       => 'name',
+								    'order'         => 'ASC',
+								    'hierarchical'  => 1,
+								    'pad_counts'    => 0
+								);
+								$categories = get_categories( $args );
+								foreach ( $categories as $category ){
 
-								$download = 0; 
-						        $getPosts = array(
-						            'post_type'   => 'produto',
-						            'post_status' => 'any',
-									'tax_query' => array(
-									    array(
-									        'taxonomy' => 'categoria_produto',
-									        'terms' => $category->term_id,
-									        'include_children' => false,
-									        'operator' => 'IN'
-									    )
-									),
-						        );
-						        $posts = new WP_Query( $getPosts );
-						        if(count($posts) > 0){
+									$download = 0; 
+							        $getPosts = array(
+							            'post_type'   => 'produto',
+							            'post_status' => 'any',
+										'tax_query' => array(
+										    array(
+										        'taxonomy' => 'categoria_produto',
+										        'terms' => $category->term_id,
+										        'include_children' => false,
+										        'operator' => 'IN'
+										    )
+										),
+							        );
+							        $posts = new WP_Query( $getPosts );
+							        if(count($posts) > 0){
 
-									while($posts->have_posts()) : $posts->the_post();
-										
-										if((get_field('tiff')) or (get_field('jpg')) or (get_field('png'))){
-											$download = $download+1;
-											$imagem = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), 'thumbnail' );
-
-											$produto[$category->term_id][$post->ID]['id'] = $post->ID;
-											$produto[$category->term_id][$post->ID]['nome'] = get_the_title();
-											$produto[$category->term_id][$post->ID]['img'] = $imagem[0];
-											$produto[$category->term_id][$post->ID]['tiff'] = get_field('tiff');
-											$produto[$category->term_id][$post->ID]['jpg'] = get_field('jpg');
-											$produto[$category->term_id][$post->ID]['png'] = get_field('png');
-										}			
+										while($posts->have_posts()) : $posts->the_post();
 											
-									endwhile;
+											if((get_field('tiff')) or (get_field('jpg')) or (get_field('png'))){
+												$download = $download+1;
+												$imagem = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), 'thumbnail' );
 
-						        }
+												$produto[$category->term_id][$post->ID]['id'] = $post->ID;
+												$produto[$category->term_id][$post->ID]['nome'] = get_the_title();
+												$produto[$category->term_id][$post->ID]['img'] = $imagem[0];
+												$produto[$category->term_id][$post->ID]['tiff'] = get_field('tiff');
+												$produto[$category->term_id][$post->ID]['jpg'] = get_field('jpg');
+												$produto[$category->term_id][$post->ID]['png'] = get_field('png');
+											}			
+												
+										endwhile;
 
-							    if($download > 0){ ?>
-							    	<option value="<?php echo $category->term_id; ?>"><?php echo strtoupper($category->name); ?></option>
-							    <?php }
-							}
-						?>
-					</select>
-				</span>
+							        }
 
-				<h3 class="tit-baixar" id="download-prod">
-					<span id="tit-produto"></span>
-					<button id="baixar-produto">baixar</button>
-				</h3>
+								    if($download > 0){ ?>
+								    	<option value="<?php echo $category->term_id; ?>"><?php echo mb_strtoupper($category->name, 'UTF-8'); ?></option>
+								    <?php }
+								}
+							?>
+						</select>
+					</span>
 
-				<div class="row list-download" id="list-prod"></div>
+					<h3 class="tit-baixar" id="download-prod">
+						<span id="tit-produto"></span>
+						<span class="erro-download">É preciso selecionar um arquivo.</span>
+						<a class="baixar-produto" rel="#form-produto">baixar</a>
+					</h3>
 
+					<div class="row list-download" id="list-prod"></div>
+
+				</form>
 			</div>	
 
 		</div>
@@ -173,13 +182,22 @@
 <?php //var_dump($produto); ?>
 <?php //print_r($produto); ?>
 
+<?php //print_r($produto); ?>
+
 <script type="text/javascript">
+	var linha = '';
+	var form = false;
 	var produto = <?php echo json_encode($produto); ?>;
 	//alert(produto[4][159]['nome']);
 
 	jQuery(document).ready(function(){
 
 		jQuery('.tab .item').click(function(){
+			form = false;
+			jQuery('input[type="checkbox"]').prop( "checked", false );
+			jQuery('.checkbox').html('');
+
+			jQuery('.erro-download').hide();
 			jQuery('.tab .item').removeClass('active');
 			jQuery(this).addClass('active');
 			jQuery('.tab-content').removeClass('active');
@@ -190,9 +208,11 @@
 			if(jQuery('input[type="checkbox"]',this).is(':checked')){
 				jQuery('input[type="checkbox"]',this).prop( "checked", false );
 				jQuery('.checkbox',this).html('');
+				form = false;
 			}else{
 				jQuery('input[type="checkbox"]',this).prop( "checked", true );
 				jQuery('.checkbox',this).html('<i class="fa fa-check" aria-hidden="true"></i>');
+				jQuery('.erro-download').hide();
 			}
 		});
 
@@ -208,7 +228,27 @@
 		});
 		*/
 
+		jQuery('.baixar-produto').click(function(){
+			jQuery('input[type="checkbox"]',jQuery(this).attr('rel')).each(function(){
+				if(jQuery(this).prop("checked")){
+					if(!form){
+						form = true;
+					}else{
+					}
+				}else{
+				}
+			});
+
+			if(form){
+				jQuery(jQuery(this).attr('rel')).submit();
+			}else{
+				jQuery('.erro-download').show();
+			}
+		});
+
 		jQuery('select[name="linha-produto"]').change(function(){
+			form = false;
+			jQuery('.erro-download').hide();
 			jQuery('#list-prod').html('');
 			linhaProduto = jQuery(this).val();
 			//alert(linhaProduto);
@@ -218,6 +258,7 @@
 			}else{
 				jQuery('#tit-produto').html(jQuery('option:selected',this).text());
 
+				linha = 0;
 				jQuery.each( produto[linhaProduto], function( prod, label ) {
 				  	jQuery('#list-prod').append('<div class="col-12 item-download" id="'+prod+'"></div>');
 				  	jQuery('#'+prod).append('<img src="'+label.img+'" class="img-produto" alt="">');
@@ -233,17 +274,17 @@
 				  	}
 				  	
 				  	if(label.tiff){
-				  		jQuery('#'+prod+' .mockups-img').append('<fieldset class="arteFinal"><label><input type="checkbox" name="tiff" value="'+label.tiff+'"><span class="checkbox"></span>TIFF</label></fieldset>');
+				  		jQuery('#'+prod+' .mockups-img').append('<fieldset class="arteFinal"><label><input type="checkbox" name="tiff-'+linha+'" value="'+label.tiff+'"><span class="checkbox"></span>TIFF</label></fieldset>');
 				  	}
 				  	
 
 				  	if(label.jpg){
-				  		jQuery('#'+prod+' .mockups-img').append('<fieldset class="arteFinal"><label><input type="checkbox" name="jpg" value="'+label.jpg+'"><span class="checkbox"></span>JPG</label></fieldset>');
+				  		jQuery('#'+prod+' .mockups-img').append('<fieldset class="arteFinal"><label><input type="checkbox" name="jpg-'+linha+'" value="'+label.jpg+'"><span class="checkbox"></span>JPG</label></fieldset>');
 				  	}
 				  	
 
 				  	if(label.png){
-				  		jQuery('#'+prod+' .mockups-img').append('<fieldset class="arteFinal"><label><input type="checkbox" name="png" value="'+label.png+'"><span class="checkbox"></span>PNG</label></fieldset>');
+				  		jQuery('#'+prod+' .mockups-img').append('<fieldset class="arteFinal"><label><input type="checkbox" name="png-'+linha+'" value="'+label.png+'"><span class="checkbox"></span>PNG</label></fieldset>');
 				  	}
 
 					jQuery('#download-prod').show();
@@ -252,11 +293,15 @@
 						if(jQuery('input[type="checkbox"]',this).is(':checked')){
 							jQuery('input[type="checkbox"]',this).prop( "checked", false );
 							jQuery('.checkbox',this).html('');
+							form = false;
 						}else{
 							jQuery('input[type="checkbox"]',this).prop( "checked", true );
 							jQuery('.checkbox',this).html('<i class="fa fa-check" aria-hidden="true"></i>');
+							jQuery('.erro-download').hide();
 						}
 					});
+
+					linha = linha+parseInt(1);
 				});
 			}
 		});

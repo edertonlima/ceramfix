@@ -19,7 +19,7 @@
 		<div class="container">
 			<h2 class="outros-produtos">Veja outros produtos:</h2>
 
-			<div class="slide-produtos list-produto">
+			<div class="slide-produtos list-produto owl-carousel owl-theme">
 					
 				<?php if( have_rows('produto') ):
 					while ( have_rows('produto') ) : the_row(); 
@@ -80,14 +80,15 @@
 	owl.owlCarousel({
 		margin: 0,
 		loop: false,
+		nav:true,
 		responsive: {
 			0: {
-				items: 1
+				items: 3
 			},
 			600: {
-				items: 2
+				items: 3
 			},
-			1300: {
+			1000: {
 				items: 3
 			}
 		}

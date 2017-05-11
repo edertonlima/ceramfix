@@ -183,7 +183,13 @@
 		}
 
 		if(form_cal){
-			consumo = (((parseInt(a)+parseInt(b))*e*l*cr)/(a*b))*m2;
+			a = a/100;
+			b = b/100;
+			e = e/1000;
+			l = l/1000;
+			consumo = (a+b)*e*l*cr;
+			consumo = consumo/(a*b);
+			consumo = consumo*m2;
 			consumo = parseFloat((consumo).toFixed(2));
 
 			jQuery('#resultado span').html(consumo);
