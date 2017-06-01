@@ -119,10 +119,28 @@
 			var scroll = jQuery(this).attr('rel');
 		    jQuery("html, body").animate({ scrollTop: jQuery(scroll).offset().top }, 1000);
 		});
+
+		/* OPEN/CLOSE MENU */
+		jQuery('.menu-mobile').click(function(){
+			if(jQuery(this).hasClass('active')){
+				jQuery(this).removeClass('active');
+				jQuery('.nav').css('left','100vw');
+				jQuery('.region').css('left','100vw');
+				jQuery('.info-tel').css('left','100vw');
+			}else{
+				jQuery(this).addClass('active');
+				jQuery('.nav').css('left','0vw');
+				jQuery('.region').css('left','0vw');
+				jQuery('.info-tel').css('left','0vw');
+			}
+		});
 	});	
 
 	jQuery(window).resize(function(){
-
+		jQuery('.menu-mobile').removeClass('active');
+		jQuery('.nav').css('left','100vw');
+		jQuery('.region').css('left','100vw');
+		jQuery('.info-tel').css('left','100vw');
 	});
 </script>
 
@@ -140,54 +158,57 @@
 				</h1>
 
 				<div class="box-menu">
+					<a href="javascript:" class="menu-mobile"><span><em>X</em></span></a>
+
 					<div class="info">
 						<span class="info-tel">0800 7045049</span>
-						<div class="region" style="opacity: 0;">
-							<a href="#" class="" title="EN">EN</a>
-							<a href="#" class="ativo" title="PT">PT</a>
-							<a href="#" class="" title="ES">ES</a>
+						<div class="region">
+							<a href="javascript:" class="" title="EN" style="display: none;">EN</a>
+							<a href="javascript:" class="ativo" title="PT">PT</a>
+							<a href="javascript:" class="" title="ES" style="display: none;">ES</a>
 						</div>
 					</div>
 
 					<nav class="nav">
-						<ul>
-							<li class="">
+						<ul class="menu-principal">
+							<li class="<?php if(is_post_type_archive('produto')){ echo 'active'; } ?>">
 								<a href="<?php echo get_home_url(); ?>?post_type=produto" title="PRODUTOS" class="ativo">PRODUTOS</a>
 							</li>
-							<li class="">
-								<a href="javascript:" title="SIMULADORES">SIMULADORES</a>
+							<li class="<?php if((is_page('simulador-cores')) or (is_page('calculadora-consumo'))){ echo 'active'; } ?>">
+								<a href="<?php echo get_permalink(get_page_by_path('simulador-cores')); ?>" title="SIMULADORES">SIMULADORES</a>
 								<ul class="submenu">
-									<li class="matriz-filiais"><a href="<?php echo get_permalink(get_page_by_path('simulador-cores')); ?>" title="SIMULADOR DE CORES">SIMULADOR<br>DE CORES</a></li>		
-									<li class="trabalhe-conosco"><a href="<?php echo get_permalink(get_page_by_path('calculadora-consumo')); ?>" title="CALCULADORA DE CONSUMO">CALCULADORA<br>DE CONSUMO</a></li>	
+									<li class="matriz-filiais"><a href="<?php echo get_permalink(get_page_by_path('simulador-cores')); ?>" title="SIMULADOR DE CORES" class="<?php if(is_page('simulador-cores')){ echo 'active'; } ?>">SIMULADOR<br>DE CORES</a></li>		
+									<li class="trabalhe-conosco"><a href="<?php echo get_permalink(get_page_by_path('calculadora-consumo')); ?>" title="CALCULADORA DE CONSUMO" class="<?php if(is_page('calculadora-consumo')){ echo 'active'; } ?>">CALCULADORA<br>DE CONSUMO</a></li>	
 								</ul>
 							</li>
-							<li class="">
+							<li class="<?php if((is_page('aaaaaa')) or (is_page('trabalhe-conosco')) or (is_page('empresa'))){ echo 'active'; } ?>">
 								<a href="<?php echo get_permalink(get_page_by_path('empresa')); ?>" title="EMPRESA">EMPRESA</a>
 								<ul class="submenu">
-									<li class="matriz-filiais"><a href="<?php echo get_home_url(); ?>?post_type=matriz_filiais" title="MATRIZ E UNIDADES">MATRIZ E<br>UNIDADES</a></li>		
-									<li class="trabalhe-conosco"><a href="<?php echo get_permalink(get_page_by_path('trabalhe-conosco')); ?>" title="TRABALHE CONOSCO">TRABALHE<br>CONOSCO</a></li>		
-									<li class="premios"><a href="<?php echo get_permalink(get_page_by_path('empresa')); ?>#premios" title="PRÊMIOS">PRÊMIOS</a></li>				
-									<li class="ideologia-corporativa"><a href="<?php echo get_permalink(get_page_by_path('empresa')); ?>#ideologia-corporativa" title="IDEOLOGIA CORPORATIVA">IDEOLOGIA<br>CORPORATIVA</a></li>
+									<li class="matriz-filiais"><a href="<?php echo get_home_url(); ?>?post_type=matriz_filiais" title="MATRIZ E UNIDADES" class="<?php if(is_page('aaaaaa')){ echo 'active'; } ?>">MATRIZ E<br>UNIDADES</a></li>		
+									<li class="trabalhe-conosco"><a href="<?php echo get_permalink(get_page_by_path('trabalhe-conosco')); ?>" title="TRABALHE CONOSCO" class="<?php if(is_page('aaaaaa')){ echo 'active'; } ?>">TRABALHE<br>CONOSCO</a></li>		
+									<li class="premios"><a href="<?php echo get_permalink(get_page_by_path('empresa')); ?>#premios" title="PRÊMIOS" class="<?php if(is_page('aaaaaa')){ echo 'active'; } ?>">PRÊMIOS</a></li>				
+									<li class="ideologia-corporativa"><a href="<?php echo get_permalink(get_page_by_path('empresa')); ?>#ideologia-corporativa" title="IDEOLOGIA CORPORATIVA" class="<?php if(is_page('aaaaaa')){ echo 'active'; } ?>">IDEOLOGIA<br>CORPORATIVA</a></li>
 								</ul>
 							</li>
-							<li class="">
+							<li class="<?php if((is_page('aaaaaa')) or (is_page('aaaaaa')) or (is_page('aaaaaa'))){ echo 'active'; } ?>">
 								<a href="javascript:" title="CONTATO">CONTATO</a>
 								<ul class="submenu">
-									<li class="matriz-filiais"><a href="<?php echo get_home_url(); ?>?post_type=matriz_filiais" title="MATRIZ E UNIDADES">MATRIZ E<br>UNIDADES</a></li>		
-									<li class="trabalhe-conosco"><a href="<?php echo get_permalink(get_page_by_path('fale-conosco')); ?>" title="FALE CONOSCO">FALE<br>CONOSCO</a></li>		
-									<li class="trabalhe-conosco"><a href="<?php echo get_permalink(get_page_by_path('trabalhe-conosco')); ?>" title="TRABALHE CONOSCO">TRABALHE<br>CONOSCO</a></li>
+									<li class="matriz-filiais"><a href="<?php echo get_home_url(); ?>?post_type=matriz_filiais" title="MATRIZ E UNIDADES" class="<?php if(is_page('aaaaaa')){ echo 'active'; } ?>">MATRIZ E<br>UNIDADES</a></li>		
+									<li class="trabalhe-conosco"><a href="<?php echo get_permalink(get_page_by_path('fale-conosco')); ?>" title="FALE CONOSCO" class="<?php if(is_page('aaaaaa')){ echo 'active'; } ?>">FALE<br>CONOSCO</a></li>		
+									<li class="trabalhe-conosco"><a href="<?php echo get_permalink(get_page_by_path('trabalhe-conosco')); ?>" title="TRABALHE CONOSCO" class="<?php if(is_page('aaaaaa')){ echo 'active'; } ?>">TRABALHE<br>CONOSCO</a></li>
 								</ul>
 							</li>
-							<li class="">
+							<li class="<?php if((is_page('aaaaaa')) or (is_page('aaaaaa')) or (is_page('aaaaaa'))){ echo 'active'; } ?>">
 								<a href="javascript:" title="MÍDIA">MÍDIA</a>
 								<ul class="submenu">
-									<li class="matriz-filiais"><a href="<?php echo get_home_url(); ?>?cat=1" title="RELEASES">RELEASES</a></li>		
-									<li class="trabalhe-conosco"><a href="<?php echo get_home_url(); ?>?cat=5" title="NA MÍDIA">NA MÍDIA</a></li>		
-									<li class="premios"><a href="<?php echo get_permalink(get_page_by_path('downloads')); ?>" title="DOWNLOAD">DOWNLOAD</a></li>				
+									<li class="matriz-filiais"><a href="<?php echo get_home_url(); ?>?cat=1" title="RELEASES" class="<?php if(is_page('aaaaaa')){ echo 'active'; } ?>">RELEASES</a></li>		
+									<li class="trabalhe-conosco"><a href="<?php echo get_home_url(); ?>?cat=9" title="NA MÍDIA" class="<?php if(is_page('aaaaaa')){ echo 'active'; } ?>">NA MÍDIA</a></li>		
+									<li class="premios"><a href="<?php echo get_permalink(get_page_by_path('downloads')); ?>" title="DOWNLOAD" class="<?php if(is_page('aaaaaa')){ echo 'active'; } ?>">DOWNLOAD</a></li>				
 								</ul>
 							</li>
 						</ul>
 					</nav>
+
 				</div>
 
 			</div>

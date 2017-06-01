@@ -8,7 +8,7 @@
 	<div class="container">
 
 		<div class="tab">
-			<div class="item" rel="#anuncios">ANÚNCIOS</div>
+			<div class="item" rel="#anuncios">INSTITUCIONAL</div>
 			<div class="item" rel="#catalogos">CATÁLOGOS</div>
 			<div class="item active" rel="#produtos">PRODUTOS</div>
 
@@ -16,7 +16,7 @@
 			<div class="tab-content" id="anuncios">
 				<form action="<?php echo get_template_directory_uri(); ?>/compactar.php" method="post" id="form-anuncios">
 
-					<p class="desc-donwload">Selecione o anúncio que deseja baixar.<br>Pode selecionar vários anúncios juntos para baixar simultaneamente.</p>
+					<p class="desc-donwload">Selecione o arquivo que deseja baixar.<br>Pode selecionar vários arquivos juntos para baixar simultaneamente.</p>
 
 					<?php if( have_rows('anuncios','option') ): ?>
 						<h3 class="tit-baixar">
@@ -56,7 +56,7 @@
 			<div class="tab-content" id="catalogos">
 				<form action="<?php echo get_template_directory_uri(); ?>/compactar.php" method="post" id="form-catalogo">
 
-					<p class="desc-donwload">Selecione o catalogo que deseja baixar.<br>Pode selecionar vários catálogos juntos para baixar simultaneamente.</p>
+					<p class="desc-donwload">Selecione o arquivo que deseja baixar.<br>Pode selecionar vários arquivos juntos para baixar simultaneamente.</p>
 
 					<?php if( have_rows('catalogos','option') ): ?>
 						<h3 class="tit-baixar">
@@ -98,15 +98,8 @@
 
 					<p class="desc-donwload">Selecione a linha a que o produto e o tipo de material que deseja baixar.<br>Pode selecionar vários materiais juntos para baixar simultaneamente.</p>
 
-					<?php /*<span class="select">
-						<select name="marca-produto">
-							<option selected="selected">ESCOLHA A MARCA</option>
-							<option value="CERAMFIX">CERAMFIX</option>
-						</select>
-					</span>*/ ?>
-
 					<span class="select">
-						<select name="linha-produto">
+						<select id="linha-produto">
 							<option value="null" selected="selected">ESCOLHA A LINHA DE PRODUTO</option>
 							<?php
 								$produto = [];
@@ -246,7 +239,7 @@
 			}
 		});
 
-		jQuery('select[name="linha-produto"]').change(function(){
+		jQuery('select#linha-produto').change(function(){
 			form = false;
 			jQuery('.erro-download').hide();
 			jQuery('#list-prod').html('');

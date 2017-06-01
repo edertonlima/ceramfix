@@ -11,7 +11,7 @@
 
 			$term = get_term( get_sub_field('categoria_do_produto','option'), 'categoria_produto' ); 
 			if($term->term_id == get_queried_object()->term_id){ ?>
-				<img src="<?php the_sub_field('imagem_categoria_produto','option'); ?>" class="img-linha" alt="ARGAMASSA COLANTE">
+				<div style="background-image: url('<?php the_sub_field('imagem_categoria_produto','option'); ?>');" class="img-linha"></div>
 			<?php } ?>
 
 		<?php endwhile;
@@ -30,6 +30,9 @@
 
 		</ul>
 	</div>
+
+	<?php paginacao(); ?>
+	
 </section>	
 
 <?php get_footer(); ?>

@@ -25,7 +25,8 @@
             'post_type'   => 'produto',
             'post_status' => 'any',
             'orderby'     => date,
-            'order'       => 'DESC'
+            'order'       => 'DESC',
+            'nopaging' => true
         );
         $posts = new WP_Query( $getPosts );
         if(count($posts) > 0){ 
@@ -33,7 +34,7 @@
 
         		if(get_field('cr')){ ?>
 
-					<option value="<?php echo $post->ID; ?>" rel="<?php the_field('cr'); ?>"><?php echo strtoupper(get_the_title()); ?></option>
+					<option value="<?php echo $post->ID; ?>" rel="<?php the_field('cr'); ?>"><?php echo mb_strtoupper(get_the_title(), 'UTF-8'); ?></option>
 
         		<?php }
 
@@ -107,7 +108,7 @@
 			<div class="col-12">
 				<div class="info-contato">
 					<span>CENTRAL DE RELACIONAMENTO CERAMFIX</span>
-					<h2>0800 704549</h2>
+					<h2>0800 7045049</h2>
 					<a href="#">www.ceramfix.com.br</a>
 					<a href="#">info@ceramfix.com.br</a>
 				</div>
@@ -183,14 +184,17 @@
 		}
 
 		if(form_cal){
-			a = a/100;
-			b = b/100;
-			e = e/1000;
-			l = l/1000;
-			consumo = (a+b)*e*l*cr;
+			a = a;
+			b = b;
+			e = e/10;
+			l = l;
+			var consumo = ((parseInt(a)+parseInt(b))*e)*l;
+			consumo = consumo*cr;
 			consumo = consumo/(a*b);
 			consumo = consumo*m2;
-			consumo = parseFloat((consumo).toFixed(2));
+
+			consumo = consumo.toFixed(2);
+			consumo = consumo.replace('.', ',');
 
 			jQuery('#resultado span').html(consumo);
 			jQuery('#resultado').show();
