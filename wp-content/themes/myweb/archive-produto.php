@@ -16,8 +16,8 @@
 						$i = 0;
 						while ( have_rows('slide_produtop','option') ) : the_row(); ?>
 
-							<div class="item <?php if($i==0){ echo 'active'; } ?>">
-								<img src="<?php the_sub_field('imagem_slide_produto','option'); ?>">
+							<div class="item <?php if($i==0){ echo 'active'; } ?>" style="background-image: url('<?php the_sub_field('imagem_slide_produto','option'); ?>');">
+								<?php /* <img src=""> */ ?>
 							</div>
 
 						<?php 
@@ -50,7 +50,7 @@
 				<?php endwhile;
 			endif; ?>
 
-			<?php
+			<?php /*
 				$args = array(
 				    'taxonomy'      => 'categoria_produto',
 				    'parent'        => 0, // get top level categories
@@ -63,11 +63,11 @@
 				foreach ( $categories as $category ){ //print_r($category);?>
 
 					
-				<?php }
+				<?php } */
 			?>
 
 		</ul>
 	</div>
-</section>	
+</section>
 
 <?php get_footer(); ?>
