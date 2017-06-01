@@ -31,8 +31,8 @@ foreach ($files as $file) {
     $zip->addFromString(basename($file), $download_file);
 }
 
-$conteudo_php = $zip->statIndex(0);
-$zip->deleteName($conteudo_php['name']);
+/*$conteudo_php = $zip->statIndex(0);
+$zip->deleteName($conteudo_php['name']);*/
 
 # close zip
 $zip->close();

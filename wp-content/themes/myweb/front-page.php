@@ -7,7 +7,7 @@
 			<a class="left" href="#slide" role="button" data-slide="prev"></a>
 			<a class="right" href="#slide" role="button" data-slide="next"></a>
 		</div>
-		<div class="carousel slide" data-ride="carousel" data-interval="10000" id="slide">
+		<div class="carousel slide" data-ride="carousel" data-interval="1000000" id="slide">
 
 			<div class="carousel-inner" role="listbox">
 
@@ -24,7 +24,7 @@
 								</video>
 
 								<?php if(get_sub_field('youtube','option')){ ?>
-									<a href="<?php the_sub_field('youtube','option'); ?>" class="play" target="_blank"><i class="fa fa-youtube-play" aria-hidden="true"></i></a>
+									<a href="javascript:" class="play" target="" data-target="#lightbox"><i class="fa fa-youtube-play" aria-hidden="true" rel="<?php the_sub_field('youtube','option'); ?>"></i></a>
 								<?php } ?>
 							</div>
 
@@ -122,21 +122,23 @@
 	<div class="container">
 
 		<div class="row">
-			<div class="col-6">
-				<p class="subtitulo"><?php the_field('texto_fale','option'); ?></p>
-			</div>
 
-			<div class="col-6">
+			<div class="col-6 centrar-telefone">
 				<div class="info-contato">
 					<span>CENTRAL DE RELACIONAMENTO CERAMFIX</span>
-					<h2>0800 704549</h2>
+					<h2>0800 7045049</h2>
 					<a href="#">info@ceramfix.com.br</a>
 				</div>
 			</div>
+
+			<div class="col-6 text-form-home">
+				<p class="subtitulo"><?php the_field('texto_fale','option'); ?></p>
+			</div>
+			
 		</div>
 		
 		<div class="row">
-			<form action="#" class="contato-home">
+			<form action="javascript:" class="contato-home">
 				<fieldset class="col-12">
 					<span><input type="text" name="nome" id="nome" placeholder="Nome:"></span>
 				</fieldset>
@@ -144,13 +146,14 @@
 					<span><input type="text" name="email" id="email" placeholder="E-mail:"></span>
 				</fieldset>
 				<fieldset class="col-6">
-					<span><input type="text" name="" id="" placeholder="Telefone principal:"></span>
+					<span><input type="text" name="telefone" id="telefone" placeholder="Telefone principal:"></span>
 				</fieldset>
 				<fieldset class="col-12">
 					<label for="mensagem">Mensagem:</label>
 					<textarea name="mensagem" id="mensagem" cols="30" rows="10"></textarea>
 				</fieldset>
 				<fieldset class="col-12">
+					<p class="msg-form"></p>
 					<button class="enviar">ENVIAR!</button>
 				</fieldset>
 			</form>
@@ -160,3 +163,85 @@
 </section>
 
 <?php get_footer(); ?>
+
+<div id="lightbox" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <button type="button" class="close hidden home-slide-play" data-dismiss="modal" aria-hidden="true"><span>×</span></button>
+        <div class="modal-content">
+            <div class="modal-body">
+				<iframe src="" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+	jQuery(document).ready(function(){
+	    var lightbox = jQuery('#lightbox');
+	    
+	    jQuery('[data-target="#lightbox"]').on('click', function(event) {
+	    	lightbox.show();
+
+	        var img = jQuery(this).find('i'), 
+	            css = {
+	                'maxWidth': jQuery(window).width() - 100,
+	                'maxHeight': jQuery(window).height() - 100
+	            };
+
+			var cod_video = img.attr('rel').split("&");
+			cod_video = (cod_video[0]).split("=");
+			src = 'https://www.youtube.com/embed/'+cod_video[1];
+	    
+	        lightbox.find('.close').addClass('hidden');
+	        lightbox.find('iframe').attr('src', src);
+
+	        lightbox.addClass('in');
+
+	        var iframe = lightbox.find('iframe');	            
+	        lightbox.find('.modal-dialog').css({'width': '80%', 'margin-top': '18.65vh'});
+	        lightbox.find('.modal-content').css({'width': '100%'});
+	        lightbox.find('.close').removeClass('hidden');
+	        //lightbox.find('iframe').css({'width': (iframe.width()), 'top': '50%'});
+	    });
+
+	    lightbox.find('.close').on('click', function(event) {
+	    	lightbox.removeClass('in');
+	    	lightbox.find('iframe').attr('src', '');
+			setTimeout(function(){
+				lightbox.find('.close').addClass('hidden');
+				lightbox.hide();
+			}, 1000);
+	    });
+
+
+		jQuery(".enviar").click(function(){
+			jQuery('.enviar').html('ENVIANDO').prop( "disabled", true );
+			jQuery('.msg-form').removeClass('erro ok').html('');
+			var nome = jQuery('#nome').val();
+			var email = jQuery('#email').val();
+			var telefone = jQuery('#telefone').val();
+			var mensagem = jQuery('#mensagem').val();
+			var para = '<?php the_field('email', 'option'); ?>';
+			var nome_site = '<?php bloginfo('name'); ?>';
+
+			if(email!=''){
+				jQuery.getJSON("<?php echo get_template_directory_uri(); ?>/mail.php", { nome:nome, email:email, telefone:telefone, mensagem:mensagem, para:para, nome_site:nome_site }, function(result){		
+					if(result=='ok'){
+						resultado = 'Enviado com sucesso! Obrigado.';
+						classe = 'ok';
+					}else{
+						resultado = result;
+						classe = 'erro';
+					}
+					jQuery('.msg-form').addClass(classe).html(resultado);
+					jQuery('.news form').trigger("reset");
+					jQuery('.enviar').html('CADASTRAR').prop( "disabled", false );
+				});
+			}else{
+				jQuery('.msg-form').addClass('erro').html('Por favor, digite um e-mail válido.');
+				jQuery('.enviar').html('CADASTRAR').prop( "disabled", false );
+			}
+		});
+
+	});
+</script>

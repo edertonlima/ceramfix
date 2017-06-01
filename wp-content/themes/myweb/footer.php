@@ -2,9 +2,28 @@
 	<footer class="footer">
 		<div class="container">
 			<div class="row">
-				<a href="#" class="social" target="_blank" title="facebook"><i class="fa fa-facebook"></i></a>
-				<a href="#" class="social" target="_blank" title="twitter"><i class="fa fa-twitter"></i></a>
+
+				<?php if( have_rows('redesociais','option') ):
+					while ( have_rows('redesociais','option') ) : the_row(); ?>
+
+						<a href="<?php the_sub_field('url','option'); ?>" class="social" target="_blank" title="<?php the_sub_field('titulo','option'); ?>"><?php the_sub_field('icone','option'); ?></a>
+
+					<?php endwhile;
+				endif; ?>
+
+
+				<div class="outros-icones">
+					<?php if( have_rows('outros_icones','option') ):
+						while ( have_rows('outros_icones','option') ) : the_row(); ?>
+
+							<a href="<?php the_sub_field('url','option'); ?>" class="social" target="_blank" title="<?php the_sub_field('titulo','option'); ?>"><img src="<?php the_sub_field('icone','option'); ?>"></a>
+
+						<?php endwhile;
+					endif; ?>
+				</div>
+
 				<a href="#" class="di20"><img src="assets/images/logo_di20.png" alt="di20 DESENV." /></a>
+				
 			</div>
 		</div>
 

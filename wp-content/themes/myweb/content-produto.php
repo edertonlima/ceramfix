@@ -19,9 +19,7 @@
 					while ( have_rows('indicação_produto') ) : the_row(); ?>
 
 						<li>
-							<a href="<?php the_sub_field('icone_indicacao'); ?>" data-toggle="lightbox">
-								<img src="<?php the_sub_field('icone_indicacao'); ?>" alt="<?php the_sub_field('titulo_indicacao'); ?>">
-							</a>
+							<img src="<?php the_sub_field('icone_indicacao'); ?>" alt="<?php the_sub_field('titulo_indicacao'); ?>">
 							<span><?php the_sub_field('titulo_indicacao'); ?></span>
 						</li>
 

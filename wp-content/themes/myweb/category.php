@@ -17,13 +17,7 @@
 
 		</div>
 
-		<ul class="paginacao" style="display: none;">
-			<li><a href="javascript:" class="off"><i class="fa fa-angle-left" aria-hidden="true"></i></a></li>
-			<li><a href="javascript:" class="active">1</a></li>
-			<li><a href="javascript:">2</a></li>
-			<li><a href="javascript:">3</a></li>
-			<li><a href="javascript:"><i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
-		</ul>
+		<?php paginacao(); ?>
 
 	</div>
 </section>
