@@ -88,7 +88,7 @@ em { text-decoration: italic; }
 
 @mixin animacao-off() {
 	-moz-transition: none;
-	-webkit-transition: none;
+	-webkit-transition: none;   
 	-o-transition: none;
 }
 
@@ -116,7 +116,7 @@ $azul: #00549d;
 $vermelho: #df1939;
 $roxo: #793f84;
 $verde: #319b42;
-$rosa: #ed1651;
+$rosa: #d31f3a;
 $roxo: #8C4799;
 
 $light: 300;
@@ -132,6 +132,9 @@ html {
 }
 
 body {
+	padding-top: 82px;
+	position: relative;
+
 	&.front{
 		background-color: #eef8fd;
 	}
@@ -285,15 +288,15 @@ label:hover:before {
 	@include box-sizing();
 
 	select {
-		width: 100%;
-		padding-right: 20px;
+		width: 88%;
+		padding-right: 135px;
 		background-color: transparent;
 		font-weight: $regular;
 		font-size: 1.125rem;
 		color: $roxo;
 		box-sizing: content-box;
 		position: relative;
-		z-index: 999;
+		z-index: 99;
 		cursor: pointer;
 	}
 
@@ -332,6 +335,7 @@ h1 {
 	margin-top: 13px;
 	max-width: 270px;
 	width: 100%;
+	@include animacao('','');
 
 	a {
 		img {
@@ -341,12 +345,18 @@ h1 {
 
 	@media all and (max-width: 992px) {
 		width: 180px;
+		margin-top: 20px;
 	}
 }
 
 h2 {
 	font-size: 3rem;
 	font-weight: $bold;
+	
+	@media all and (max-width: 1000px) {
+		font-size: 2rem;
+		line-height: 2rem;
+	}
 }
 
 h3 {
@@ -395,14 +405,29 @@ p {
 	background-color: #000000;
 	height: 82px;
 	width: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 999;
 
 	.container {
-		padding: 0 160px;
-		position: inherit;
+		padding: 0px;
+		position: relative;
+
+		@media all and (max-width: 1160px){
+			padding-right: 20px;
+			padding-left: 20px;
+		}
+
+		.row {
+			margin: 0;
+		}
 	}
 
 	h1 {
 		float: left;
+		position: absolute;
+		top: 0;
 	}
 
 	.box-menu {
@@ -410,8 +435,13 @@ p {
 		width: 100%;
 		max-width: 600px;
 
+		@media all and (max-width: 800px){
+			margin-top: 15px;
+		}
+
 		.info {
-			width: 100%;
+			width: auto;
+			float: right;
 			min-height: 35px;
 			text-align: right;
 			margin-top: 10px;
@@ -422,10 +452,46 @@ p {
 				color: #ffffff;
 				display: inline-block;
 				margin-right: 80px;
+				@include animacao('','');
+
+				@media all and (max-width: 800px) {
+					margin-right: 20px;
+				}
+
+				@media all and (max-width: 460px) {
+					margin: 0;
+					padding: 15px 0 10px 70px;
+					position: fixed;
+					top: 0px;
+					left: 100vw;
+					z-index: 9999;
+					width: 100%;
+					text-align: left;
+					background-color: #000000;
+					@include box-sizing();
+				}
 			}
 
 			.region {
 				display: inline-block;
+				@include animacao('','');
+
+				@media all and (max-width: 580px) {
+					margin: 0;
+					padding: 20px 0 20px 63px;
+					position: fixed;
+					left: 100vw;
+					top: 0px;
+					width: 100%;
+					z-index: 9999;
+					background-color: #000000;
+					text-align: left;
+					@include box-sizing();
+				}
+
+				@media all and (max-width: 460px) {
+					top: 40px;
+				}
 
 				.block {
 					display: inline-block;
@@ -502,7 +568,7 @@ p {
 					display: none;
 					height: 100px;
 					width: 100%;
-					position: absolute;
+					position: fixed;
 					left: 0;
 					top: 81px;
 					z-index: 999;
@@ -544,16 +610,16 @@ p {
 
 				&:nth-child(2){
 					> a {
-						cursor: default;
+						//cursor: default;
 					}
 					&.active, &.active-trail, &:hover {
 						a {
-							border-color: #D31939; 
+							border-color: $rosa; 
 						}
 					}
 
 					ul {
-						background-color: #D31939;
+						background-color: $rosa;
 
 						li {
 							a {
@@ -562,8 +628,8 @@ p {
 									margin-left: 99815px;
 								}
 
-								&:hover {
-									background-color: darken(#D31939, 5%);
+								&:hover, &.active {
+									background-color: darken($rosa, 5%);
 								}
 							}
 
@@ -620,7 +686,7 @@ p {
 									//margin-left: 99815px;
 								}
 
-								&:hover {
+								&:hover, &.active {
 									background-color: darken($laranja, 5%);
 								}
 							}
@@ -708,7 +774,7 @@ p {
 									//margin-left: 99815px;
 								}
 
-								&:hover {
+								&:hover, &.active {
 									background-color: darken($verde, 5%);
 								}
 							}
@@ -781,7 +847,7 @@ p {
 									//margin-left: 99815px;
 								}
 
-								&:hover {
+								&:hover, &.active {
 									background-color: darken($roxo, 5%);
 								}
 							}
@@ -832,11 +898,191 @@ p {
 				}
 			}
 		}
+
+		@media all and (max-width: 800px){
+			background-color: #000;
+			width: 100%;
+			position: fixed;
+			top: 0px;
+			left: 100vw;
+			padding: 30px 0;
+			z-index: 999;
+			height: 100vh;
+			overflow: auto;
+			margin: 0px;
+			@include animacao('','');
+
+			ul {
+				li {
+					display: block;
+					text-align: left;
+					padding: 0px;
+					margin: 0 20px 20px;
+
+					a {
+						padding-left: 50px;
+						display: inline-block;
+					}
+
+					ul {
+						display: block;
+						height: auto;
+						position: relative;
+						top: 0;
+						left: 0;
+						text-align: left;
+						margin-top: 3px;
+						background-color: transparent!important;
+
+						li {
+							height: auto;
+							padding: 0;
+							display: inline-block;
+							margin: 0 0 -1px;
+
+							a {
+								font-size: .875rem;
+								line-height: 1rem;
+								padding: 0 20px 0 45px;
+								height: 50px;
+								background-position: 0px center;
+								background-size: 30%;
+							}
+						}
+					}
+
+					&:nth-child(2) {
+						ul li {
+							a {
+								background-color: $rosa;
+							}
+						}
+					}
+
+					&:nth-child(3) {
+						ul li {
+							a {
+								background-color: $laranja;
+							}
+						}
+					}
+
+					&:nth-child(4) {
+						ul li {
+							a {
+								background-color: $verde;
+							}
+						}
+					}
+
+					&:nth-child(5) {
+						ul li {
+							a {
+								background-color: $roxo;
+							}
+						}
+					}
+				}
+			}
+		}
+
+		@media all and (max-width: 580px){
+			padding-top: 80px;
+		}
+
+		@media all and (max-width: 460px){
+			padding-top: 115px;
+		}
+
+	}
+}
+
+/* menu mobile */
+.menu-mobile {
+	display: none;
+	float: right;
+	width: 40px;
+	height: 30px;
+	margin-top: 16px;
+	margin-left: 20px;
+	text-decoration: none;
+	position: relative;
+	z-index: 99999;
+
+	@media all and (max-width: 992px) {
+		margin-top: 13px;
+	}
+
+	@media all and (max-width: 800px) {
+		display: block;
+	}
+
+	span {
+		display: block;
+
+		em {
+			font-style: normal;
+			color: #ffffff;
+			font-size: 3rem;
+			line-height: 2rem;
+			display: block;
+			margin-top: -2px;
+			@include animacao('','');
+
+			&:hover {
+				color: $laranja;
+			}
+		}
+	}
+
+	&.active {
+		text-align: center;
+	}
+
+	&:not(.active){
+		span {
+			position: relative;
+
+			em {
+				display: none;
+			}
+
+			&:before, &:after {
+				content: '';
+				position: absolute;
+			}
+
+			&:before {
+				top: 11px;
+			}
+
+			&:after {
+				top: 22px;
+			}
+		}
+
+		span, span:before, span:after {
+			background-color: #ffffff;
+			height: 5px;
+			width: 40px;
+			@include animacao('','');
+		}
+
+		&:hover {
+
+			span, span:before, span:after {
+				background-color: $laranja;
+			}
+		}
+	}
+
+	@media all and (max-width: 600px) {
+		margin-top: 13px;
 	}
 }
 
 /* SLIDE */
-$hSlide: 90vh;
+$hSlide: 89vh;
 .slide {
 	height: $hSlide;
 	
@@ -859,7 +1105,7 @@ $hSlide: 90vh;
 				left: 50%;
 				margin: -15vh 0px 0px -15vh;
 				@include animacao('','');
-				z-index: 999;
+				z-index: 9;
 
 				.fa-youtube-play {
 					font-size: 30vh;
@@ -901,7 +1147,7 @@ $hSlide: 90vh;
 			height: 46px;
 			width: 25px;
 			position: relative;
-			z-index: 999;
+			z-index: 990;
 			@include animacao('','');
 
 			&:hover {
@@ -1012,6 +1258,24 @@ $hSlide: 90vh;
 			}
 		}
 
+		&.slide-home, &.slide-simuladores {
+			@media all and (max-width: 680px){
+				h2 {
+					font-size: 1.6rem!important;
+				}
+
+				span {
+					font-size: 1.125rem!important;
+					line-height: 1.125rem!important;
+
+					&.menor {
+						font-size: 1.125rem!important;
+						line-height: 1.125rem!important;
+					}
+				}
+			}
+		}
+
 		&.premios {
 			border-color: #ffffff;
 			background-color: $laranja;
@@ -1019,30 +1283,53 @@ $hSlide: 90vh;
 			.container {
 				padding: 70px 0; 
 				max-width: 1000px;
+
+				@media all and (max-width: 1200px){
+					padding-right: 40px; 
+					padding-left: 40px; 
+				}
 			}
 
 			h2 {
 				color: #ffffff;
 				background: url(../images/ico_premios.png) no-repeat center top transparent;
-				padding-top: 110px;
+				padding-top: 50px;
 				display: block;
 				margin: 0 auto;
 				width: 240px;
 				text-align: center;
+
+				@media all and (max-width: 580px){
+					font-size: 2rem;
+				}
 			}
 
 			.subtitulo {
 				display: block;
 				margin: 0 auto;
-				width: 400px;
+				max-width: 400px;
+				width: 100%;
 				text-align: center;
 				color: #fff;
 				font-size: 1.5rem;
+
+				@media all and (max-width: 580px){
+					font-size: 1.125rem;
+					line-height: 1.25rem;
+				}
 			}
 
 			.item-premio {
 				width: 220px;
 				margin: 30px 0 0;
+
+				@media all and (max-width: 580px){
+					display: block;
+					margin-right: auto;
+					margin-left: auto;
+					float: none!important;
+					@include clear();
+				}
 
 				&:first-child {
 					float: left;
@@ -1065,6 +1352,7 @@ $hSlide: 90vh;
 						vertical-align: middle;
 						display: table-cell;
 						margin: 60px auto;
+						max-width: 95%;
 					}
 				}
 
@@ -1073,6 +1361,11 @@ $hSlide: 90vh;
 					font-size: 1.3rem;
 					color: #ffffff;
 					text-align: center;
+
+					@media all and (max-width: 580px){
+						font-size: 1.125rem;
+						line-height: 1.25rem;
+					}
 				}
 			}
 
@@ -1095,6 +1388,7 @@ $hSlide: 90vh;
 	}
 
 	.contato, .trabalhe-conosco {
+
 		label {
 			display: none;
 		}
@@ -1166,10 +1460,11 @@ $hSlide: 90vh;
 	border-color: $verde;
 	position: relative;
 	background-color: #ffffff;
+	padding-top: 90px;
 	@include clear();
 
 	.container {
-		padding: 20px 0; 
+		//padding: 20px 0; 
 		max-width: 1000px;
 	}
 
@@ -1177,20 +1472,37 @@ $hSlide: 90vh;
 		font-size: 1.5rem;
 		float: left;
 		margin-top: 10px;
+
+		@media all and (max-width: 500px){
+			font-size: 1.125rem;
+			line-height: 1.25rem;
+		}
 	}
 
 	.info-contato {
 		float: right;
 
+		@media all and (max-width: 830px){
+			width: 100%;
+		}
+
 		span {
 			font-weight: $bold;
 			font-size: 1rem;
+
+			@media all and (max-width: 500px){
+				line-height: 1rem;
+			}
 		}
 
 		h2 {
 			color: $rosa;
 			line-height: 2.5rem;
 			margin-top: 5px;
+
+			@media all and (max-width: 500px){
+				font-size: 2.6rem;
+			}
 		}
 
 		a {
@@ -1204,6 +1516,18 @@ $hSlide: 90vh;
 		}
 	}
 
+	.centrar-telefone {
+		float: right;
+		margin-top: 19px;
+	}
+
+	@media all and (max-width: 830px){
+		.centrar-telefone, .text-form-home {
+			width: 100%;
+			text-align: center;
+		}
+	}
+
 	&.calculadora-consumo {
 		.info-contato {
 			float: none;
@@ -1212,6 +1536,12 @@ $hSlide: 90vh;
 			a {
 				@include clear();
 			}
+		}
+
+		&.contato {
+			//@media all and (max-width: 500px){
+				padding: 50px 0 80px;
+			//}
 		}
 	}
 
@@ -1230,6 +1560,12 @@ $hSlide: 90vh;
 
 		button {
 			margin-top: 20px;
+		}
+
+		@media all and (max-width: 580px){
+			.col-6 {
+				width: 100%!important;
+			}
 		}
 	}
 }
@@ -1273,6 +1609,38 @@ $hSlide: 90vh;
 		span, h2, a {
 			text-align: left;
 			margin-left: 25%;
+		}
+	}
+
+	@media all and (max-width: 1200px) {
+		width: 75%;
+
+		&.right {
+			span, h2, a {
+				margin-right: 10%;
+			}
+		}
+
+		&.left {
+			span, h2, a {
+				margin-left: 10%;
+			}
+		}
+	}
+
+	@media all and (max-width: 680px) {
+		width: 100%;
+
+		&.right {
+			span, h2, a {
+				margin-right: 5%;
+			}
+		}
+
+		&.left {
+			span, h2, a {
+				margin-left: 5%;
+			}
 		}
 	}
 }
@@ -1491,8 +1859,9 @@ $hSlide: 90vh;
 		}
 
 		&.box-simulador-cores {
+
 			h2 {
-				color: #D31939;
+				color: $rosa;
 				text-align: left;
 				text-transform: uppercase;
 			}
@@ -1500,9 +1869,9 @@ $hSlide: 90vh;
 			.tab {
 				> .item {
 					border: none;
-					color: #D31939;
+					color: $rosa;
 					&.active, &:hover {
-						background-color: #D31939;
+						background-color: $rosa;
 						color: #ffffff;
 					}
 				}
@@ -1518,10 +1887,10 @@ $hSlide: 90vh;
 
 				.select {
 					select {
-						color: #D31939;
+						color: $rosa;
 					}
 					&:after {
-						color: #D31939;
+						color: $rosa;
 					}
 				}
 			}
@@ -1529,7 +1898,7 @@ $hSlide: 90vh;
 
 		&.box-calculadora-consumo {
 			h2 {
-				color: #D31939;
+				color: $rosa;
 				text-align: left;
 				text-transform: uppercase;
 			}
@@ -1540,10 +1909,10 @@ $hSlide: 90vh;
 
 				.select {
 					select {
-						color: #D31939;
+						color: $rosa;
 					}
 					&:after {
-						color: #D31939;
+						color: $rosa;
 					}
 				}
 			}
@@ -1551,6 +1920,11 @@ $hSlide: 90vh;
 			p {
 				margin-top: 40px;
 				font-size: 2rem;
+
+				@media all and (max-width: 1000px){
+					font-size: 1.5rem;
+					line-height: 1.725rem;
+				}
 			}
 
 			.passos-calculadora {
@@ -1559,12 +1933,16 @@ $hSlide: 90vh;
 				display: block;
 				position: relative;
 
+				@media all and (max-width: 1000px){
+					width: 100%;
+				}
+
 				.passo, .box-passos {
 					display: inline-block;
 				}
 
 				.passo {
-					background-color: #D31939;
+					background-color: $rosa;
 					border-radius: 50%;
 					width: 25px;
 					height: 25px;
@@ -1599,7 +1977,7 @@ $hSlide: 90vh;
 					}
 
 					.selectboxproduto.erro {
-						border: 1px solid #D31939;
+						border: 1px solid $rosa;
 					}
 
 					.campos {
@@ -1617,13 +1995,13 @@ $hSlide: 90vh;
 							@include animacao('','');
 
 							&.erro {
-								border: 1px solid #D31939;
+								border: 1px solid $rosa;
 							}
 						}
 
 						span {
 							display: inline-block;
-							color: #D31939;
+							color: $rosa;
 
 							&.label {
 								color: #58595b;
@@ -1643,7 +2021,7 @@ $hSlide: 90vh;
 						@include box-sizing();
 
 						.tit-campo {
-							color: #D31939;
+							color: $rosa;
 							text-transform: uppercase;
 							font-size: .87rem;
 							width: 55%;
@@ -1696,11 +2074,43 @@ $hSlide: 90vh;
 								width: 110px;
 							}
 						}
+
+						@media all and (max-width: 880px){
+							//background-color: transparent;
+							width: 46%!important;
+
+							&.passo-3, &.passo-4, &.passo-5 {
+								padding-left: 10px;
+								.passo {
+									left: -35px
+								}
+							}
+
+							&.passo-2, &.passo-4 {
+								margin-right: 8%;
+							}
+
+							&.passo-2, &.passo-3 {
+								margin-bottom: 30px;
+							}
+						}
+
+						@media all and (max-width: 600px){
+							width: 100%!important;
+
+							&.passo-2, &.passo-4 {
+								margin-right: 0%;
+							}
+
+							&.passo-4 {
+								margin-bottom: 30px;
+							}
+						}
 					}
 				}
 			}
 			.calcular {
-				background-color: #D31939;
+				background-color: $rosa;
 				color: #ffffff; 
 				height: 50px;
 				line-height: 50px;
@@ -1711,7 +2121,7 @@ $hSlide: 90vh;
 				@include animacao('','');
 
 				&:hover {
-					background-color: darken(#D31939, 10%)
+					background-color: darken($rosa, 10%)
 				}
 			}
 
@@ -1726,8 +2136,27 @@ $hSlide: 90vh;
 				padding: 30px;
 
 				span {
-					color: #D31939;
+					color: $rosa;
 					font-weight: $bold;
+				}
+			}
+		}
+
+		&.box-calculadora-consumo, &.box-simulador-cores {
+			.container {
+				@media all and (max-width: 1000px){
+					padding-left: 20px;
+					padding-right: 20px;
+				}
+
+				@media all and (max-width: 850px){
+					.option-produto {
+						width: 90%;
+						float: none;
+						margin-right: auto; 
+						margin-left: auto; 
+						display: block;
+					}
 				}
 			}
 		}
@@ -2104,7 +2533,7 @@ $hSlide: 90vh;
 								font-size: 13vh;
 								color: #ffffff;
 								position: absolute;
-								z-index: 999;
+								z-index: 9;
 								line-height: 30vh;
 								left: 0;
 								top: 0;
@@ -2115,29 +2544,6 @@ $hSlide: 90vh;
 							}
 						}
 					}
-				}
-			}
-
-			.paginacao {
-				a, span {
-					background-color: $roxo;
-					color: #ffffff;
-				}
-
-				i {
-					color: #ffffff;
-				}
-
-				a:hover {
-					background-color: darken($roxo, 10%);
-				}
-
-				a.off:hover {
-					background-color: $roxo;						
-				}
-
-				a.active, a.active:hover {
-					background-color: #1fa7b3;
 				}
 			}
 
@@ -2205,6 +2611,25 @@ $hSlide: 90vh;
 					}
 				}
 			}
+
+			.paginacao {
+				a, span {
+					color: $roxo;
+
+					&.current, &.current:hover {
+						background-color: $roxo;
+					}
+
+					i {
+						color: $roxo;
+					}
+				}
+
+				a:hover {
+					background-color: $roxo;
+				}
+			}
+
 		}
 
 		&.laranja {
@@ -2213,6 +2638,50 @@ $hSlide: 90vh;
 			h2, h3, p {
 				color: #ffffff;
 			}
+		}
+	}
+}
+
+.paginacao {
+	width: 100%;
+	text-align: center;
+	margin: 40px 0;
+	display: block;
+	@include clear();
+
+	li {
+		display: inline-block;
+	}
+
+	a, span {
+		background-color: transparent;
+		width: 30px;
+		height: 30px;
+		float: left;
+		font-size: 1.125rem;
+		line-height: 30px;
+		text-align: center;
+		text-decoration: none;
+
+		&.current, &.current:hover {
+			color: #ffffff!important;
+			i {
+				color: #ffffff!important;
+			}
+		}
+
+		i {
+			position: relative;
+			top: 2px;
+			font-size: 1.5rem;
+		}
+	}
+
+	a:hover {
+		color: #ffffff!important;
+
+		i {
+			color: #ffffff!important;
 		}
 	}
 }
@@ -2354,6 +2823,13 @@ $hSlide: 90vh;
 }
 
 .produtos {
+	.container {
+		@media all and (max-width: 1000px){
+			padding-left: 20px;
+			padding-right: 20px;
+		}
+	}
+
 	h2 {
 		color: #0077c8;
 		font-weight: $light;
@@ -2369,6 +2845,11 @@ $hSlide: 90vh;
 		font-size: 1.75rem;
 		line-height: 2rem;
 		margin-top: 10px;
+
+		@media all and (max-width: 1000px){
+			font-size: 1.225rem;
+			line-height: 1.5rem;
+		}
 	}
 
 	h4 p {
@@ -2384,6 +2865,9 @@ $hSlide: 90vh;
 
 			.item {
 				height: 50vh;
+				background-size: cover;
+				background-position: center;
+				background-repeat: no-repeat;
 			}
 		}
 
@@ -2429,6 +2913,12 @@ $hSlide: 90vh;
 			@include box-sizing();
 			@include animacao('','');
 
+			@media all and (max-width: 800px){
+				width: 100%;
+				margin-left: 0px!important;
+				margin-right: 0px!important;
+			}
+
 			&:hover {
 				/*-webkit-filter: grayscale(100%);
 				   -moz-filter: grayscale(100%);
@@ -2454,6 +2944,7 @@ $hSlide: 90vh;
 				height: 100%;
 				font-weight: $bold;
 				color: #ffffff;
+				text-shadow: 1px 1px 1px #7d7d7d;
 			}
 
 			a {
@@ -2468,6 +2959,15 @@ $hSlide: 90vh;
 				padding: 0 50px;
 				text-transform: uppercase;
 				@include animacao('','');
+
+				@media all and (max-width: 1000px){
+					font-size: 1.5rem;
+					line-height: 1.5rem;
+				}
+
+				@media all and (max-width: 800px){
+					text-align: center!important;
+				}
 
 				li {
 					font-weight: $bold;
@@ -2493,6 +2993,10 @@ $hSlide: 90vh;
 
 	.img-linha {
 		width: 100%;
+		height: 40vh;
+		background-position: center;
+		background-size: cover;
+		background-repeat: no-repeat;
 	}
 
 	.list-produto {
@@ -2508,6 +3012,22 @@ $hSlide: 90vh;
 			@include animacao('','');
 			@include box-sizing();
 
+			@media all and (max-width: 1000px){
+				width: 70%!important;
+				padding: 0!important;
+				margin-left: 15%;
+			}	
+
+			@media all and (max-width: 700px){
+				width: 80%!important;
+				margin-left: 10%;
+			}	
+
+			@media all and (max-width: 480px){
+				width: 100%!important;
+				margin-left: 0%;
+			}	
+
 			a {
 				text-decoration: none;
 			}
@@ -2515,6 +3035,7 @@ $hSlide: 90vh;
 			img {
 				float: left;
 				width: 30%;
+				//max-width: 170px;
 			}
 
 			.cont-list-prod {
@@ -2530,10 +3051,22 @@ $hSlide: 90vh;
 					font-weight: $light;
 					color: $cor-txt;
 					@include animacao('','');
+
+					@media all and (max-width: 700px){
+						font-size: 1.225rem;
+						line-height: 1.5rem;
+					}
 				}
 
 				p {
-					font-size: 1.25rem
+					font-size: 1.25rem;
+					line-height: 1.5rem;
+					margin-top: 5px;
+
+					@media all and (max-width: 700px){
+						font-size: 1rem;
+						line-height: 1.125rem;
+					}
 				}
 			}
 
@@ -2618,7 +3151,7 @@ $hSlide: 90vh;
 	}
 
 	.detalhe-produto {
-		margin-bottom: 36px;
+		margin-bottom: 25px;
 		overflow: hidden;
 
 		.img-produto {
@@ -2842,35 +3375,6 @@ $hSlide: 90vh;
 		}
 	}
 
-	#lightbox .modal-content {
-	    display: inline-block;
-	    text-align: center;   
-	}
-
-	#lightbox .close {
-	    opacity: 1;
-	    color: rgb(255, 255, 255);
-	    background-color: rgb(25, 25, 25);
-	    border-radius: 50%;
-	    border: 2px solid rgb(255, 255, 255);
-	    position: absolute;
-	    top: -15px;
-	    right: -55px;
-	    width: 30px;
-	    height: 30px;
-	    line-height: 30px;
-	    text-align: center;
-	    z-index:1032;
-	    font-weight: $light;
-
-	    span {
-	    	position: relative;
-	    	top: -3px;
-	    	font-weight: $light;
-	    	color: #ffffff;
-	    }
-	}
-
 	h2.outros-produtos {
 		margin: 0px;
 		font-size: 1.75rem;
@@ -2878,11 +3382,63 @@ $hSlide: 90vh;
 		text-align: center;
 		text-transform: none;
 	}
+
+	.paginacao {
+		a, span {
+			color: $azul;
+
+			&.current, &.current:hover {
+				background-color: $azul;
+			}
+
+			i {
+				color: $azul;
+			}
+		}
+
+		a:hover {
+			background-color: $azul;
+		}
+	}
 }
 
-/* SLIDE */
+#lightbox .modal-content {
+    display: inline-block;
+    text-align: center;   
 
+    iframe {
+    	width: 100%;
+    	height: 62.7vh;
+    }
+}
 
+#lightbox .close {
+    opacity: 1;
+    color: rgb(255, 255, 255);
+    background-color: rgb(25, 25, 25);
+    border-radius: 50%;
+    border: 2px solid rgb(255, 255, 255);
+    position: absolute;
+    top: -15px;
+    right: -55px;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    z-index:1032;
+    font-weight: $light;
+
+    span {
+    	position: relative;
+    	top: -3px;
+    	font-weight: $light;
+    	color: #ffffff;
+    }
+
+    &.home-slide-play {
+    	right: -15px!important;
+    }
+}
 
 .tab {
 	margin: 40px 0;
@@ -2907,6 +3463,14 @@ $hSlide: 90vh;
 		border: 1px solid $roxo;
 		border-left: 0;
 		@include animacao('','');
+
+		@media all and (max-width: 700px){
+			width: 50%;
+		}
+
+		@media all and (max-width: 400px){
+			width: 100%;
+		}
 
 		&:hover, &.active {
 			background-color: $roxo;
@@ -3040,9 +3604,23 @@ $hSlide: 90vh;
 	width: 100%;
 	padding: 10px 0;
 	position: relative;
+	@include clear();
+
+	@media all and (max-width: 600px){
+		height: auto;
+		padding-top: 20px;
+	}
+
+	@media all and (max-width: 400px){
+		text-align: center;
+	}
 
 	.seta {
 		top: -120px;
+	}
+
+	.row {
+		position: relative;
 	}
 	
 	a {
@@ -3050,14 +3628,11 @@ $hSlide: 90vh;
 		display: inline-block;
 		@include animacao('','');
 
-		&:first-child {
-			margin-right: 20px;
-		}
-
 		&.social {
 			i {
-				font-size: 1.75rem;
+				font-size: 1.5rem;
 				color: #ffffff;
+				margin-right: 10px;
 				@include animacao('','');
 			}
 
@@ -3073,8 +3648,55 @@ $hSlide: 90vh;
 		    margin-top: 7px;
 			background: url('../images/logo_di20.png') no-repeat 0 0;
 
+			@media all and (max-width: 600px){
+				clear: both;
+				float: none;
+				display: block;
+				margin: 20px auto 0;
+			}
+
 			img {
 				display: none;
+			}
+
+			&:hover {
+				opacity: .75;
+			}
+		}
+	}
+
+	.outros-icones {
+		position: absolute;
+		right: 100px;
+		top: 0;
+		border-right: 1px solid #fff;
+		padding-right: 10px;
+		height: 20px;
+		margin-top: 3px;
+
+		@media all and (max-width: 600px){
+			position: relative;
+			right: 0;
+			border: none;
+			padding: 0;
+			margin: 0;
+			width: auto;
+			float: right;
+		}
+
+		@media all and (max-width: 400px){
+			float: none;
+			width: 100%;
+			margin-top: 20px;
+		}
+
+		a {
+			margin-right: 10px;
+			@include animacao('','');
+
+			img {
+				height: 25px;
+				margin-top: -3px;
 			}
 
 			&:hover {
@@ -3477,10 +4099,15 @@ $hSlide: 90vh;
 .slide-cor {
 	span.tit-cores {
 		margin-left: 42px;
-		color: #D31939;
+		color: $rosa;
 		font-weight: $regular;
 		text-transform: uppercase;
 		font-size: 1rem;
+
+		@media all and (max-width: 850px){
+			margin-left: 0px;
+			line-height: 1rem;
+		}
 	}
 
 	.slide-item-cor {
@@ -3506,7 +4133,7 @@ $hSlide: 90vh;
 				width: 20px;
 				height: 48px;
 				position: absolute;
-				background-color: #D31939;
+				background-color: $rosa;
 				color: #e6e7e8;
 				font-size: 1px;
 				@include animacao('','');
@@ -3572,7 +4199,7 @@ $hSlide: 90vh;
 				}
 			}
 			.nome-cor {
-				color: #D31939;
+				color: $rosa;
 				font-weight: 300;
 				text-transform: uppercase;
 				font-size: .625rem;
@@ -3589,12 +4216,27 @@ $hSlide: 90vh;
 
 			&:hover, &.active {
 				.cor { 
-					border-color: #D31939;
+					border-color: $rosa;
 				}
 				.nome-cor {
 					display: block;
 				}
 			}
 		}
+	}
+}
+
+
+.lojas {
+	margin: 0px 0 80px;
+	@include clear();
+
+	.mapa-select {
+		background-size: cover;
+		background-position: center;
+		background-repeat: no-repeat;
+		width: 100%;
+		height: 100vh;
+		max-height: 320px;
 	}
 }

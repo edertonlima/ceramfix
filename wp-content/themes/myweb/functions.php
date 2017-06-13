@@ -226,7 +226,7 @@
 
 
 
-$producao = true;
+$producao = false;
 if($producao){
 	add_action('admin_head', 'my_custom_fonts');
 

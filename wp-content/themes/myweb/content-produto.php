@@ -65,6 +65,88 @@
     </div>
 </div>
 
+
+<?php
+$args = array(
+	'numberposts'	=> -1,
+	'post_type'		=> 'lojas',
+	'meta_key'		=> 'uf',
+	'meta_value'	=> 'Melbourne'
+);
+    
+?>
+<section class="lojas">
+	<div class="container">
+		
+		<div class="mapa-select" style="background-image: url('<?php the_field('imagem_busca','options'); ?>');">
+
+			<div class="bg-select-">
+				<span class="select selectboxproduto">
+					<select name="produto" id="produto" class="select-produto">
+						<option value="" selected="selected">UF</option>
+						<?php
+							//foreach ($uf_cidades as $uf => $cidades){ ?>
+								
+								<option value="<?php //echo $uf; ?>" selected="selected"><?php //echo $uf; ?></option>
+
+								<?php 
+									//$cidades = array_unique($cidades);
+									//$cidades = arraytolower($cidades);
+
+									//foreach ($cidades as $cidade){ ?>
+										<script type="text/javascript">
+											//var <?php //echo strtolower($uf); ?> = <?php //echo json_encode($cidades); ?>;
+										</script>
+									<?php //}
+
+							//}
+						?>
+					</select>
+				</span>
+			</div>
+			
+		</div>
+
+	</div>
+</section>
+
+
+<?php if( have_rows('produto') ): ?>
+
+	<section class="produtos">
+		<div class="container">
+			<h2 class="outros-produtos">Veja outros produtos:</h2>
+
+			<div class="slide-produtos list-produto owl-carousel owl-theme">
+					
+				<?php if( have_rows('produto') ):
+					while ( have_rows('produto') ) : the_row(); 
+
+						$outros_pro = get_sub_field('produto'); ?>
+
+							<div class="item">
+								<a href="<?php echo get_permalink($outros_pro->ID); ?>" title="<?php echo $outros_pro->post_title; ?>">
+									<?php $imgPage = wp_get_attachment_image_src( get_post_thumbnail_id($outros_pro->ID), 'thumbnail' ); ?>
+									<?php if($imgPage){ ?>
+										<img src="<?php if($imgPage[0]){ echo $imgPage[0]; } ?>" alt="<?php echo $outros_pro->post_title; ?>">
+									<?php } ?>
+									<div class="cont-list-prod">
+										<h3><?php echo $outros_pro->post_title; ?></h3>
+										<p><?php the_field('descrição_curta_produto',$outros_pro->ID); ?></p>
+									</div>
+								</a>
+							</div>
+
+					<?php endwhile;
+				endif; ?>
+
+			</div>
+		</div>
+	</section>
+
+<?php endif; ?>
+
+
 <script type="text/javascript">
 	function heightAplicacao(){
 		<?php if((get_field('video_youtube_aplicacao')) or (get_field('imagem_aplicacao'))){
@@ -112,4 +194,26 @@
 	        lightbox.find('.close').removeClass('hidden');
 	    });
 	});
+</script>
+
+<script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/assets/js/owl.carousel.min.js"></script>
+<script type="text/javascript">
+	jQuery.noConflict();
+	var owl = jQuery('.slide-produtos');
+	owl.owlCarousel({
+		margin: 0,
+		loop: false,
+		nav:true,
+		responsive: {
+			0: {
+				items: 3
+			},
+			600: {
+				items: 3
+			},
+			1000: {
+				items: 3
+			}
+		}
+	})
 </script>
