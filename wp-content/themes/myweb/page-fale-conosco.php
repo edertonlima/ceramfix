@@ -16,16 +16,16 @@
 	<div class="container">
 
 		<div class="row">
-			<div class="col-6">
-				<p class="subtitulo">Você também pode enviar suas críticas, sugestões ou dúvidas preenchendo todos os campos abaixo:</p>
-			</div>
-
-			<div class="col-6">
+			<div class="col-6 centrar-telefone">
 				<div class="info-contato">
 					<span>CENTRAL DE RELACIONAMENTO CERAMFIX</span>
 					<h2>0800 7045049</h2>
 					<a href="#">info@ceramfix.com.br</a>
 				</div>
+			</div>
+
+			<div class="col-6 text-form-home">
+				<p class="subtitulo"><?php the_field('texto_fale','option'); ?></p>
 			</div>
 		</div>
 		

@@ -134,6 +134,15 @@
 				jQuery('.info-tel').css('left','0vw');
 			}
 		});
+
+		jQuery('.nav a').click(function(){
+			if(jQuery('.menu-mobile').hasClass('active')){
+				jQuery('.menu-mobile').removeClass('active');
+				jQuery('.nav').css('left','100vw');
+				jQuery('.region').css('left','100vw');
+				jQuery('.info-tel').css('left','100vw');
+			}
+		});
 	});	
 
 	jQuery(window).resize(function(){
