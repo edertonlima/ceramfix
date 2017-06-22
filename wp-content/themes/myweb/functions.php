@@ -448,6 +448,49 @@ function paginacao() {
 }
 
 
+
+
+function my_pre_get_posts( $query ) {
+	
+	// do not modify queries in the admin
+	if( is_admin() ) {
+		
+		return $query;
+		
+	}
+	
+	
+	// only modify queries for 'event' post type
+	if( isset($query->query_vars['post_type']) && $query->query_vars['post_type'] == 'lojas' ) {
+		
+		// allow the url to alter the query
+		if( isset($_GET['cidade']) ) {
+			
+    		$query->set('meta_key', 'cidade');
+			$query->set('meta_value', $_GET['cidade']);
+			
+    	} 
+		
+	}
+	
+	
+	// return
+	return $query;
+
+}
+
+add_action('pre_get_posts', 'my_pre_get_posts');
+
+
+
+
+
+
+
+
+
+
+
 	// CLIENTES
 	/*
 	add_action('init', 'type_post_clientes');

@@ -65,43 +65,20 @@
     </div>
 </div>
 
-
-<?php
-$args = array(
-	'numberposts'	=> -1,
-	'post_type'		=> 'lojas',
-	'meta_key'		=> 'uf',
-	'meta_value'	=> 'Melbourne'
-);
-    
-?>
 <section class="lojas">
 	<div class="container">
 		
 		<div class="mapa-select" style="background-image: url('<?php the_field('imagem_busca','options'); ?>');">
 
-			<div class="bg-select-">
+			<h3>ENCONTRAR LOJAS PERTO DE MIM</h3>
+
+			<div class="bg-select">
 				<span class="select selectboxproduto">
-					<select name="produto" id="produto" class="select-produto">
-						<option value="" selected="selected">UF</option>
-						<?php
-							//foreach ($uf_cidades as $uf => $cidades){ ?>
-								
-								<option value="<?php //echo $uf; ?>" selected="selected"><?php //echo $uf; ?></option>
+					<select name="produto" id="estados" class="select-produto"></select>
+				</span>
 
-								<?php 
-									//$cidades = array_unique($cidades);
-									//$cidades = arraytolower($cidades);
-
-									//foreach ($cidades as $cidade){ ?>
-										<script type="text/javascript">
-											//var <?php //echo strtolower($uf); ?> = <?php //echo json_encode($cidades); ?>;
-										</script>
-									<?php //}
-
-							//}
-						?>
-					</select>
+				<span class="select selectboxproduto">
+					<select name="cidades" id="cidades" class="select-produto" disabled></select>
 				</span>
 			</div>
 			
@@ -193,6 +170,53 @@ $args = array(
 	        lightbox.find('.modal-dialog').css({'width': img.width()});
 	        lightbox.find('.close').removeClass('hidden');
 	    });
+	});
+
+	jQuery(document).ready(function () {
+	
+		jQuery.getJSON('<?php echo get_template_directory_uri(); ?>/estados_cidades.json', function (data) {
+			var items = [];
+			var options = '<option value="">Estado</option>';	
+			jQuery.each(data, function (key, val) {
+				options += '<option value="' + val.nome + '">' + val.nome + '</option>';
+			});			
+
+			jQuery("#estados").html(options);
+
+			var str = "Estado";	
+			jQuery("#estados").change(function () {	
+				var options_cidades = '<option value="Cidade">Cidade</option>';
+				str = jQuery('#estados option:selected').text();
+
+				if(str != 'Estado'){
+					jQuery.each(data, function (key, val) {
+						if(val.nome == str) {							
+							jQuery.each(val.cidades, function (key_city, val_city) {
+								options_cidades += '<option value="' + val_city + '">' + val_city + '</option>';
+							});							
+						}
+					});
+					jQuery("#cidades").html(options_cidades).prop('disabled', false);
+				}else{
+					options_cidades += '<option value="Cidades">Cidades</option>';
+					jQuery("#cidades").html(options_cidades).prop('disabled', true);
+				}
+			}).change();		
+		});
+
+		var str_cidade = "Cidade";	
+		jQuery("#cidades").change(function () {	
+			jQuery("#cidades option:selected").each(function () {
+				str_cidade = jQuery('#cidades option:selected').text();
+				str = jQuery('#estados option:selected').text();
+			});
+
+			if(str_cidade != 'Cidade'){
+				var url = '<?php echo get_home_url(); ?>/?post_type=lojas&estado='+str+'&cidade='+str_cidade;
+				window.location.replace(url);				
+			}
+		}).change();
+	
 	});
 </script>
 
