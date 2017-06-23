@@ -3823,6 +3823,7 @@ $hSlide: 89vh;
 	width: 100%;
 	padding: 10px 0;
 	position: relative;
+	bottom: -18px;
 	@include clear();
 
 	@media all and (max-width: 600px){

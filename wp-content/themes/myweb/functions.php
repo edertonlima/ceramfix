@@ -239,8 +239,8 @@ if($producao){
 		#the-list #post-94, 
 		#the-list #post-65, 
 		.taxonomy-category .form-field.term-parent-wrap, 
-		.wp-menu-separator, 
-		#toplevel_page_pmxi-admin-home li:nth-child(1), #toplevel_page_pmxi-admin-home li:nth-child(3), #toplevel_page_pmxi-admin-home li:nth-child(4), #toplevel_page_pmxi-admin-home li:nth-child(5)  
+		.wp-menu-separator
+		/*#toplevel_page_pmxi-admin-home li:nth-child(1), #toplevel_page_pmxi-admin-home li:nth-child(3), #toplevel_page_pmxi-admin-home li:nth-child(4), #toplevel_page_pmxi-admin-home li:nth-child(5) */ 
 		{
 			display: none!important;
 		}
@@ -266,6 +266,11 @@ if($producao){
 				jQuery("#toplevel_page_pmxi-admin-home li:nth-child(3)").html("");
 				jQuery("#toplevel_page_pmxi-admin-home li:nth-child(4)").html("");
 				jQuery("#toplevel_page_pmxi-admin-home li:nth-child(5)").html("");
+
+				jQuery("#toplevel_page_delete_all_posts").detach().insertBefore("#toplevel_page_pmxi-admin-home");
+				jQuery("#toplevel_page_delete_all_posts .wp-menu-name").html("Apagar Lojas");
+				jQuery("#toplevel_page_delete_all_posts .wp-first-item .wp-first-item").html("Apagar Todas");
+				jQuery("#toplevel_page_delete_all_posts ul").remove();
 			});
 		</script>
 	  ';
