@@ -1,35 +1,16 @@
 <?php get_header(); ?>
 
-<session class="post-det">
+<section class="produtos">
 	<div class="container">
-
-		<div class="row">
-			<div class="col-8 content-page">
-
-				<article class="post">
-
-					<header class="post-header">
-						<div class="container-info">
-							<span class="tit-page">DESCULPE</span>
-							<h2>UPS! ESSA PÁGINA NÃO PODE SER ENCONTRADA</h2>
-						</div>
-					</header>
-
-					<div class="conteudo-post">
-						<br><br>
-						<p align="center">Parece que não foi possível encontrar o que você estava procurando. <br>Por favor, tente encontrar acessando as categorias ao lado.</p>
-					</div>
-
-				</article>
-
-			</div>
-			<div class="col-4 content-sidebar">
-				<?php include 'sidebar.php'; ?>
-			</div>
+		
+		<br><br>
+		<h2>DESCULPE, NÃO PUDE ENCONTRAR ESTA PAGINA!</h2>
+		<div class="conteudo">
+			<p align="center"><br><br>Por favor, tente acessar utilizando o menu principal.</p>
 		</div>
 
 	</div>
-</session>
+</section>
 
 <?php get_footer(); ?>
 

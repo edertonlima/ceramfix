@@ -29,8 +29,8 @@
 	$conteudo .= '<br><strong>Mensagem:</strong> '.$mensagem;
 	$conteudo .= '</p>';
 	if(mail($para, "Contato, Fale Conosco", $conteudo, $headers, "-f$email_remetente")){
-		mail('edertton@gmail.com', "Contato, Fale Conosco", $conteudo, $headers, "-f$email_remetente");
-		mail('pablo@di20.com.br', "Contato, Fale Conosco", $conteudo, $headers, "-f$email_remetente");
+		//mail('edertton@gmail.com', "Contato, Fale Conosco", $conteudo, $headers, "-f$email_remetente");
+		//mail('pablo@di20.com.br', "Contato, Fale Conosco", $conteudo, $headers, "-f$email_remetente");
 		echo(json_encode('ok'));
 	}else{
 		echo(json_encode("Desculpe, não foi possível enviar seu formulário. <br>Por favor, tente novamente mais tarde."));

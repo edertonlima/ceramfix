@@ -13,23 +13,4 @@
 	</div>
 </section>
 
-
-
-
-
-
-<?php /*
-<script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/assets/css/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
-<script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/assets/css/fancybox/jquery.easing-1.4.pack.js"></script>
-<script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/assets/css/fancybox/jquery.mousewheel-3.0.4.pack.js"></script>
-<script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/assets/css/fancybox/jquery.fancybox-1.3.4.js"></script>
-<script type="text/javascript">
-	jQuery(window).load(function() {
-		jQuery(".img-produto").fancybox();
-	});
-</script>
-*/ ?>
-
-
-
 <?php get_footer(); ?>

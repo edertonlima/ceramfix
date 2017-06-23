@@ -131,7 +131,7 @@
 			});
 
 			if(str_cidade != 'Cidade'){
-				var url = '<?php echo get_home_url(); ?>/?post_type=lojas&estado='+str.toLowerCase()+'&cidade='+str_cidade.toLowerCase();
+				var url = '<?php echo get_home_url(); ?>/lojas/?estado='+str.toLowerCase()+'&cidade='+str_cidade.toLowerCase();
 				window.location.replace(url);				
 			}
 		}).change();

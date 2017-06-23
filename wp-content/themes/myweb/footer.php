@@ -22,7 +22,7 @@
 					endif; ?>
 				</div>
 
-				<a href="#" class="di20"><img src="assets/images/logo_di20.png" alt="di20 DESENV." /></a>
+				<a href="http://www.di20.com.br" class="di20" target="_blank"><img src="assets/images/logo_di20.png" alt="di20 DESENV." /></a>
 				
 			</div>
 		</div>

@@ -238,6 +238,7 @@ if($producao){
 		.acf-postbox h2 a, 
 		#the-list #post-94, 
 		#the-list #post-65, 
+		#toplevel_page_wpglobus_options, 
 		.taxonomy-category .form-field.term-parent-wrap, 
 		.wp-menu-separator
 		/*#toplevel_page_pmxi-admin-home li:nth-child(1), #toplevel_page_pmxi-admin-home li:nth-child(3), #toplevel_page_pmxi-admin-home li:nth-child(4), #toplevel_page_pmxi-admin-home li:nth-child(5) */ 
@@ -251,21 +252,22 @@ if($producao){
 			jQuery.noConflict();
 
 			jQuery("document").ready(function(){
-				jQuery("#menu-media").html("");
-				jQuery("#menu-comments").html("");
-				jQuery("#menu-appearance").html("");
-				jQuery("#menu-plugins").html("");
-				jQuery("#menu-tools").html("");
-				jQuery("#menu-settings").html("");
-				jQuery("#toplevel_page_edit-post_type-acf").html("");
-				jQuery("#toplevel_page_edit-post_type-acf-field-group").html("");
+				jQuery("#menu-media").remove();
+				jQuery("#menu-comments").remove();
+				jQuery("#menu-appearance").remove();
+				jQuery("#menu-plugins").remove();
+				jQuery("#menu-tools").remove();
+				jQuery("#menu-settings").remove();
+				jQuery("#toplevel_page_edit-post_type-acf").remove();
+				jQuery("#toplevel_page_edit-post_type-acf-field-group").remove();
 				jQuery("#toplevel_page_zilla-likes").html("");
-				jQuery(".taxonomy-category .form-field.term-parent-wrap").html("");
-				jQuery(".wp-menu-separator").html("");
-				jQuery("#toplevel_page_pmxi-admin-home li:nth-child(1)").html("");
-				jQuery("#toplevel_page_pmxi-admin-home li:nth-child(3)").html("");
-				jQuery("#toplevel_page_pmxi-admin-home li:nth-child(4)").html("");
-				jQuery("#toplevel_page_pmxi-admin-home li:nth-child(5)").html("");
+				jQuery(".taxonomy-category .form-field.term-parent-wrap").remove();
+				jQuery(".wp-menu-separator").remove();
+				jQuery("#toplevel_page_pmxi-admin-home li:nth-child(1)").remove();
+				jQuery("#toplevel_page_pmxi-admin-home li:nth-child(3)").remove();
+				jQuery("#toplevel_page_pmxi-admin-home li:nth-child(4)").remove();
+				jQuery("#toplevel_page_pmxi-admin-home li:nth-child(5)").remove();
+				jQuery("#toplevel_page_wpglobus_options").remove();
 
 				jQuery("#toplevel_page_delete_all_posts").detach().insertBefore("#toplevel_page_pmxi-admin-home");
 				jQuery("#toplevel_page_delete_all_posts .wp-menu-name").html("Apagar Lojas");
