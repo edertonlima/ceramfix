@@ -655,7 +655,7 @@
 			$form.find('a[rel="preview"].preview').click();
 		});
 		$form.find('input[name$=download_images]').each(function(){			
-			if ($(this).is(':checked') && ( $(this).val() == 'gallery' || $(this).val() == 'no') )
+			if ($(this).is(':checked') && $(this).val() == 'gallery' )
 			{
 				$(this).parents('.wpallimport-collapsed-content:first').find('.advanced_options_files').find('p:first').show();
 				$(this).parents('.wpallimport-collapsed-content:first').find('.advanced_options_files').find('input').attr({'disabled':'disabled'});
@@ -663,7 +663,7 @@
 		});
 		
 		$form.find('input[name$=download_images]').click(function(){			
-			if ($(this).is(':checked') && ( $(this).val() == 'gallery' || $(this).val() == 'no') )
+			if ($(this).is(':checked') && $(this).val() == 'gallery' )
 			{				
 				$(this).parents('.wpallimport-collapsed-content:first').find('.advanced_options_files').find('p:first').show();
 				$(this).parents('.wpallimport-collapsed-content:first').find('.advanced_options_files').find('input').attr({'disabled':'disabled'});
