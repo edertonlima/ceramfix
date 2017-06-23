@@ -143,6 +143,12 @@
 				jQuery('.info-tel').css('left','100vw');
 			}
 		});
+
+		if(jQuery('body').height() <= jQuery(window).height()){
+			jQuery('.footer').css({position: 'absolute', bottom: '0px'});
+		}else{
+			jQuery('.footer').css({position: 'relative'});
+		}
 	});	
 
 	jQuery(window).resize(function(){
@@ -150,6 +156,11 @@
 		jQuery('.nav').css('left','100vw');
 		jQuery('.region').css('left','100vw');
 		jQuery('.info-tel').css('left','100vw');
+		if(jQuery('body').height() <= jQuery(window).height()){
+			jQuery('.footer').css({position: 'absolute', bottom: '0px'});
+		}else{
+			jQuery('.footer').css({position: 'relative'});
+		}
 	});
 </script>
 

@@ -212,7 +212,7 @@
 			});
 
 			if(str_cidade != 'Cidade'){
-				var url = '<?php echo get_home_url(); ?>/?post_type=lojas&estado='+str+'&cidade='+str_cidade;
+				var url = '<?php echo get_home_url(); ?>/?post_type=lojas&estado='+str.toLowerCase()+'&cidade='+str_cidade.toLowerCase();
 				window.location.replace(url);				
 			}
 		}).change();

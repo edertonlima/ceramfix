@@ -134,6 +134,7 @@ html {
 body {
 	padding-top: 82px;
 	position: relative;
+	min-height: 100vh;
 
 	&.front{
 		background-color: #eef8fd;
@@ -2374,6 +2375,27 @@ $hSlide: 89vh;
 				}
 			}
 
+		}
+
+		&.box-lojas {
+			.item {
+				.info-item {
+					width: 100%;
+					padding: 0px!important;
+
+					p {
+						margin-top: 15px;
+					}
+				}
+
+				&:nth-child(2n+1){
+					@include clear();
+				}
+			}
+
+			.not-loja {
+				margin-top: -80px;
+			}
 		}
 
 		&.box-matriz-filiais {

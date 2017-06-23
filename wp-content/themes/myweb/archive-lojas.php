@@ -19,7 +19,7 @@
 		<h2>LOJAS CADASTRADAS</h2>
 	</div>
 	
-	<section class="lojas">
+	<section class="lojas list-lojas">
 		<div class="container">
 			
 			<div class="mapa-select" style="background-image: url('<?php the_field('imagem_busca','options'); ?>');">
@@ -51,33 +51,23 @@
 		<div class="row sub-conteudo">
 
 			<?php 
-				while ( have_posts() ) : the_post();
+				if( (isset($_GET['cidade'])) and ($_GET['cidade'] != '') ) {
+					if( have_posts() ):
+						while ( have_posts() ) : the_post();
 
-						get_template_part( 'content-loja', get_post_format() );
-					
-				endwhile; 
-			?>
+							get_template_part( 'content-loja', get_post_format() );
+							
+						endwhile;
+					else :
 
-			<?php /*
-				$args = array( 'post_type' => 'lojas','posts_per_page' => '10','meta_key' => 'estado','meta_value' => 'Santa Catarina');
-				$lojas = new WP_Query( $args );
+						get_template_part( 'content-loja-none', get_post_format() );
 
-				if( $lojas->have_posts() ): ?>
-					<ul>
-					<?php while( $lojas->have_posts() ) : $lojas->the_post(); ?>
-						<li>
-							<a href="<?php the_permalink(); ?>">
-								<img src="<?php the_field('event_thumbnail'); ?>" />
-								<?php the_title(); ?>
-							</a>
-						</li>
-					<?php endwhile; ?>
-					</ul>
-				<?php endif;
-
-				foreach( $lojas as $loja ) {
-					//get_template_part( 'content-loja', get_post_format() );
-				}*/
+					endif;
+				}else{ ?>
+					<div class="conteudo">
+						<p class="not-loja">Selecione o estado e cidade para encontrar a loja mais perto de você.</p>
+					</div>
+				<?php }
 			?>
 
 		</div>
@@ -88,26 +78,15 @@
 
 <script type="text/javascript">
 
-	function get_lojas(cidade){
-		//alert(cidade)
-	}
-		
-	<?php 
-		if(($estado != '') and ($cidade != '')){ ?>
-			var estado = '<?php echo $estado; ?>';
-			var cidade = '<?php echo $cidade; ?>';
-		<?php }else{ ?>
-			var estado = '';
-			var cidade = '';
-		<?php }
-	?>
+	var estado = '<?php echo $estado; ?>';
+	var cidade = '<?php echo $cidade; ?>';
 
 	jQuery(document).ready(function () {	
 		jQuery.getJSON('<?php echo get_template_directory_uri(); ?>/estados_cidades.json', function (data) {
 			var items = [];
 			var options = '<option value="">Estado</option>';	
 			jQuery.each(data, function (key, val) {
-				if(val.nome == estado){
+				if(val.nome.toLowerCase() == estado.toLowerCase()){
 					selected = ' selected';
 				}else{
 					selected = '';
@@ -126,7 +105,7 @@
 					jQuery.each(data, function (key, val) {
 						if(val.nome == str) {						
 							jQuery.each(val.cidades, function (key_city, val_city) {
-								if(val_city == cidade){
+								if(val_city.toLowerCase() == cidade.toLowerCase()){
 									selected = ' selected';
 								}else{
 									selected = '';
@@ -137,13 +116,25 @@
 					});
 					jQuery("#cidades").html(options_cidades).prop('disabled', false);
 					str_cidade = jQuery('#cidades option:selected').text();
-					get_lojas(str_cidade);
 				}else{
 					options_cidades += '<option value="Cidades">Cidades</option>';
 					jQuery("#cidades").html(options_cidades).prop('disabled', true);
 				}
 			}).change();		
 		});
+
+		var str_cidade = "Cidade";	
+		jQuery("#cidades").change(function () {	
+			jQuery("#cidades option:selected").each(function () {
+				str_cidade = jQuery('#cidades option:selected').text();
+				str = jQuery('#estados option:selected').text();
+			});
+
+			if(str_cidade != 'Cidade'){
+				var url = '<?php echo get_home_url(); ?>/?post_type=lojas&estado='+str.toLowerCase()+'&cidade='+str_cidade.toLowerCase();
+				window.location.replace(url);				
+			}
+		}).change();
 		
 	});
 </script>
