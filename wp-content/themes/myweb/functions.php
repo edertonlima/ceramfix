@@ -238,6 +238,8 @@ if($producao){
 		.acf-postbox h2 a, 
 		#the-list #post-94, 
 		#the-list #post-65, 
+		#commentstatusdiv, 
+		#commentsdiv, 
 		#toplevel_page_wpglobus_options, 
 		.taxonomy-category .form-field.term-parent-wrap, 
 		.wp-menu-separator
@@ -268,6 +270,8 @@ if($producao){
 				jQuery("#toplevel_page_pmxi-admin-home li:nth-child(4)").remove();
 				jQuery("#toplevel_page_pmxi-admin-home li:nth-child(5)").remove();
 				jQuery("#toplevel_page_wpglobus_options").remove();
+				jQuery("#commentstatusdiv").remove();
+				jQuery("#commentsdiv").remove();
 
 				jQuery("#toplevel_page_delete_all_posts").detach().insertBefore("#toplevel_page_pmxi-admin-home");
 				jQuery("#toplevel_page_delete_all_posts .wp-menu-name").html("Apagar Lojas");
@@ -464,9 +468,20 @@ function my_pre_get_posts( $query ) {
 	
 	if( $query->query_vars['post_type'] === 'lojas' && !is_admin() ) {
 		if( isset($_GET['cidade']) ) {
-			
-    		$query->set('meta_key', 'cidade');
-			$query->set('meta_value', $_GET['cidade']);
+
+			$query->set('meta_query', array(
+				array(
+					'key' => 'cidade',
+					'value' => $_GET['cidade']
+				),
+				array(
+					'key' => 'uf',
+					'value' => $_GET['estado']
+				)
+			));
+
+			$query->set('orderby', 'rand');
+			$query->set('order', 'ASC');
 			
     	}
 	}

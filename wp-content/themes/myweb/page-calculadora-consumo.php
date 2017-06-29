@@ -96,7 +96,7 @@
 
 		<button class="calcular">CALCULAR!</button>
 
-		<h2 id="resultado">O seu consumo médio será de <span></span> Kg.</h2>
+		<h2 id="resultado">O seu consumo médio para rejuntar será de <span></span> Kg. <p>Obs: Para calculo do assentamento de pastilhas e revestimentos o consumo está disponível na página do produto.</p></h2>
 
 	</div>
 </section>	
@@ -140,9 +140,30 @@
 	});
 
 	form_cal = true;
+	function formataValor(valor){
+		valor = valor.replace(',', '.');
+		var corte = valor.split('.');
+
+		if(corte.length > 1){
+			if(corte[1].length > 2){
+				valor = corte[0]+'.'+corte[1].substring(0,2);
+			}else{
+				if(corte[1].length == 1){
+					valor = valor+'0';
+				}else{
+					if(corte[1].length == 0){
+						valor = corte[0];
+					}
+				}
+			}
+		}
+		//alert(valor);
+		return valor;
+	}
 	jQuery('.calcular').click(function(){
 		if(jQuery('#produto').val()){          		
 			cr = jQuery('#produto option:selected').attr('rel');
+			cr = formataValor(cr);
 		}else{
 			form_cal = false;
 			jQuery('.selectboxproduto').addClass('erro');
@@ -150,6 +171,7 @@
 
 		if(jQuery('input[name=a]').val()){          		
 			a = jQuery('input[name=a]').val();
+			a = formataValor(a);
 		}else{
 			form_cal = false;
 			jQuery('input[name=a]').addClass('erro');
@@ -157,6 +179,7 @@
 
 		if(jQuery('input[name=b]').val()){          		
 			b = jQuery('input[name=b]').val();
+			b = formataValor(b);
 		}else{
 			form_cal = false;
 			jQuery('input[name=b]').addClass('erro');
@@ -164,6 +187,7 @@
 
 		if(jQuery('input[name=e]').val()){          		
 			e = jQuery('input[name=e]').val();
+			e = formataValor(e);
 		}else{
 			form_cal = false;
 			jQuery('input[name=e]').addClass('erro');
@@ -171,6 +195,7 @@
 
 		if(jQuery('input[name=l]').val()){          		
 			l = jQuery('input[name=l]').val();
+			l = formataValor(l);
 		}else{
 			form_cal = false;
 			jQuery('input[name=l]').addClass('erro');
@@ -178,6 +203,7 @@
 
 		if(jQuery('input[name=m2]').val()){          		
 			m2 = jQuery('input[name=m2]').val();
+			m2 = formataValor(m2);
 		}else{
 			form_cal = false;
 			jQuery('input[name=m2]').addClass('erro');
@@ -195,7 +221,6 @@
 
 			consumo = consumo.toFixed(2);
 			consumo = consumo.replace('.', ',');
-
 			jQuery('#resultado span').html(consumo);
 			jQuery('#resultado').show();
 		}

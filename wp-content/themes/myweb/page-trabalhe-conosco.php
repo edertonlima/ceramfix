@@ -88,7 +88,7 @@
 							}
 						?>
 					</p>
-					<input type="hidden" name="para" value="<?php the_field('email', 'option'); ?>">
+					<input type="hidden" name="para" value="<?php the_field('email_rh', 'option'); ?>">
 					<input type="hidden" name="nome_site" value="<?php bloginfo('name'); ?>">
 					<button class="enviar" type="submit">ENVIAR!</button>
 				</fieldset>

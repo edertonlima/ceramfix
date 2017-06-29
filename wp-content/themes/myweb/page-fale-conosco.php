@@ -50,7 +50,6 @@
 			</form>
 		</div>
 	</div>
-	<a href="javascript:" class="seta" rel="body"><i class="fa fa-angle-up" aria-hidden="true"></i></a>
 </section>
 
 <?php get_footer(); ?>

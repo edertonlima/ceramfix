@@ -8,7 +8,7 @@
 	<?php } ?>
 
 	<div class="cont-detalhe-produto">
-		<h2><?php the_title(); ?></h2>
+		<h2 class="tit-det-produto"><?php the_title(); ?></h2>
 		<p><?php the_field('descrição_produto'); ?></p>
 
 		<div class="indicacao">
@@ -30,14 +30,8 @@
 		</div>
 	</div>
 
-	<div class="link-prod<?php if(!get_field('ficha_tecnica')){ echo ' no-ficha'; } if(!((get_field('video_youtube_aplicacao')) or (get_field('imagem_aplicacao')))){ echo ' no-aplicacao'; } ?>">
-		<div class="col-link">
-			<?php if(get_field('ficha_tecnica')){ ?>
-				<a href="<?php the_field('ficha_tecnica'); ?>" target="_blank" class="ficha-tecnica"><span class="box-link"><span><span>FICHA TÉCNICA</span></span></span></a>
-			<?php } ?>
-			<a href="<?php echo get_permalink(get_page_by_path('simulador-cores')); ?>" title="SIMULADOR DE CORES" class="simulador"><span class="box-link"><span><span>SIMULADOR DE CORES</span></span></span></a>
-			<a href="<?php echo get_permalink(get_page_by_path('calculadora-consumo')); ?>" title="CALCULADORA DE CONSUMO" class="calculadora"><span class="box-link"><span><span>CALCULADORA DE CONSUMO</span></span></span></a>
-		</div>
+	<div class="link-prod<?php if((!get_field('ficha_tecnica')) and (!get_field('simulacao_cores')) and (!get_field('cr'))){ echo ' no-button'; } if(!((get_field('video_youtube_aplicacao')) or (get_field('imagem_aplicacao')))){ echo ' no-aplicacao'; } ?>">
+
 		<?php if((get_field('video_youtube_aplicacao')) or (get_field('imagem_aplicacao'))){ ?>
 			<div class="col-link aplicacao">
 				<h2>Aplicação</h2>
@@ -50,6 +44,18 @@
 				?>
 			</div>
 		<?php } ?>
+
+		<div class="col-link">
+			<?php if(get_field('ficha_tecnica')){ ?>
+				<a href="<?php the_field('ficha_tecnica'); ?>" target="_blank" class="ficha-tecnica"><span class="box-link"><span><span>FICHA TÉCNICA</span></span></span></a>
+			<?php } ?>
+			<?php if(get_field('simulacao_cores')){ ?>
+				<a href="<?php echo get_permalink(get_page_by_path('simulador-cores')); ?>" title="SIMULADOR DE CORES" class="simulador"><span class="box-link"><span><span>SIMULADOR DE CORES</span></span></span></a>
+			<?php } ?>
+			<?php if(get_field('cr')){ ?>
+				<a href="<?php echo get_permalink(get_page_by_path('calculadora-consumo')); ?>" title="CALCULADORA DE CONSUMO" class="calculadora"><span class="box-link"><span><span>CALCULADORA DE CONSUMO</span></span></span></a>
+			<?php } ?>
+		</div>
 	</div>
 
 </div>
@@ -126,15 +132,19 @@
 
 <script type="text/javascript">
 	function heightAplicacao(){
-		<?php if((get_field('video_youtube_aplicacao')) or (get_field('imagem_aplicacao'))){
-			if(get_field('video_youtube_aplicacao')){ ?>
-				var hAplicacao = (jQuery('.link-prod').width())/3.57;
-				jQuery('.aplicacao iframe').height(hAplicacao);
-			<?php }else{ ?>
-				var hAplicacao = jQuery('.aplicacao img').height();
+		if(jQuery(window).width() > '750'){
+			<?php if((get_field('video_youtube_aplicacao')) or (get_field('imagem_aplicacao'))){
+				if(get_field('video_youtube_aplicacao')){ ?>
+					var hAplicacao = (jQuery('.link-prod').width())/3.57;
+					jQuery('.aplicacao iframe').height(hAplicacao);
+				<?php }else{ ?>
+					var hAplicacao = jQuery('.aplicacao img').height();
+				<?php } ?>
+				jQuery('.col-link a').height(((hAplicacao)/3)-2);
 			<?php } ?>
-			jQuery('.col-link a').height(((hAplicacao)/3)-2);
-		<?php } ?>
+		}else{
+			jQuery('.col-link a').height('10vh');
+		}
 	}
 
 	jQuery('document').ready(function(){
@@ -154,20 +164,24 @@
 	            src = img.attr('src'),
 	            alt = img.attr('alt'),
 	            css = {
-	                'maxWidth': jQuery(window).width() - 100,
-	                'maxHeight': jQuery(window).height() - 100
+	                'maxWidth': jQuery(window).width() - ((jQuery(window).width())*0.2),
+	                'maxHeight': jQuery(window).height() - ((jQuery(window).height())*0.2)
 	            };
 	    
 	        lightbox.find('.close').addClass('hidden');
 	        lightbox.find('img').attr('src', src);
 	        lightbox.find('img').attr('alt', alt);
 	        lightbox.find('img').css(css);
+
+	        //topModal = '-'+parseInt(((jQuery(window).height())-(jQuery(window).height()))/2)+'px';
+	        topModal = '-'+parseInt((img.height())/1.25)+'px';
+	        lightbox.find('.modal-dialog').css({'width': img.width(), 'margin-top': topModal, 'top': '50%'});
 	    });
 	    
 	    lightbox.on('shown.bs.modal', function (e) {
 	        var img = lightbox.find('img');
-	            
-	        lightbox.find('.modal-dialog').css({'width': img.width()});
+	        //topModal = '-'+parseInt(((jQuery(window).height())-(jQuery(window).height()))/2)+'px';
+	        lightbox.find('.modal-dialog').css({'width': img.width(), 'margin-top': topModal, 'top': '50%'});
 	        lightbox.find('.close').removeClass('hidden');
 	    });
 	});
@@ -176,9 +190,9 @@
 	
 		jQuery.getJSON('<?php echo get_template_directory_uri(); ?>/estados_cidades.json', function (data) {
 			var items = [];
-			var options = '<option value="">Estado</option>';	
+			var options = '<option value="Estado">Estado</option>';	
 			jQuery.each(data, function (key, val) {
-				options += '<option value="' + val.nome + '">' + val.nome + '</option>';
+				options += '<option value="' + val.sigla + '">' + val.nome + '</option>';
 			});			
 
 			jQuery("#estados").html(options);
@@ -186,11 +200,11 @@
 			var str = "Estado";	
 			jQuery("#estados").change(function () {	
 				var options_cidades = '<option value="Cidade">Cidade</option>';
-				str = jQuery('#estados option:selected').text();
+				str = jQuery('#estados option:selected').val();
 
 				if(str != 'Estado'){
 					jQuery.each(data, function (key, val) {
-						if(val.nome == str) {							
+						if(val.sigla == str) {							
 							jQuery.each(val.cidades, function (key_city, val_city) {
 								options_cidades += '<option value="' + val_city + '">' + val_city + '</option>';
 							});							
@@ -208,7 +222,7 @@
 		jQuery("#cidades").change(function () {	
 			jQuery("#cidades option:selected").each(function () {
 				str_cidade = jQuery('#cidades option:selected').text();
-				str = jQuery('#estados option:selected').text();
+				str = jQuery('#estados option:selected').val();
 			});
 
 			if(str_cidade != 'Cidade'){

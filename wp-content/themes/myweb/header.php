@@ -268,8 +268,8 @@
 							<li class="<?php if((is_category('release')) or (is_category('na-midia')) or (is_page('downloads')) or (is_singular('post'))){ echo 'active'; } ?>">
 								<a href="javascript:" title="MÍDIA">MÍDIA</a>
 								<ul class="submenu">
-									<li><a href="<?php echo get_home_url(); ?>/release" title="RELEASES" class="<?php if(is_category('release')){ echo 'active'; } ?>">RELEASES</a></li>		
-									<li><a href="<?php echo get_home_url(); ?>/na-midia" title="NA MÍDIA" class="<?php if(is_category('na-midia')){ echo 'active'; } ?>">NA MÍDIA</a></li>		
+									<li><a href="<?php echo get_home_url(); ?>/midia/release" title="RELEASES" class="<?php if(is_category('release')){ echo 'active'; } ?>">RELEASES</a></li>		
+									<li><a href="<?php echo get_home_url(); ?>/midia/na-midia" title="NA MÍDIA" class="<?php if(is_category('na-midia')){ echo 'active'; } ?>">NA MÍDIA</a></li>		
 									<li><a href="<?php echo get_permalink(get_page_by_path('downloads')); ?>" title="DOWNLOAD" class="<?php if(is_page('downloads')){ echo 'active'; } ?>">DOWNLOAD</a></li>				
 								</ul>
 							</li>
