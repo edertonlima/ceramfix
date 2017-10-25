@@ -208,7 +208,7 @@
 					<a href="javascript:" class="menu-mobile"><span><em>X</em></span></a>
 
 					<div class="info">
-						<span class="info-tel">0800 7045049</span>
+						<span class="info-tel"><?php the_field('telefone','option'); ?></span>
 						<div class="region" style="display: none;">
 							<?php 
 								$class_en = '';
@@ -217,15 +217,18 @@
 								$on_pt = '';
 								$class_es = '';
 								$on_es = '';
+								$menu_idioma = [];
 
 								if($idioma == 'en'){
 									$class_en = 'ativo';
 									$on_en = '';
+									$menu_idioma = ['Products','Simulators','Color Simulator','Consumption Calculator','Company','Matrix and Units','Work with us','Awards & Reviews','Corporate Ideology','Contact','Contact us','Media','Releases','In the Media','Download'];
 								}
 
 								if($idioma == 'pt'){
 									$class_pt = 'ativo';
 									$on_pt = '';
+									$menu_idioma = ['Produtos','Simuladores','Simulador de Cores','Calculadora de Consumo','Empresa','Matriz e Unidades','Trabalhe Conosco','Prêmios','Ideologia Corporativa','Contato','Fale Conosco','Mídia','Releases','Na Mídia','Download'];
 								}
 
 									if(is_front_page()){
@@ -237,6 +240,7 @@
 								if($idioma == 'es'){
 									$class_es = 'ativo';
 									$on_es = '';
+									$menu_idioma = ['Productos','Simuladores','Simulador de color','Calculadora de Consumo','Empresa','Matriz y unidades','Trabaja con nosotros','Premios','Ideología Corporativa','Contacto','Hable con nosotros','Medios','Noticias','En los medios','Descargar'];
 								}
 						 	?>
 
@@ -248,41 +252,57 @@
 
 					<nav class="nav">
 						<ul class="menu-principal">
+
 							<li class="<?php if((is_post_type_archive('lojas')) or (is_post_type_archive('produto')) or (is_tax('categoria_produto')) or (is_singular('produto'))){ echo 'active'; } ?>">
-								<a href="<?php echo get_home_url(); ?>/produto" title="PRODUTOS" class="">PRODUTOS</a>
+								<a href="<?php echo get_home_url(); ?>/produto" title="<?php echo $menu_idioma[0]; ?>" class=""><?php echo $menu_idioma[0]; ?></a>
+								<ul class="submenu">
+									<?php if( have_rows('imagem_categoria_produto','option') ):
+										while ( have_rows('imagem_categoria_produto','option') ) : the_row(); 
+
+											$term = get_term( get_sub_field('categoria_do_produto','option'), 'categoria_produto' ); ?>
+
+											<li>
+												<a href="<?php echo get_term_link($term->term_id); ?>" title="<?php echo $term->name; ?>" class="<?php if(is_tax('categoria_produto',$term->slug)){ echo 'active'; } ?>" style="background-image: url('<?php the_sub_field('icone_categoria','option'); ?>');">
+													<?php echo $term->name; ?>
+												</a>
+											</li>
+
+										<?php endwhile;
+									endif; ?>
+								</ul>
 							</li>
 
 							<li class="<?php if((is_page('simulador-cores')) or (is_page('calculadora-consumo'))){ echo 'active'; } ?>">
-								<a href="<?php echo get_permalink(get_page_by_path('simulador-cores')); ?>" title="SIMULADORES">SIMULADORES</a>
+								<a href="<?php echo get_permalink(get_page_by_path('simulador-cores')); ?>" title="<?php echo $menu_idioma[1]; ?>"><?php echo $menu_idioma[1]; ?></a>
 								<ul class="submenu">
-									<li><a href="<?php echo get_permalink(get_page_by_path('simulador-cores')); ?>" title="SIMULADOR DE CORES" class="<?php if(is_page('simulador-cores')){ echo 'active'; } ?>">SIMULADOR<br>DE CORES</a></li>		
-									<li><a href="<?php echo get_permalink(get_page_by_path('calculadora-consumo')); ?>" title="CALCULADORA DE CONSUMO" class="<?php if(is_page('calculadora-consumo')){ echo 'active'; } ?>">CALCULADORA<br>DE CONSUMO</a></li>	
+									<li><a href="<?php echo get_permalink(get_page_by_path('simulador-cores')); ?>" title="<?php echo $menu_idioma[2]; ?>" class="<?php if(is_page('simulador-cores')){ echo 'active'; } ?>"><?php echo $menu_idioma[2]; ?></a></li>		
+									<li><a href="<?php echo get_permalink(get_page_by_path('calculadora-consumo')); ?>" title="<?php echo $menu_idioma[3]; ?>" class="<?php if(is_page('calculadora-consumo')){ echo 'active'; } ?>"><?php echo $menu_idioma[3]; ?></a></li>	
 								</ul>
 							</li>
 
 							<li class="<?php if((is_page('empresa'))){ echo 'active'; } ?>">
-								<a href="<?php echo get_permalink(get_page_by_path('empresa')); ?>" title="EMPRESA">EMPRESA</a>
+								<a href="<?php echo get_permalink(get_page_by_path('empresa')); ?>" title="<?php echo $menu_idioma[4]; ?>"><?php echo $menu_idioma[4]; ?></a>
 								<ul class="submenu">
-									<li><a href="<?php echo get_home_url(); ?>/matriz_filiais" title="MATRIZ E UNIDADES" class="<?php if(is_post_type_archive('matriz_filiais')){ echo 'active'; } ?>">MATRIZ E<br>UNIDADES</a></li>		
-									<li><a href="<?php echo get_permalink(get_page_by_path('trabalhe-conosco')); ?>" title="TRABALHE CONOSCO" class="<?php if(is_page('trabalhe-conosco')){ echo 'active'; } ?>">TRABALHE<br>CONOSCO</a></li>		
-									<li><a href="<?php echo get_permalink(get_page_by_path('empresa')); ?>#premios" title="PRÊMIOS" class="">PRÊMIOS</a></li>				
-									<li><a href="<?php echo get_permalink(get_page_by_path('empresa')); ?>#ideologia-corporativa" title="IDEOLOGIA CORPORATIVA" class="">IDEOLOGIA<br>CORPORATIVA</a></li>
+									<li><a href="<?php echo get_home_url(); ?>/matriz_filiais" title="<?php echo $menu_idioma[5]; ?>" class="<?php if(is_post_type_archive('matriz_filiais')){ echo 'active'; } ?>"><?php echo $menu_idioma[5]; ?></a></li>		
+									<li><a href="<?php echo get_permalink(get_page_by_path('trabalhe-conosco')); ?>" title="<?php echo $menu_idioma[6]; ?>" class="<?php if(is_page('trabalhe-conosco')){ echo 'active'; } ?>"><?php echo $menu_idioma[6]; ?></a></li>		
+									<li><a href="<?php echo get_permalink(get_page_by_path('empresa')); ?>#premios" title="<?php echo $menu_idioma[7]; ?>" class=""><?php echo $menu_idioma[7]; ?></a></li>				
+									<li><a href="<?php echo get_permalink(get_page_by_path('empresa')); ?>#ideologia-corporativa" title="<?php echo $menu_idioma[8]; ?>" class=""><?php echo $menu_idioma[8]; ?></a></li>
 								</ul>
 							</li>
 							<li class="<?php if((is_post_type_archive('matriz_filiais')) or (is_page('trabalhe-conosco')) or (is_page('fale-conosco'))){ echo 'active'; } ?>">
-								<a href="javascript:" title="CONTATO">CONTATO</a>
+								<a href="javascript:" title="<?php echo $menu_idioma[9]; ?>"><?php echo $menu_idioma[9]; ?></a>
 								<ul class="submenu">
-									<li><a href="<?php echo get_home_url(); ?>/matriz_filiais" title="MATRIZ E UNIDADES" class="<?php if(is_post_type_archive('matriz_filiais')){ echo 'active'; } ?>">MATRIZ E<br>UNIDADES</a></li>		
-									<li><a href="<?php echo get_permalink(get_page_by_path('fale-conosco')); ?>" title="FALE CONOSCO" class="<?php if(is_page('fale-conosco')){ echo 'active'; } ?>">FALE<br>CONOSCO</a></li>		
-									<li><a href="<?php echo get_permalink(get_page_by_path('trabalhe-conosco')); ?>" title="TRABALHE CONOSCO" class="<?php if(is_page('trabalhe-conosco')){ echo 'active'; } ?>">TRABALHE<br>CONOSCO</a></li>
+									<li><a href="<?php echo get_home_url(); ?>/matriz_filiais" title="<?php echo $menu_idioma[5]; ?>" class="<?php if(is_post_type_archive('matriz_filiais')){ echo 'active'; } ?>"><?php echo $menu_idioma[5]; ?></a></li>		
+									<li><a href="<?php echo get_permalink(get_page_by_path('fale-conosco')); ?>" title="<?php echo $menu_idioma[10]; ?>" class="<?php if(is_page('fale-conosco')){ echo 'active'; } ?>"><?php echo $menu_idioma[10]; ?></a></li>		
+									<li><a href="<?php echo get_permalink(get_page_by_path('trabalhe-conosco')); ?>" title="<?php echo $menu_idioma[6]; ?>" class="<?php if(is_page('trabalhe-conosco')){ echo 'active'; } ?>"><?php echo $menu_idioma[6]; ?></a></li>
 								</ul>
 							</li>
 							<li class="<?php if((is_category('release')) or (is_category('na-midia')) or (is_page('downloads')) or (is_singular('post'))){ echo 'active'; } ?>">
-								<a href="javascript:" title="MÍDIA">MÍDIA</a>
+								<a href="javascript:" title="<?php echo $menu_idioma[11]; ?>"><?php echo $menu_idioma[11]; ?></a>
 								<ul class="submenu">
-									<li><a href="<?php echo get_home_url(); ?>/midia/release" title="RELEASES" class="<?php if(is_category('release')){ echo 'active'; } ?>">RELEASES</a></li>		
-									<li><a href="<?php echo get_home_url(); ?>/midia/na-midia" title="NA MÍDIA" class="<?php if(is_category('na-midia')){ echo 'active'; } ?>">NA MÍDIA</a></li>		
-									<li><a href="<?php echo get_permalink(get_page_by_path('downloads')); ?>" title="DOWNLOAD" class="<?php if(is_page('downloads')){ echo 'active'; } ?>">DOWNLOAD</a></li>				
+									<li><a href="<?php echo get_home_url(); ?>/midia/release" title="<?php echo $menu_idioma[12]; ?>" class="<?php if(is_category('release')){ echo 'active'; } ?>"><?php echo $menu_idioma[12]; ?></a></li>		
+									<li><a href="<?php echo get_home_url(); ?>/midia/na-midia" title="<?php echo $menu_idioma[13]; ?>" class="<?php if(is_category('na-midia')){ echo 'active'; } ?>"><?php echo $menu_idioma[13]; ?></a></li>		
+									<li><a href="<?php echo get_permalink(get_page_by_path('downloads')); ?>" title="<?php echo $menu_idioma[14]; ?>" class="<?php if(is_page('downloads')){ echo 'active'; } ?>"><?php echo $menu_idioma[14]; ?></a></li>				
 								</ul>
 							</li>
 						</ul>

@@ -440,7 +440,7 @@ p {
 	.box-menu {
 		float: right;
 		width: 100%;
-		max-width: 600px;
+		//max-width: 600px;
 
 		@media all and (max-width: 800px){
 			margin-top: 15px;
@@ -573,7 +573,7 @@ p {
 
 				ul {
 					display: none;
-					height: 100px;
+					height: auto;
 					width: 100%;
 					position: fixed;
 					left: 0;
@@ -582,7 +582,9 @@ p {
 					text-align: center;
 
 					li {
-						height: 100px;
+						height: 96px;
+						max-width: 280px;
+						margin: 0 15px;
 
 						a {
 							font-size: 1.5rem;
@@ -611,6 +613,23 @@ p {
 					&.active, &.active-trail, &:hover {
 						a {
 							border-color: #0077C8; 
+						}
+					}
+
+					ul {
+						background-color: #0077C8;
+
+						li {
+							a {
+								cursor: pointer;
+								&:after {
+									margin-left: 99815px;
+								}
+
+								&:hover, &.active {
+									background-color: darken(#0077C8, 5%);
+								}
+							}
 						}
 					}
 				}
@@ -954,6 +973,15 @@ p {
 								height: 50px;
 								background-position: 0px center;
 								background-size: 30%;
+								width: 90px;
+							}
+						}
+					}
+
+					&:nth-child(1) {
+						ul li {
+							a {
+								background-color: #0077C8;
 							}
 						}
 					}
@@ -2763,7 +2791,7 @@ $hSlide: 89vh;
 
 					fieldset {
 						margin-top: 0px;
-						width: 100px !important;
+						width: 135px !important;
 					}
 
 					@media all and (max-width: 480px){
@@ -3177,7 +3205,7 @@ $hSlide: 89vh;
 				filter: grayscale(100%);*/
 
 				a {
-					background-color: rgba(#0077c8,.4);
+					background-color: rgba(#0077c8,.5);
 				}
 			}
 
@@ -3185,7 +3213,10 @@ $hSlide: 89vh;
 				display: table;
 				height: 100%;
 				width: 100%;
+				@include box-sizing();
 				@include animacao('','');
+				background-repeat: no-repeat;
+				background-size: 18%;
 			}
 
 			span {
@@ -3200,14 +3231,14 @@ $hSlide: 89vh;
 			a {
 				text-decoration: none;
 				font-size: 4vh;
-				line-height: 5vh;
+				line-height: 4vh;
 				font-weight: $bold;
 				color: #ffffff;
 				display: table;
 				height: 100%;
 				width: 100%;
-				padding: 0 50px;
 				text-transform: uppercase;
+				background-color: rgba(#000000,.3);
 				@include animacao('','');
 
 				@media all and (max-width: 1000px){
@@ -3216,7 +3247,14 @@ $hSlide: 89vh;
 				}
 
 				@media all and (max-width: 800px){
-					text-align: center!important;
+					text-align: left!important;
+
+					div {
+						background-position: center left!important;
+						padding-right: 10px!important;
+						padding-left: 15%!important;
+						background-size: 15%!important;
+					}
 				}
 
 				li {
@@ -3229,6 +3267,14 @@ $hSlide: 89vh;
 
 			&:nth-child(2n+1){
 				margin-right: 1%;
+
+				a, li {
+					div {
+						background-position: center left;
+						padding-left: 80px;
+						padding-right: 20px;
+					}
+				}
 			}
 
 			&:nth-child(2n+2){
@@ -3236,6 +3282,12 @@ $hSlide: 89vh;
 
 				a, li {
 					text-align: right;
+
+					div {
+						background-position: center right;
+						padding-right: 80px;
+						padding-left: 20px;
+					}
 				}
 			}
 		}

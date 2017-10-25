@@ -1,10 +1,25 @@
 <?php get_header(); ?>
 
+<?php 
+	$idioma_archive = [];
+	if($idioma == 'en'){
+		$menu_idioma = ['Products','Know the product lines<br>with the specialty Ceramfix.'];
+	}
+
+	if($idioma == 'pt'){
+		$menu_idioma = ['Produtos','Conheça as linhas de produtos<br>com a especialidade Ceramfix.'];
+	}
+
+	if($idioma == 'es'){
+		$menu_idioma = ['Productos','Conozca las líneas de productos<br>con la especialidad Ceramfix.'];
+	}
+?>
+
 <!-- slide -->
 <section class="produtos">
 	<div class="container">
-		<h2>PRODUTOS</h2>
-		<h4><?php the_field('texto_slide_produto','option'); ?></h4>
+		<h2><?php echo $menu_idioma[0]; ?></h2>
+		<h4><?php echo $menu_idioma[1]; ?></h4>
 		<div class="slide slide-produto">
 			<div class="controle-slide">
 				<a class="left" href="#slide" role="button" data-slide="prev"></a>
@@ -43,7 +58,11 @@
 
 					<li style="background-image: url('<?php the_sub_field('imagem_categoria_produto','option'); ?>');">
 						<a href="<?php echo get_term_link($term->term_id); ?>" title="<?php echo $term->name; ?>">
-							<div><span><?php echo $term->name; ?></span></div>
+							<div style="background-image: url('<?php the_sub_field('icone_categoria','option'); ?>')">
+								<span>
+									<?php echo $term->name; ?>
+								</span>
+							</div>
 						</a>
 					</li>
 

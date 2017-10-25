@@ -1,3 +1,33 @@
+<?php 
+	global $idioma;
+	global $url_idioma;
+	$idioma = WPGlobus::Config()->language;
+	if($idioma == 'en'){
+		$url_idioma = explode('/en',home_url());
+		$url_idioma = $url_idioma[0];
+	}else{
+		if($idioma == 'es'){
+			$url_idioma = explode('/es',home_url());
+			$url_idioma = $url_idioma[0];
+		}else{
+			$url_idioma = home_url();
+		}
+	}
+
+	$idioma_single_produto = [];
+	if($idioma == 'pt'){
+		$idioma_single_produto = ['Indicação de uso','Aplicação','FICHA TÉCNICA','SIMULADOR DE CORES','CALCULADORA DE CONSUMO','ENCONTRAR LOJAS PERTO DE MIM','Veja outros produtos'];
+	}
+
+	if($idioma == 'en'){
+		$idioma_single_produto = ['Indication of use', 'Application', 'TECHNICAL SHEET', 'COLOR SIMULATOR', 'CONSUMER CALCULATOR', 'FIND SHOPS NEAR ME', 'See other products'];
+	}
+
+	if($idioma == 'es'){
+		$idioma_single_produto = ['Indicación de uso', 'Aplicación', 'FICHA TÉCNICA', 'SIMULADOR DE COLORES', 'CALCULADORA DE CONSUMO', 'ENCONTRAR TIENDAS CERCA DE MÍ', 'Vea otros productos'];
+	}
+?>
+
 <div class="detalhe-produto">
 		
 	<?php $imgPage = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), '' ); ?>
@@ -12,7 +42,7 @@
 		<p><?php the_field('descrição_produto'); ?></p>
 
 		<div class="indicacao">
-			<h2>Indicação de uso</h2>
+			<h2><?php echo $idioma_single_produto[0]; ?></h2>
 			<ul>
 
 				<?php if( have_rows('indicação_produto') ):
@@ -34,12 +64,12 @@
 
 		<?php if((get_field('video_youtube_aplicacao')) or (get_field('imagem_aplicacao'))){ ?>
 			<div class="col-link aplicacao">
-				<h2>Aplicação</h2>
+				<h2><?php echo $idioma_single_produto[1]; ?></h2>
 				<?php 
 					if(get_field('video_youtube_aplicacao')){
 						the_field('video_youtube_aplicacao');
 					}else{ ?>
-						<img src="<?php the_field('imagem_aplicacao'); ?>" alt="Aplicação">
+						<img src="<?php the_field('imagem_aplicacao'); ?>" alt="<?php echo $idioma_single_produto[1]; ?>">
 					<?php }
 				?>
 			</div>
@@ -47,13 +77,13 @@
 
 		<div class="col-link">
 			<?php if(get_field('ficha_tecnica')){ ?>
-				<a href="<?php the_field('ficha_tecnica'); ?>" target="_blank" class="ficha-tecnica"><span class="box-link"><span><span>FICHA TÉCNICA</span></span></span></a>
+				<a href="<?php the_field('ficha_tecnica'); ?>" target="_blank" title="<?php echo $idioma_single_produto[2]; ?>" class="ficha-tecnica"><span class="box-link"><span><span><?php echo $idioma_single_produto[2]; ?></span></span></span></a>
 			<?php } ?>
 			<?php if(get_field('simulacao_cores')){ ?>
-				<a href="<?php echo get_permalink(get_page_by_path('simulador-cores')); ?>" title="SIMULADOR DE CORES" class="simulador"><span class="box-link"><span><span>SIMULADOR DE CORES</span></span></span></a>
+				<a href="<?php echo get_permalink(get_page_by_path('simulador-cores')); ?>" title="<?php echo $idioma_single_produto[3]; ?>" class="simulador"><span class="box-link"><span><span><?php echo $idioma_single_produto[3] ?></span></span></span></a>
 			<?php } ?>
 			<?php if(get_field('cr')){ ?>
-				<a href="<?php echo get_permalink(get_page_by_path('calculadora-consumo')); ?>" title="CALCULADORA DE CONSUMO" class="calculadora"><span class="box-link"><span><span>CALCULADORA DE CONSUMO</span></span></span></a>
+				<a href="<?php echo get_permalink(get_page_by_path('calculadora-consumo')); ?>" title="<?php echo $idioma_single_produto[4]; ?>" class="calculadora"><span class="box-link"><span><span><?php echo $idioma_single_produto[4]; ?></span></span></span></a>
 			<?php } ?>
 		</div>
 	</div>
@@ -76,7 +106,7 @@
 		
 		<div class="mapa-select" style="background-image: url('<?php the_field('imagem_busca','options'); ?>');">
 
-			<h3>ENCONTRAR LOJAS PERTO DE MIM</h3>
+			<h3><?php echo $idioma_single_produto[5]; ?></h3>
 
 			<div class="bg-select">
 				<span class="select selectboxproduto">
@@ -98,7 +128,7 @@
 
 	<section class="produtos">
 		<div class="container">
-			<h2 class="outros-produtos">Veja outros produtos:</h2>
+			<h2 class="outros-produtos"><?php echo $idioma_single_produto[6]; ?>:</h2>
 
 			<div class="slide-produtos list-produto owl-carousel owl-theme">
 					

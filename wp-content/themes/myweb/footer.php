@@ -16,7 +16,7 @@
 					<?php if( have_rows('outros_icones','option') ):
 						while ( have_rows('outros_icones','option') ) : the_row(); ?>
 
-							<a href="<?php the_sub_field('url','option'); ?>" class="social" target="_blank" title="<?php the_sub_field('titulo','option'); ?>"><img src="<?php the_sub_field('icone','option'); ?>"></a>
+							<a href="<?php the_sub_field('url','option'); ?>" class="social" target="_blank" title=""><img src="<?php the_sub_field('icone','option'); ?>"></a>
 
 						<?php endwhile;
 					endif; ?>

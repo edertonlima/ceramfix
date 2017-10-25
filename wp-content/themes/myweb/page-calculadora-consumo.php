@@ -1,5 +1,20 @@
 <?php get_header(); ?>
 
+<?php
+	$idioma_single_produto = [];
+	if($idioma == 'pt'){
+		$idioma_single_produto = ['Calcule a quantidade e evite desperdício','ESCOLHA UM PRODUTO','DIMENSÕES DO REVESTIMENTO','LARGURA DA JUNTA','ESPESSURA DO REVESTIMENTO','ÁREA TOTAL A SER REVESTIDA','CALCULAR!','O seu consumo médio para rejuntar será de <span></span> Kg. <p>Obs: Para calculo do assentamento de pastilhas e revestimentos o consumo está disponível na página do produto.</p>','CENTRAL DE RELACIONAMENTO CERAMFIX'];
+	}
+
+	if($idioma == 'en'){
+		$idioma_single_produto = ['Calculate quantity and avoid waste', 'CHOOSE A PRODUCT', 'COATING DIMENSIONS', 'BOARD WIDTH', 'COATING THICKNESS', 'TOTAL AREA TO BE COATED', 'CALCULATE!', 'Your Average consumption for grouting will be <span> </ span> Kg. <p> Note: To calculate the setting of tablets and coatings consumption is available on the product page. </ p> ',' CERAMFIX RELATIONSHIP CENTER '];
+	}
+
+	if($idioma == 'es'){
+		$idioma_single_produto = ['Calcule la cantidad y evite desperdicio', 'ELEGIR UN PRODUCTO', 'DIMENSIONES DEL REVESTIMIENTO', 'ANCHO DE LA JUNTA', 'ESPESOR DEL REVESTIMIENTO', 'ÁREA TOTAL QUE SE REVESTIDA', 'CALCULAR!', 'Su El consumo medio para rejuntar será de <span> </ span> Kg. <p> Obs: Para calculo del asentamiento de pastillas y revestimientos el consumo está disponible en la página del producto. </ p> ',' CENTRAL DE RELACIÓN CERAMFIX '];
+	}
+?>
+
 <section class="box-container box-calculadora-consumo">
 	<div class="container">
 		<h2><?php the_title(); ?></h2>
@@ -11,7 +26,7 @@
 	<?php } ?>
 
 	<div class="container">
-		<p>Calcule a quantidade e evite desperdício:</p>
+		<p><?php echo $idioma_single_produto[0]; ?>:</p>
 		
 		<div class="passos-calculadora">
 			<span class="passo first-passo">1</span>
@@ -19,7 +34,7 @@
 				<div class="bg-select">
 					<span class="select selectboxproduto">
 						<select name="produto" id="produto" class="select-produto">
-							<option value="" selected="selected">ESCOLHA UM PRODUTO</option>
+							<option value="" selected="selected"><?php echo $idioma_single_produto[1]; ?></option>
     <?php
         $getPosts = array(
             'post_type'   => 'produto',
@@ -51,7 +66,7 @@
 			<span class="passo">2</span>
 			<div class="box-passos">
 				<div class="item-passo num-passo passo-2">
-					<span class="tit-campo">DIMENSÕES DO REVESTIMENTO</span>
+					<span class="tit-campo"><?php echo $idioma_single_produto[2]; ?></span>
 					<img src="<?php echo get_template_directory_uri(); ?>/assets/images/passo-2.png" alt="">
 					<div class="campos">
 						<input type="text" name="a">
@@ -64,7 +79,7 @@
 
 				<div class="item-passo num-passo passo-3">
 					<span class="passo">3</span>
-					<span class="tit-campo">LARGURA DA JUNTA</span>
+					<span class="tit-campo"><?php echo $idioma_single_produto[3]; ?></span>
 					<img src="<?php echo get_template_directory_uri(); ?>/assets/images/passo-3.png" alt="">
 					<div class="campos">
 						<input type="text" name="l">
@@ -74,7 +89,7 @@
 
 				<div class="item-passo num-passo passo-4">
 					<span class="passo">4</span>
-					<span class="tit-campo">ESPESSURA DO REVESTIMENTO</span>
+					<span class="tit-campo"><?php echo $idioma_single_produto[4]; ?></span>
 					<img src="<?php echo get_template_directory_uri(); ?>/assets/images/passo-4.png" alt="">
 					<div class="campos">
 						<input type="text" name="e">
@@ -84,7 +99,7 @@
 
 				<div class="item-passo num-passo passo-5">
 					<span class="passo">5</span>
-					<span class="tit-campo">ÁREA TOTAL A SER REVESTIDA</span>
+					<span class="tit-campo"><?php echo $idioma_single_produto[5]; ?></span>
 					<img src="<?php echo get_template_directory_uri(); ?>/assets/images/passo-5.png" alt="">
 					<div class="campos">
 						<input type="text" name="m2">
@@ -94,9 +109,9 @@
 			</div>
 		</div>
 
-		<button class="calcular">CALCULAR!</button>
+		<button class="calcular"><?php echo $idioma_single_produto[6]; ?></button>
 
-		<h2 id="resultado">O seu consumo médio para rejuntar será de <span></span> Kg. <p>Obs: Para calculo do assentamento de pastilhas e revestimentos o consumo está disponível na página do produto.</p></h2>
+		<h2 id="resultado"><?php echo $idioma_single_produto[7]; ?></h2>
 
 	</div>
 </section>	
@@ -107,10 +122,10 @@
 		<div class="row">
 			<div class="col-12">
 				<div class="info-contato">
-					<span>CENTRAL DE RELACIONAMENTO CERAMFIX</span>
-					<h2>0800 7045049</h2>
-					<a href="#">www.ceramfix.com.br</a>
-					<a href="#">info@ceramfix.com.br</a>
+					<span><?php echo $idioma_single_produto[8]; ?></span>
+					<h2><?php the_field('telefone','option'); ?></h2>
+					<a href="<?php echo get_home_url(); ?>"><?php echo get_home_url(); ?></a>
+					<a href="mailto:<?php the_field('telefone','option'); ?>"><?php the_field('email','option'); ?></a>
 				</div>
 			</div>
 		</div>

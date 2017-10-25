@@ -226,7 +226,7 @@
 
 
 
-$producao = false;
+$producao = true;
 if($producao){
 	add_action('admin_head', 'my_custom_fonts');
 
@@ -391,12 +391,6 @@ if( function_exists('acf_add_options_page') ) {
 	acf_add_options_sub_page(array(
 		'page_title' 	=> 'Configurações Gerais',
 		'menu_title'	=> 'Geral',
-		'parent_slug'	=> 'configuracoes-geral',
-	));
-
-	acf_add_options_sub_page(array(
-		'page_title' 	=> 'Matriz e Filiais',
-		'menu_title'	=> 'Matriz e Filiais',
 		'parent_slug'	=> 'configuracoes-geral',
 	));
 	

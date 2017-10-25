@@ -1,5 +1,20 @@
 <?php get_header(); ?>
 
+<?php
+	$idioma_single_produto = [];
+	if($idioma == 'pt'){
+		$idioma_single_produto = ['SALA','COZINHA','BANHEIRO','PISCINA','ESCOLHA UM PRODUTO','SELECIONE A COR DO REJUNTE DA PAREDE','SELECIONE A COR DO REJUNTE DO PISO','SELECIONE A IMAGEM DA PAREDE','SELECIONE A IMAGEM DO PISO','SELECIONE A IMAGEM DA PASTILHA','SELECIONE A COR DO REJUNTE DA PASTILHA'];
+	}
+
+	if($idioma == 'en'){
+		$idioma_single_produto = ['LIVING ROOM','KITCHEN','WC','POOL','CHOOSE A PRODUCT','SELECT THE COLOR OF THE WALL JOINT', 'SELECT THE COLOR OF THE FLOOR JOINT', 'SELECT THE WALL IMAGE', 'SELECT THE IMAGE FROM THE FLOOR','SELECT THE PICTURE OF THE SHEET', 'SELECT THE COLOR OF THE SHEET OF THE SHEET'];
+	}
+
+	if($idioma == 'es'){
+		$idioma_single_produto = ['SALA','COCINA','BAÑO','PISCINA','ELEGIR UN PRODUCTO','SELECCIONE EL COLOR DEL REJUNTO DE LA PARED', 'SELECCIONE EL COLOR DEL REJUNTE DEL PISO', 'SELECCIONE LA IMAGEN DE LA PARED', 'SELECCIONE LA IMAGEN DEL PISO','SELECCIONE LA IMAGEN DE LA PASTILLA', 'SELECCIONE EL COLOR DEL REJUNTE DE LA PASTILLA'];
+	}
+?>
+
 <section class="box-container box-simulador-cores">
 	<div class="container">
 		<h2><?php the_title(); ?></h2>
@@ -7,10 +22,10 @@
 
 	<div class="container">
 		<div class="tab">
-			<div class="item item-ambiente active" rel="#sala">SALA</div>
-			<div class="item item-ambiente" rel="#cozinha">COZINHA</div>
-			<div class="item item-ambiente" rel="#banheiro">BANHEIRO</div>
-			<div class="item item-ambiente" rel="#piscina">PISCINA</div>
+			<div class="item item-ambiente active" rel="#sala"><?php echo $idioma_single_produto[0]; ?></div>
+			<div class="item item-ambiente" rel="#cozinha"><?php echo $idioma_single_produto[1]; ?></div>
+			<div class="item item-ambiente" rel="#banheiro"><?php echo $idioma_single_produto[2]; ?></div>
+			<div class="item item-ambiente" rel="#piscina"><?php echo $idioma_single_produto[3]; ?></div>
 
 			<!-- #sala -->
 			<div class="tab-content active" id="sala">
@@ -37,7 +52,7 @@
 						<div class="bg-select">
 							<span class="select">
 								<select name="produto" class="select-produto" rel="sala">
-									<option value="null" selected="selected">ESCOLHA UM PRODUTO</option>
+									<option value="null" selected="selected"><?php echo $idioma_single_produto[4]; ?></option>
 
 									<?php while ( have_rows('produto-sala','option') ) : the_row();
 
@@ -99,7 +114,20 @@
 												endwhile;
 											endif;
 
-											echo '<option value="'.$produto->ID.'" parede="'.$parede.'" piso="'.$piso.'">'.strtoupper($produto->post_title).'</option>';
+											$nome_produto = explode('{:}', strtoupper($produto->post_title));
+											if($idioma == 'pt'){
+												$titulo_prod = explode('{:PT}', strtoupper($nome_produto[0]));
+											}
+
+											if($idioma == 'en'){
+												$titulo_prod = explode('{:EN}', strtoupper($nome_produto[1]));
+											}
+
+											if($idioma == 'es'){
+												$titulo_prod = explode('{:ES}', strtoupper($nome_produto[2]));
+											}
+
+											echo '<option value="'.$produto->ID.'" parede="'.$parede.'" piso="'.$piso.'">'.$$titulo_prod[1].'</option>';
 
 										endif;
 
@@ -109,13 +137,13 @@
 							</span>
 						</div>
 
-					<?php endif; 
+					<?php endif;
 
 					if(count($produto_ambiente)):
 						foreach ($produto_ambiente as $produto){ ?>
 							<div class="option-produto esq <?php echo 'id-'.$produto['id']; ?>">			
 								<div class="slide-cor">
-									<span class="tit-cores">SELECIONE A COR DO REJUNTE DA PAREDE:</span>
+									<span class="tit-cores"><?php echo $idioma_single_produto[5]; ?>:</span>
 									<div class="slide-item-cor slide-simulacao">
 										<?php if(count($produto['rejunte-parede'])):
 											foreach ($produto['rejunte-parede'] as $rejunte_parede){ ?>
@@ -130,7 +158,7 @@
 							</div>
 							<div class="option-produto dir <?php echo 'id-'.$produto['id']; ?>"">			
 								<div class="slide-cor">
-									<span class="tit-cores">SELECIONE A COR DO REJUNTE DO PISO:</span>
+									<span class="tit-cores"><?php echo $idioma_single_produto[6]; ?>:</span>
 									<div class="slide-item-cor slide-simulacao">
 										<?php if(count($produto['rejunte-piso'])):
 											foreach ($produto['rejunte-piso'] as $rejunte){ ?>
@@ -145,7 +173,7 @@
 							</div>
 							<div class="option-produto esq <?php echo 'id-'.$produto['id']; ?> select-parede">			
 								<div class="slide-cor">
-									<span class="tit-cores">SELECIONE A IMAGEM DA PAREDE:</span>
+									<span class="tit-cores"><?php echo $idioma_single_produto[7]; ?>:</span>
 									<div class="slide-item-cor slide-simulacao">
 										<?php if(count($produto['parede'])):
 											$i = 0;
@@ -162,7 +190,7 @@
 							</div>
 							<div class="option-produto dir <?php echo 'id-'.$produto['id']; ?> select-piso">			
 								<div class="slide-cor">
-									<span class="tit-cores">SELECIONE A IMAGEM DO PISO:</span>
+									<span class="tit-cores"><?php echo $idioma_single_produto[8]; ?>:</span>
 									<div class="slide-item-cor slide-simulacao">
 										<?php if(count($produto['piso'])):
 											$i = 0;
@@ -209,7 +237,7 @@
 						<div class="bg-select">
 							<span class="select">
 								<select name="produto" class="select-produto" rel="cozinha">
-									<option value="null" selected="selected">ESCOLHA UM PRODUTO</option>
+									<option value="null" selected="selected"><?php echo $idioma_single_produto[4]; ?></option>
 
 									<?php while ( have_rows('produto-cozinha','option') ) : the_row();
 
@@ -271,7 +299,20 @@
 												endwhile;
 											endif;
 
-											echo '<option value="'.$produto->ID.'" parede="'.$parede.'" piso="'.$piso.'">'.strtoupper($produto->post_title).'</option>';
+											$nome_produto = explode('{:}', strtoupper($produto->post_title));
+											if($idioma == 'pt'){
+												$titulo_prod = explode('{:PT}', strtoupper($nome_produto[0]));
+											}
+
+											if($idioma == 'en'){
+												$titulo_prod = explode('{:EN}', strtoupper($nome_produto[1]));
+											}
+
+											if($idioma == 'es'){
+												$titulo_prod = explode('{:ES}', strtoupper($nome_produto[2]));
+											}
+
+											echo '<option value="'.$produto->ID.'" parede="'.$parede.'" piso="'.$piso.'">'.$titulo_prod[1].'</option>';
 
 										endif;
 
@@ -287,7 +328,7 @@
 						foreach ($produto_ambiente as $produto){ ?>
 							<div class="option-produto esq <?php echo 'id-'.$produto['id']; ?>">			
 								<div class="slide-cor">
-									<span class="tit-cores">SELECIONE A COR DO REJUNTE DA PAREDE:</span>
+									<span class="tit-cores"><?php echo $idioma_single_produto[5]; ?>:</span>
 									<div class="slide-item-cor slide-simulacao">
 										<?php if(count($produto['rejunte-parede'])):
 											foreach ($produto['rejunte-parede'] as $rejunte_parede){ ?>
@@ -302,7 +343,7 @@
 							</div>
 							<div class="option-produto dir <?php echo 'id-'.$produto['id']; ?>"">			
 								<div class="slide-cor">
-									<span class="tit-cores">SELECIONE A COR DO REJUNTE DO PISO:</span>
+									<span class="tit-cores"><?php echo $idioma_single_produto[6]; ?>:</span>
 									<div class="slide-item-cor slide-simulacao">
 										<?php if(count($produto['rejunte-piso'])):
 											foreach ($produto['rejunte-piso'] as $rejunte){ ?>
@@ -317,7 +358,7 @@
 							</div>
 							<div class="option-produto esq <?php echo 'id-'.$produto['id']; ?> select-parede">			
 								<div class="slide-cor">
-									<span class="tit-cores">SELECIONE A IMAGEM DA PAREDE:</span>
+									<span class="tit-cores"><?php echo $idioma_single_produto[7]; ?>:</span>
 									<div class="slide-item-cor slide-simulacao">
 										<?php if(count($produto['parede'])):
 											$i = 0;
@@ -334,7 +375,7 @@
 							</div>
 							<div class="option-produto dir <?php echo 'id-'.$produto['id']; ?> select-piso">			
 								<div class="slide-cor">
-									<span class="tit-cores">SELECIONE A IMAGEM DO PISO:</span>
+									<span class="tit-cores"><?php echo $idioma_single_produto[7]; ?>:</span>
 									<div class="slide-item-cor slide-simulacao">
 										<?php if(count($produto['piso'])):
 											$i = 0;
@@ -381,7 +422,7 @@
 						<div class="bg-select">
 							<span class="select">
 								<select name="produto" class="select-produto" rel="banheiro">
-									<option value="null" selected="selected">ESCOLHA UM PRODUTO</option>
+									<option value="null" selected="selected"><?php echo $idioma_single_produto[4]; ?></option>
 
 									<?php while ( have_rows('produto-banheiro','option') ) : the_row();
 
@@ -443,7 +484,20 @@
 												endwhile;
 											endif;
 
-											echo '<option value="'.$produto->ID.'" parede="'.$parede.'" piso="'.$piso.'">'.strtoupper($produto->post_title).'</option>';
+											$nome_produto = explode('{:}', strtoupper($produto->post_title));
+											if($idioma == 'pt'){
+												$titulo_prod = explode('{:PT}', strtoupper($nome_produto[0]));
+											}
+
+											if($idioma == 'en'){
+												$titulo_prod = explode('{:EN}', strtoupper($nome_produto[1]));
+											}
+
+											if($idioma == 'es'){
+												$titulo_prod = explode('{:ES}', strtoupper($nome_produto[2]));
+											}
+
+											echo '<option value="'.$produto->ID.'" parede="'.$parede.'" piso="'.$piso.'">'.$titulo_prod[''].'</option>';
 
 										endif;
 
@@ -459,7 +513,7 @@
 						foreach ($produto_ambiente as $produto){ ?>
 							<div class="option-produto esq <?php echo 'id-'.$produto['id']; ?>">			
 								<div class="slide-cor">
-									<span class="tit-cores">SELECIONE A COR DO REJUNTE DA PAREDE:</span>
+									<span class="tit-cores"><?php echo $idioma_single_produto[5]; ?>:</span>
 									<div class="slide-item-cor slide-simulacao">
 										<?php if(count($produto['rejunte-parede'])):
 											foreach ($produto['rejunte-parede'] as $rejunte_parede){ ?>
@@ -474,7 +528,7 @@
 							</div>
 							<div class="option-produto dir <?php echo 'id-'.$produto['id']; ?>"">			
 								<div class="slide-cor">
-									<span class="tit-cores">SELECIONE A COR DO REJUNTE DO PISO:</span>
+									<span class="tit-cores"><?php echo $idioma_single_produto[6]; ?>:</span>
 									<div class="slide-item-cor slide-simulacao">
 										<?php if(count($produto['rejunte-piso'])):
 											foreach ($produto['rejunte-piso'] as $rejunte){ ?>
@@ -489,7 +543,7 @@
 							</div>
 							<div class="option-produto esq <?php echo 'id-'.$produto['id']; ?> select-parede">			
 								<div class="slide-cor">
-									<span class="tit-cores">SELECIONE A IMAGEM DA PAREDE:</span>
+									<span class="tit-cores"><?php echo $idioma_single_produto[7]; ?>:</span>
 									<div class="slide-item-cor slide-simulacao">
 										<?php if(count($produto['parede'])):
 											$i = 0;
@@ -506,7 +560,7 @@
 							</div>
 							<div class="option-produto dir <?php echo 'id-'.$produto['id']; ?> select-piso">			
 								<div class="slide-cor">
-									<span class="tit-cores">SELECIONE A IMAGEM DO PISO:</span>
+									<span class="tit-cores"><?php echo $idioma_single_produto[8]; ?>:</span>
 									<div class="slide-item-cor slide-simulacao">
 										<?php if(count($produto['piso'])):
 											$i = 0;
@@ -549,7 +603,7 @@
 						<div class="bg-select">
 							<span class="select">
 								<select name="produto" class="select-produto" rel="piscina">
-									<option value="null" selected="selected">ESCOLHA UM PRODUTO</option>
+									<option value="null" selected="selected"><?php echo $idioma_single_produto[4]; ?></option>
 
 									<?php while ( have_rows('produto-piscina','option') ) : the_row();
 
@@ -585,7 +639,20 @@
 												endwhile;
 											endif;
 
-											echo '<option value="'.$produto->ID.'" piso="'.$piso.'">'.strtoupper($produto->post_title).'</option>';
+											$nome_produto = explode('{:}', strtoupper($produto->post_title));
+											if($idioma == 'pt'){
+												$titulo_prod = explode('{:PT}', strtoupper($nome_produto[0]));
+											}
+
+											if($idioma == 'en'){
+												$titulo_prod = explode('{:EN}', strtoupper($nome_produto[1]));
+											}
+
+											if($idioma == 'es'){
+												$titulo_prod = explode('{:ES}', strtoupper($nome_produto[2]));
+											}
+
+											echo '<option value="'.$produto->ID.'" piso="'.$piso.'">'.$titulo_prod[''].'</option>';
 
 										endif;
 
@@ -602,7 +669,7 @@
 
 							<div class="option-produto esq <?php echo 'id-'.$produto['id']; ?> select-piso">			
 								<div class="slide-cor">
-									<span class="tit-cores">SELECIONE A IMAGEM DA PASTILHA:</span>
+									<span class="tit-cores"><?php echo $idioma_single_produto[8]; ?>:</span>
 									<div class="slide-item-cor slide-simulacao">
 										<?php if(count($produto['piso'])):
 											$i = 0;
@@ -620,7 +687,7 @@
 
 							<div class="option-produto dir <?php echo 'id-'.$produto['id']; ?>"">			
 								<div class="slide-cor">
-									<span class="tit-cores">SELECIONE A COR DO REJUNTE DA PASTILHA:</span>
+									<span class="tit-cores"><?php echo $idioma_single_produto[9]; ?>:</span>
 									<div class="slide-item-cor slide-simulacao">
 										<?php if(count($produto['rejunte-piso'])):
 											foreach ($produto['rejunte-piso'] as $rejunte){ ?>

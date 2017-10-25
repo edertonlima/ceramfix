@@ -1,28 +1,43 @@
 <?php get_header(); ?>
 
+<?php 
+	$idioma_download = [];
+	if($idioma == 'pt'){
+		$idioma_download = ['DOWNLOAD','INSTITUCIONAL','CATÁLOGOS','PRODUTOS','Selecione o arquivo que deseja baixar.<br>Pode selecionar vários arquivos juntos para baixar simultaneamente.','É preciso selecionar um arquivo.','baixar','BAIXAR','Selecione a linha a que o produto e o tipo de material que deseja baixar.<br>Pode selecionar vários materiais juntos para baixar simultaneamente.','ESCOLHA A LINHA DE PRODUTO'];;
+	}
+
+	if($idioma == 'es'){
+		$idioma_download = ['DESCARGAR','INSTITUCIONAL','CATÁLOGOS','PRODUCTOS','Seleccione el archivo que desea descargar.<br>Puede seleccionar varios archivos juntos para descargar simultáneamente. ',' Debe seleccionar un archivo. ','bajar ','BAJAR ',' la línea a la que el producto y el tipo de material que desea descargar. <br> Puede seleccionar varios materiales juntos para descargar simultáneamente. ',' SELECCIÓN DE LA LÍNEA DE PRODUCTO '];
+	}
+
+	if($idioma == 'en'){
+		$idioma_download = ['DOWNLOAD','INSTITUTIONAL','CATALOG', 'PRODUCTS', 'Select the file you want to download.<br>You can select multiple files together to download simultaneously. ',' You must select a file. ','download','DOWNLOAD',' line to which the product and the type of material you want to download. <br> You can select multiple materials together to download simultaneously. ',' CHOOSE THE PRODUCT LINE '];
+	}
+?>
+
 <section class="box-container box-release box-download">
 	<div class="container">
-		<h2>DOWNLOAD</h2>
+		<h2><?php echo $idioma_download[0]; ?></h2>
 	</div>
 
 	<div class="container">
 
 		<div class="tab">
-			<div class="item" rel="#anuncios">INSTITUCIONAL</div>
-			<div class="item" rel="#catalogos">CATÁLOGOS</div>
-			<div class="item active" rel="#produtos">PRODUTOS</div>
+			<div class="item" rel="#anuncios"><?php echo $idioma_download[1]; ?></div>
+			<div class="item" rel="#catalogos"><?php echo $idioma_download[2]; ?></div>
+			<div class="item active" rel="#produtos"><?php echo $idioma_download[3]; ?></div>
 
 			<!-- ANUNCIOS -->
 			<div class="tab-content" id="anuncios">
 				<form action="<?php echo get_template_directory_uri(); ?>/compactar.php" method="post" id="form-anuncios">
 
-					<p class="desc-donwload">Selecione o arquivo que deseja baixar.<br>Pode selecionar vários arquivos juntos para baixar simultaneamente.</p>
+					<p class="desc-donwload"><?php echo $idioma_download[8]; ?></p>
 
 					<?php if( have_rows('anuncios','option') ): ?>
 						<h3 class="tit-baixar">
 							<span id="tit-anuncios"></span>
-							<span class="erro-download">É preciso selecionar um arquivo.</span>
-							<a class="baixar-produto" rel="#form-anuncios">baixar</a>
+							<span class="erro-download"><?php echo $idioma_download[5]; ?></span>
+							<a class="baixar-produto" rel="#form-anuncios"><?php echo $idioma_download[6]; ?></a>
 						</h3>
 
 						<div class="row list-download">
@@ -39,7 +54,7 @@
 											<label>
 												<input type="checkbox" name="arquivo-<?php echo $itemAnuncio; ?>" value="<?php the_sub_field('arquivo','option'); ?>">
 												<span class="checkbox"></span>
-												BAIXAR
+												<?php echo $idioma_download[7]; ?>
 											</label>
 										</fieldset>
 									</div>
@@ -56,13 +71,13 @@
 			<div class="tab-content" id="catalogos">
 				<form action="<?php echo get_template_directory_uri(); ?>/compactar.php" method="post" id="form-catalogo">
 
-					<p class="desc-donwload">Selecione o arquivo que deseja baixar.<br>Pode selecionar vários arquivos juntos para baixar simultaneamente.</p>
+					<p class="desc-donwload"><?php echo $idioma_download[4]; ?></p>
 
 					<?php if( have_rows('catalogos','option') ): ?>
 						<h3 class="tit-baixar">
 							<span id="tit-catalogos"></span>
-							<span class="erro-download">É preciso selecionar um arquivo.</span>
-							<a class="baixar-produto" rel="#form-catalogo">baixar</a>
+							<span class="erro-download"><?php echo $idioma_download[5]; ?></span>
+							<a class="baixar-produto" rel="#form-catalogo"><?php echo $idioma_download[6]; ?></a>
 						</h3>
 
 						<div class="row list-download">
@@ -79,7 +94,7 @@
 											<label>
 												<input type="checkbox" name="arteFinal-<?php echo $itemCatalogo; ?>" value="<?php the_sub_field('arquivo','option'); ?>">
 												<span class="checkbox"></span>
-												BAIXAR
+												<?php echo $idioma_download[7]; ?>
 											</label>
 										</fieldset>
 									</div>
@@ -96,11 +111,11 @@
 			<div class="tab-content active" id="produtos">
 				<form action="<?php echo get_template_directory_uri(); ?>/compactar.php" method="post" id="form-produto">
 
-					<p class="desc-donwload">Selecione a linha a que o produto e o tipo de material que deseja baixar.<br>Pode selecionar vários materiais juntos para baixar simultaneamente.</p>
+					<p class="desc-donwload"><?php echo $idioma_download[4]; ?></p>
 
 					<span class="select">
 						<select id="linha-produto">
-							<option value="null" selected="selected">ESCOLHA A LINHA DE PRODUTO</option>
+							<option value="null" selected="selected"><?php echo $idioma_download[9]; ?></option>
 							<?php
 								$produto = [];
 								$args = array(
@@ -159,8 +174,8 @@
 
 					<h3 class="tit-baixar" id="download-prod">
 						<span id="tit-produto"></span>
-						<span class="erro-download">É preciso selecionar um arquivo.</span>
-						<a class="baixar-produto" rel="#form-produto">baixar</a>
+						<span class="erro-download"><?php echo $idioma_download[5]; ?></span>
+						<a class="baixar-produto" rel="#form-produto"><?php echo $idioma_download[6]; ?></a>
 					</h3>
 
 					<div class="row list-download" id="list-prod"></div>

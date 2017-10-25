@@ -1,5 +1,20 @@
 <?php get_header(); ?>
 
+<?php 
+	$idioma_empresa = [];
+	if($idioma == 'pt'){
+		$idioma_empresa = ['PRÊMIOS','IDEOLOGIA CORPORATIVA'];
+	}
+
+	if($idioma == 'en'){
+		$idioma_empresa = ['AWARDS','CORPORATE IDEOLOGY'];
+	}
+
+	if($idioma == 'es'){
+		$idioma_empresa = ['PREMIOS','IDEOLOGÍA CORPORATIVA'];
+	}
+?>
+
 <section class="box-container box-empresa">
 
 	<?php
@@ -17,22 +32,22 @@
 
 <section class="box-container box-empresa premios" id="premios">
 	<div class="container">
-		<h2>PRÊMIOS</h2>
-		<img src="<?php the_field('imagem_premios','option'); ?>" class="img-page">
+		<h2><?php echo $idioma_empresa[0]; ?></h2>
+		<img src="<?php the_field('imagem_premios',49); ?>" class="img-page">
 
 		<div class="conteudo">
-			<p><?php the_field('texto_empresa_premios','option'); ?></p>
+			<p><?php the_field('texto_empresa_premios',49); ?></p>
 		</div>
 
 		<div class="row sub-conteudo">
-			<?php if( have_rows('prêmios','option') ):
-				while ( have_rows('prêmios','option') ) : the_row(); ?>
+			<?php if( have_rows('prêmios',49) ):
+				while ( have_rows('prêmios',49) ) : the_row(); ?>
 
 					<div class="item-premio">
 						<span class="ico-item-premio">
-							<img typeof="foaf:Image" src="<?php the_sub_field('imagem_premio','option'); ?>" width="200" height="100" alt="">
+							<img typeof="foaf:Image" src="<?php the_sub_field('imagem_premio',49); ?>" width="200" height="100" alt="">
 						</span>
-						<p class="subtitulo"><?php the_sub_field('texto_premios','option'); ?></p>
+						<p class="subtitulo"><?php the_sub_field('texto_premios',49); ?></p>
 					</div>
 
 				<?php endwhile;
@@ -46,7 +61,7 @@
 
 <section class="box-container laranja box-empresa ideologia-corporativa" id="ideologia-corporativa">
 	<div class="container">
-		<h2>IDEOLOGIA CORPORATIVA</h2>
+		<h2><?php echo $idioma_empresa[1]; ?></h2>
 
 		<div class="conteudo">
 			<p class=""><?php the_field('texto_ideologia_principal'); ?></p>
