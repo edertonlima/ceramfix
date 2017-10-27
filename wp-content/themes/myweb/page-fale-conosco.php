@@ -3,15 +3,15 @@
 <?php
 	$idioma_single_produto = [];
 	if($idioma == 'pt'){
-		$idioma_single_produto = ['CENTRAL DE RELACIONAMENTO CERAMFIX','Nome','E-mail','Telefone principal','Mensagem','ENVIAR!','ENVIANDO!','Enviado com sucesso! Obrigado.','Você também pode enviar suas críticas, sugestões ou dúvidas preenchendo os campos abaixo:'];
+		$idioma_single_produto = ['CENTRAL DE RELACIONAMENTO CERAMFIX','Nome','E-mail','Telefone principal','Mensagem','ENVIAR!','ENVIANDO!','Enviado com sucesso! Obrigado.','Você também pode enviar suas críticas, sugestões ou dúvidas preenchendo os campos abaixo:','Estado','Cidade','Campos obrigatórios não podem estar vazios.'];
 	}
 
 	if($idioma == 'en'){
-		$idioma_single_produto = ['CERAMFIX RELATIONSHIP CENTER', 'Name', 'Email', 'Home Phone', 'Message', 'SEND!', 'SENDING!', 'Successfully Sent! Thank you.','You can also send your criticisms, suggestions or questions by filling out the fields below:'];
+		$idioma_single_produto = ['CERAMFIX RELATIONSHIP CENTER', 'Name', 'Email', 'Home Phone', 'Message', 'SEND!', 'SENDING!', 'Successfully Sent! Thank you.','You can also send your criticisms, suggestions or questions by filling out the fields below:','State','City','Required fields can not be empty.'];
 	}
 
 	if($idioma == 'es'){
-		$idioma_single_produto = ['CENTRAL DE RELACIÓN CERAMFIX', 'Nombre', 'E-mail', 'Teléfono principal', 'Mensaje', 'ENVIAR!', 'ENVIANDO!', 'Enviado con éxito! Gracias. ','Usted también puede enviar sus críticas, sugerencias o dudas rellenando los campos abajo:'];
+		$idioma_single_produto = ['CENTRAL DE RELACIÓN CERAMFIX', 'Nombre', 'E-mail', 'Teléfono principal', 'Mensaje', 'ENVIAR!', 'ENVIANDO!', 'Enviado con éxito! Gracias. ','Usted también puede enviar sus críticas, sugerencias o dudas rellenando los campos abajo:','Estado','Ciudad','Los campos obligatorios no pueden estar vacíos.'];
 	}
 ?>
 
@@ -47,16 +47,24 @@
 		<div class="row">
 			<form action="javascript:" class="contato-home">
 				<fieldset class="col-12">
-					<span><input type="text" name="nome" id="nome" placeholder="<?php echo $idioma_single_produto[1]; ?>:"></span>
+					<span><input type="text" name="nome" id="nome" placeholder="<?php echo $idioma_single_produto[1]; ?>: *"></span>
 				</fieldset>
 				<fieldset class="col-6">
-					<span><input type="text" name="email" id="email" placeholder="<?php echo $idioma_single_produto[2]; ?>:"></span>
+					<span><input type="text" name="email" id="email" placeholder="<?php echo $idioma_single_produto[2]; ?>: *"></span>
 				</fieldset>
 				<fieldset class="col-6">
-					<span><input type="text" name="telefone" id="telefone" placeholder="<?php echo $idioma_single_produto[3]; ?>:"></span>
+					<span><input type="text" name="telefone" id="telefone" class="mask-telefone" placeholder="<?php echo $idioma_single_produto[3]; ?>: *"></span>
 				</fieldset>
+
+				<fieldset class="col-6">
+					<span><input type="text" name="cidade" id="cidade" placeholder="<?php echo $idioma_single_produto[10]; ?>: *"></span>
+				</fieldset>
+				<fieldset class="col-6">
+					<span><input type="text" name="estado" id="estado" placeholder="<?php echo $idioma_single_produto[9]; ?>: *"></span>
+				</fieldset>
+
 				<fieldset class="col-12">
-					<textarea name="mensagem" id="mensagem" cols="30" rows="10" placeholder="<?php echo $idioma_single_produto[4]; ?>:"></textarea>
+					<textarea name="mensagem" id="mensagem" cols="30" rows="10" placeholder="<?php echo $idioma_single_produto[4]; ?>: *"></textarea>
 				</fieldset>
 				<fieldset class="col-12">
 					<p class="msg-form"></p>
@@ -70,32 +78,81 @@
 <?php get_footer(); ?>
 
 <script type="text/javascript">
+
 		jQuery(".enviar").click(function(){
 			jQuery('.enviar').html('<?php echo $idioma_single_produto[6]; ?>').prop( "disabled", true );
 			jQuery('.msg-form').removeClass('erro ok').html('');
 			var nome = jQuery('#nome').val();
 			var email = jQuery('#email').val();
 			var telefone = jQuery('#telefone').val();
+			var cidade = jQuery('#cidade').val();
+			var estado = jQuery('#estado').val();
 			var mensagem = jQuery('#mensagem').val();
 			var para = '<?php the_field('email', 'option'); ?>';
 			var nome_site = '<?php bloginfo('name'); ?>';
 
-			if(email!=''){
-				jQuery.getJSON("<?php echo get_template_directory_uri(); ?>/mail.php", { nome:nome, email:email, telefone:telefone, mensagem:mensagem, para:para, nome_site:nome_site }, function(result){		
+			if(nome == ''){
+				jQuery('#nome').parent().addClass('erro');
+			}
+
+			if(email == ''){
+				jQuery('#email').parent().addClass('erro');
+			}
+
+			if(telefone == ''){
+				jQuery('#telefone').parent().addClass('erro');
+			}
+
+			if(cidade == ''){
+				jQuery('#cidade').parent().addClass('erro');
+			}
+
+			if(estado == ''){
+				jQuery('#estado').parent().addClass('erro');
+			}
+
+			if(mensagem == ''){
+				jQuery('#mensagem').addClass('erro');
+			}
+
+			if((nome == '') || (email == '') || (telefone == '') || (cidade == '') || (estado == '') || (mensagem == '')){
+				jQuery('.msg-form').html('<?php echo $idioma_single_produto[11]; ?>');
+
+				jQuery('.enviar').html('<?php echo $idioma_single_produto[5]; ?>').prop( "disabled", false );
+			}else{
+				jQuery.getJSON("<?php echo get_template_directory_uri(); ?>/mail.php", { nome:nome, email:email, telefone:telefone, mensagem:mensagem, cidade:cidade, estado:estado, para:para, nome_site:nome_site }, function(result){		
 					if(result=='ok'){
-						resultado = <?php echo $idioma_single_produto[7]; ?>;
+						resultado = '<?php echo $idioma_single_produto[7]; ?>';
 						classe = 'ok';
 					}else{
 						resultado = result;
 						classe = 'erro';
 					}
 					jQuery('.msg-form').addClass(classe).html(resultado);
-					jQuery('.news form').trigger("reset");
+					jQuery('.contato-home').trigger("reset");
 					jQuery('.enviar').html('<?php echo $idioma_single_produto[5]; ?>').prop( "disabled", false );
 				});
-			}else{
-				jQuery('.msg-form').addClass('erro').html('Por favor, digite um e-mail válido.');
-				jQuery('.enviar').html('<?php echo $idioma_single_produto[5]; ?>').prop( "disabled", false );
 			}
 		});
+
+	jQuery(document).ready(function(){
+		jQuery('input').change(function(){
+			if(jQuery(this).parent().hasClass('erro')){
+				jQuery(this).parent().removeClass('erro');
+			}
+		});
+
+		jQuery('textarea').change(function(){
+			if(jQuery(this).hasClass('erro')){
+				jQuery(this).removeClass('erro');
+			}
+		});
+	})
+</script>
+
+<script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/assets/js/maskedinput.js"></script>
+<script type="text/javascript">
+	jQuery(function(jQuery){
+	   jQuery(".mask-telefone").mask("(99) 9999-9999?9");
+	});
 </script>

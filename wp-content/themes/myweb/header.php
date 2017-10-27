@@ -209,7 +209,7 @@
 
 					<div class="info">
 						<span class="info-tel"><?php the_field('telefone','option'); ?></span>
-						<div class="region" style="display: none;">
+						<div class="region">
 							<?php 
 								$class_en = '';
 								$on_en = '';

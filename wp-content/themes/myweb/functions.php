@@ -6,6 +6,8 @@
  **
  */
 
+$producao = false;
+
 	/* HABILITAR / DESABILITAR */
 
 	// Enable featured images
@@ -226,7 +228,7 @@
 
 
 
-$producao = true;
+
 if($producao){
 	add_action('admin_head', 'my_custom_fonts');
 
