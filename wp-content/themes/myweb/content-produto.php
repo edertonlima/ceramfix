@@ -144,7 +144,7 @@
 										<img src="<?php if($imgPage[0]){ echo $imgPage[0]; } ?>" alt="<?php echo $outros_pro->post_title; ?>">
 									<?php } ?>
 									<div class="cont-list-prod">
-										<h3><?php echo $outros_pro->post_title; ?></h3>
+										<h3><?php echo get_the_title($outros_pro->ID);// echo $outros_pro->post_title; ?></h3>
 										<p><?php the_field('descrição_curta_produto',$outros_pro->ID); ?></p>
 									</div>
 								</a>

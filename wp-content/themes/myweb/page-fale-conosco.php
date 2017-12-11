@@ -35,7 +35,7 @@
 				<div class="info-contato">
 					<span><?php echo $idioma_single_produto[0]; ?></span>
 					<h2><?php the_field('telefone','option'); ?></h2>
-					<a href="mailto:<?php the_field('telefone','option'); ?>"><?php the_field('email','option'); ?></a>
+					<a href="mailto:<?php the_field('email','option'); ?>"><?php the_field('email-view','option'); ?></a>
 				</div>
 			</div>
 
