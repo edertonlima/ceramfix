@@ -19,7 +19,7 @@ foreach ($_POST as $key => $value)
 $zip = new ZipArchive();
 
 # create a temp file & open it
-$tmp_file = tempnam('.', '');
+$tmp_file = tempnam('./temp_zip', '');
 $zip->open($tmp_file, ZipArchive::CREATE);
 
 # loop through each file

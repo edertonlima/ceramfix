@@ -61,9 +61,9 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBgFPAcmDR1PFBimQax_CVbjOjbC0sGj8A&callback=initMap" async defer></script>
 
 	<div class="container">
-		<?php if(get_field('descricao','options')){ ?>
+		<?php if(get_field('descricao',49)){ ?>
 			<div class="conteudo">
-				<p><?php the_field('descricao','options') ?></p>
+				<p><?php the_field('descricao',49) ?></p>
 			</div>
 		<?php } ?>
 

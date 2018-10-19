@@ -22,7 +22,7 @@
 			<a class="left" href="#slide" role="button" data-slide="prev"></a>
 			<a class="right" href="#slide" role="button" data-slide="next"></a>
 		</div>
-		<div class="carousel slide" data-ride="carousel" data-interval="1000000" id="slide">
+		<div class="carousel slide" data-ride="carousel" data-interval="5500" id="slide">
 
 			<div class="carousel-inner" role="listbox">
 

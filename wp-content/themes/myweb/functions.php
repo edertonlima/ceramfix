@@ -5,8 +5,13 @@
  * @since My web Site 1.0
  **
  */
-
-$producao = false;
+ 
+ 	//var_dump(wp_get_current_user());
+	if(wp_get_current_user()->user_login == 'ederton'){
+		$producao = false;
+	}else{
+		$producao = true;
+	}
 
 	/* HABILITAR / DESABILITAR */
 
@@ -191,6 +196,7 @@ $producao = false;
 
 
 	// lojas
+	/*
 	add_action('init', 'type_post_lojas');
 	function type_post_lojas() {
 		$labels = array(
@@ -224,8 +230,7 @@ $producao = false;
 
 		register_post_type( 'lojas' , $args );
 		flush_rewrite_rules();
-	}
-
+	}*/
 
 
 
@@ -425,10 +430,6 @@ if( function_exists('acf_add_options_page') ) {
 	));
 }
 
-
-@ini_set( 'upload_max_size' , '64M' );
-@ini_set( 'post_max_size', '64M');
-@ini_set( 'max_execution_time', '300' );
 
 function paginacao() {
     global $wp_query;

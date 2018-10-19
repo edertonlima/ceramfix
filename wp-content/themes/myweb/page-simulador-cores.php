@@ -127,7 +127,7 @@
 												$titulo_prod = explode('{:ES}', strtoupper($nome_produto[2]));
 											}
 
-											echo '<option value="'.$produto->ID.'" parede="'.$parede.'" piso="'.$piso.'">'.$$titulo_prod[1].'</option>';
+											echo '<option value="'.$produto->ID.'" parede="'.$parede.'" piso="'.$piso.'">'.$titulo_prod[1].'</option>';
 
 										endif;
 
@@ -497,7 +497,7 @@
 												$titulo_prod = explode('{:ES}', strtoupper($nome_produto[2]));
 											}
 
-											echo '<option value="'.$produto->ID.'" parede="'.$parede.'" piso="'.$piso.'">'.$titulo_prod[''].'</option>';
+											echo '<option value="'.$produto->ID.'" parede="'.$parede.'" piso="'.$piso.'">'.$titulo_prod[1].'</option>';
 
 										endif;
 
@@ -652,7 +652,7 @@
 												$titulo_prod = explode('{:ES}', strtoupper($nome_produto[2]));
 											}
 
-											echo '<option value="'.$produto->ID.'" piso="'.$piso.'">'.$titulo_prod[''].'</option>';
+											echo '<option value="'.$produto->ID.'" piso="'.$piso.'">'.$titulo_prod[1].'</option>';
 
 										endif;
 

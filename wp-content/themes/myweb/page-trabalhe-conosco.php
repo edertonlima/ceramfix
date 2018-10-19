@@ -11,7 +11,7 @@
 	}
 
 	if($idioma == 'es'){
-		$idioma_fale = ['Rellene el formulario abajo y envíe su currículum para el equipo de RH de Ceramfix. ¡Agradecemos el interés! ',' Relleno obligatorio ',' Nombre ',' E-mail ',' Teléfono principal ',' Teléfono secundario ',' Dirección ','Estado','Ciudad',' Currículum ',' Sólo archivo en PDF. ',' Mensaje ',' Enviado con éxito! Gracias. ',' Lo sentimos, no fue posible enviar su formulario. Por favor, vuelva a intentarlo más tarde. ',' No se pudo enviar el archivo, vuelva a intentarlo. ',' El archivo enviado es muy grande, envíe archivos de hasta 2Mb. ',' Por favor, envíe sólo el archivo en PDF. ','¡ENVIAR!','¡ENVIANDO!'];
+		$idioma_fale = ['Rellene el formulario abajo y envíe su currículum para el equipo de RH de Ceramfix. ¡Agradecemos el interés! ',' Relleno obligatorio ',' Nombre ',' E-mail ',' Teléfono principal ',' Teléfono secundario ',' Dirección ',' Estado ',' Ciudad ',' Currículum ',' Sólo archivo en PDF. ',' Mensaje ',' Enviado con éxito! Gracias. ',' Lo sentimos, no fue posible enviar su formulario. Por favor, vuelva a intentarlo más tarde. ',' No se pudo enviar el archivo, vuelva a intentarlo. ',' El archivo enviado es muy grande, envíe archivos de hasta 2Mb. ',' Por favor, envíe sólo el archivo en PDF. ','¡ENVIAR!','¡ENVIANDO!'];
 	}
 ?>
 

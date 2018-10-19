@@ -1,3 +1,6 @@
+<?php 
+	header('Location: '.get_home_url()); ?>
+
 <?php
 	if(isset($_GET['estado'])){
 		$estado = $_GET['estado'];	
