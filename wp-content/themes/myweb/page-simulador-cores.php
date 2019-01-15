@@ -1,5 +1,36 @@
 <?php get_header(); ?>
 
+
+													<?php /* 
+											        $getPosts = array(
+											            'posts_per_page' => 999,
+											            'post_type'   => 'sala',
+											            'post_status' => 'any'/*,
+														'tax_query' => array(
+														    array(
+														        'taxonomy' => 'categoria_produto',
+														        'terms' => $category->term_id,
+														        'include_children' => false,
+														        'operator' => 'IN'
+														    )
+														),*/  /*
+											        );
+											        $posts = new WP_Query( $getPosts );
+												        if(count($posts) > 0){
+
+															while($posts->have_posts()) : $posts->the_post();
+																		
+																var_dump($post);
+																	
+															endwhile;
+
+												        }
+												    wp_reset_postdata(); */
+											        ?>
+
+
+
+
 <?php
 	$idioma_single_produto = [];
 	if($idioma == 'pt'){
@@ -15,7 +46,7 @@
 	}
 ?>
 
-<section class="box-container box-simulador-cores">
+<section class="box-container box-simulador-cores" style="margin-bottom: 50px;">
 	<div class="container">
 		<h2><?php the_title(); ?></h2>
 	</div>
@@ -46,7 +77,7 @@
 					</div>
 				</div>
 				<?php 
-					if( have_rows('produto-sala','option') ):
+					//if( have_rows('produto-sala','option') ):
 						$produto_ambiente = []; ?>
 
 						<div class="bg-select">
@@ -54,90 +85,133 @@
 								<select name="produto" class="select-produto" rel="sala">
 									<option value="null" selected="selected"><?php echo $idioma_single_produto[4]; ?></option>
 
-									<?php while ( have_rows('produto-sala','option') ) : the_row();
+									<?php // while ( have_rows('produto-sala','option') ) : the_row();
+							        $getPosts = array(
+							            'posts_per_page' => 999,
+							            'post_type'   => 'sala',
+							            'post_status' => 'any'/*,
+										'tax_query' => array(
+										    array(
+										        'taxonomy' => 'categoria_produto',
+										        'terms' => $category->term_id,
+										        'include_children' => false,
+										        'operator' => 'IN'
+										    )
+										),*/
+							        );
+							        $posts = new WP_Query( $getPosts );
+								        if(count($posts) > 0){
 
-									    $produto = get_sub_field('produto','option');
-										if (!array_key_exists($produto->ID, $produto_ambiente)):
+											while($posts->have_posts()) : $posts->the_post();
 
-										    // info produto
-										    $produto_ambiente[$produto->ID]['id'] = $produto->ID;
+											    $produto = $post; //get_sub_field('produto','option');
+												if (!array_key_exists($produto->ID, $produto_ambiente)):
 
-										    // imagem piso
-										    if( have_rows('piso','option') ):
-										    	$qtd_piso = 0;
-										    	while ( have_rows('piso','option') ) : the_row();
-										    	$qtd_piso = $qtd_piso+1;
-										    		$produto_ambiente[$produto->ID]['piso'][] = array(
-										    			'nome' => get_sub_field('nome','option'),
-										    			'imagem' => get_sub_field('imagem','option'),
-										    			'miniatura' => get_sub_field('miniatura','option')
-										    		);
-										    		if($qtd_piso == 1){
-										    			$piso = get_sub_field('imagem','option');
-										    		}
-												endwhile;
-											endif;
+												    // info produto
+												    $produto_ambiente[$produto->ID]['id'] = $produto->ID;
 
-										    // imagem parede
-										    if( have_rows('parede','option') ):
-										    	$qtd_parede = 0;
-										    	while ( have_rows('parede','option') ) : the_row();
-										    		$qtd_parede = $qtd_parede+1;
-										    		$produto_ambiente[$produto->ID]['parede'][] = array(
-										    			'nome' => get_sub_field('nome','option'),
-										    			'imagem' => get_sub_field('imagem','option'),
-										    			'miniatura' => get_sub_field('miniatura','option')
-										    		);
-										    		if($qtd_parede == 1){
-										    			$parede = get_sub_field('imagem','option');
-										    		}
-												endwhile;
-											endif;
+												    // imagem piso
+												    if( have_rows('imagem-piso-simulacao') ):
+												    	$qtd_piso = 0;
+												    	while ( have_rows('imagem-piso-simulacao') ) : the_row();
+												    	$qtd_piso = $qtd_piso+1;
+												    		$produto_ambiente[$produto->ID]['piso'][] = array(
+												    			'nome' => get_sub_field('nome-imagem-piso'),
+												    			'imagem' => get_sub_field('imagem-imagem-piso'),
+												    			'miniatura' => get_sub_field('miniatura-imagem-piso')
+												    		);
+												    		if($qtd_piso == 1){
+												    			$piso = get_sub_field('imagem-imagem-piso');
+												    		}
+														endwhile;
+													endif;
 
-										    // cor rejunte piso
-										    if( have_rows('rejunte-piso','option') ):
-										    	while ( have_rows('rejunte-piso','option') ) : the_row();
-										    		$produto_ambiente[$produto->ID]['rejunte-piso'][] = array(
-										    			'nome' => get_sub_field('nome','option'),
-										    			'cor' => get_sub_field('hexa','option')
-										    		);
-												endwhile;
-											endif;
+												    /* if( have_rows('piso','option') ):
+												    	$qtd_piso = 0;
+												    	while ( have_rows('piso','option') ) : the_row();
+												    	$qtd_piso = $qtd_piso+1;
+												    		$produto_ambiente[$produto->ID]['piso'][] = array(
+												    			'nome' => get_sub_field('nome','option'),
+												    			'imagem' => get_sub_field('imagem','option'),
+												    			'miniatura' => get_sub_field('miniatura','option')
+												    		);
+												    		if($qtd_piso == 1){
+												    			$piso = get_sub_field('imagem','option');
+												    		}
+														endwhile;
+													endif; */
 
-										    // cor rejunte parede
-										    if( have_rows('rejunte-parede','option') ):
-										    	while ( have_rows('rejunte-parede','option') ) : the_row();
-										    		$produto_ambiente[$produto->ID]['rejunte-parede'][] = array(
-										    			'nome' => get_sub_field('nome','option'),
-										    			'cor' => get_sub_field('hexa','option')
-										    		);
-												endwhile;
-											endif;
+												    // imagem parede
+												    if( have_rows('imagem-parede-simulacao') ):
+												    	$qtd_parede = 0;
+												    	while ( have_rows('imagem-parede-simulacao') ) : the_row();
+												    		$qtd_parede = $qtd_parede+1;
+												    		$produto_ambiente[$produto->ID]['parede'][] = array(
+												    			'nome' => get_sub_field('nome-imagem-parede'),
+												    			'imagem' => get_sub_field('imagem-imagem-parede'),
+												    			'miniatura' => get_sub_field('miniatura-imagem-parede')
+												    		);
+												    		if($qtd_parede == 1){
+												    			$parede = get_sub_field('imagem-imagem-parede');
+												    		}
+														endwhile;
+													endif;
 
-											$nome_produto = explode('{:}', strtoupper($produto->post_title));
-											if($idioma == 'pt'){
-												$titulo_prod = explode('{:PT}', strtoupper($nome_produto[0]));
-											}
+												    // cor rejunte piso
+												    if( have_rows('cor-rejunte-piso-simulacao') ):
+												    	while ( have_rows('cor-rejunte-piso-simulacao') ) : the_row();
+												    		$produto_ambiente[$produto->ID]['rejunte-piso'][] = array(
+												    			'nome' => get_sub_field('nome-cor-rejunte-piso'),
+												    			'cor' => get_sub_field('hexadecimal-cor-rejunte-piso')
+												    		);
+														endwhile;
+													endif;
 
-											if($idioma == 'en'){
-												$titulo_prod = explode('{:EN}', strtoupper($nome_produto[1]));
-											}
+												    // cor rejunte parede
+												    if( have_rows('cor-rejunte-parede-simulacao') ):
+												    	while ( have_rows('cor-rejunte-parede-simulacao') ) : the_row();
+												    		$produto_ambiente[$produto->ID]['rejunte-parede'][] = array(
+												    			'nome' => get_sub_field('nome-cor-rejunte-parede'),
+												    			'cor' => get_sub_field('hexadecimal-cor-rejunte-parede')
+												    		);
+														endwhile;
+													endif;
 
-											if($idioma == 'es'){
-												$titulo_prod = explode('{:ES}', strtoupper($nome_produto[2]));
-											}
+													//$nome_produto = explode('{:}', strtoupper($produto->post_title));
+													$nome_produto = get_field('prod-simulacao');
+													//var_dump($nome_produto);
+													$nome_produto = explode('{:}', strtoupper($nome_produto->post_title)); 
 
-											echo '<option value="'.$produto->ID.'" parede="'.$parede.'" piso="'.$piso.'">'.$titulo_prod[1].'</option>';
+													if($idioma == 'pt'){
+														$titulo_prod = explode('{:PT}', strtoupper($nome_produto[0]));
+													}
 
-										endif;
+													if($idioma == 'en'){
+														$titulo_prod = explode('{:EN}', strtoupper($nome_produto[1]));
+													}
 
-									endwhile; ?>
+													if($idioma == 'es'){
+														$titulo_prod = explode('{:ES}', strtoupper($nome_produto[2]));
+													}
+
+													echo '<option value="'.$produto->ID.'" parede="'.$parede.'" piso="'.$piso.'">'.$titulo_prod[1].'</option>';
+
+												endif;
+
+
+
+													
+											endwhile;
+
+								        }
+								    wp_reset_postdata();
+									//endwhile; ?>
 
 								</select>
 							</span>
 						</div>
 
-					<?php endif;
+					<?php //endif;
 
 					if(count($produto_ambiente)):
 						foreach ($produto_ambiente as $produto){ ?>
@@ -212,6 +286,18 @@
 			<!-- #sala -->
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 			<!-- #cozinha -->
 			<div class="tab-content" id="cozinha">
 				<div class="simulador base">
@@ -231,7 +317,7 @@
 					</div>
 				</div>
 				<?php 
-					if( have_rows('produto-cozinha','option') ):
+					//if( have_rows('produto-cozinha','option') ):
 						$produto_ambiente = []; ?>
 
 						<div class="bg-select">
@@ -239,90 +325,133 @@
 								<select name="produto" class="select-produto" rel="cozinha">
 									<option value="null" selected="selected"><?php echo $idioma_single_produto[4]; ?></option>
 
-									<?php while ( have_rows('produto-cozinha','option') ) : the_row();
+									<?php // while ( have_rows('produto-sala','option') ) : the_row();
+							        $getPosts = array(
+							            'posts_per_page' => 999,
+							            'post_type'   => 'cozinha',
+							            'post_status' => 'any'/*,
+										'tax_query' => array(
+										    array(
+										        'taxonomy' => 'categoria_produto',
+										        'terms' => $category->term_id,
+										        'include_children' => false,
+										        'operator' => 'IN'
+										    )
+										),*/
+							        );
+							        $posts = new WP_Query( $getPosts );
+								        if(count($posts) > 0){
 
-									    $produto = get_sub_field('produto','option');
-										if (!array_key_exists($produto->ID, $produto_ambiente)):
+											while($posts->have_posts()) : $posts->the_post();
 
-										    // info produto
-										    $produto_ambiente[$produto->ID]['id'] = $produto->ID;
+											    $produto = $post; //get_sub_field('produto','option');
+												if (!array_key_exists($produto->ID, $produto_ambiente)):
 
-										    // imagem piso
-										    if( have_rows('piso','option') ):
-										    	$qtd_piso = 0;
-										    	while ( have_rows('piso','option') ) : the_row();
-										    	$qtd_piso = $qtd_piso+1;
-										    		$produto_ambiente[$produto->ID]['piso'][] = array(
-										    			'nome' => get_sub_field('nome','option'),
-										    			'imagem' => get_sub_field('imagem','option'),
-										    			'miniatura' => get_sub_field('miniatura','option')
-										    		);
-										    		if($qtd_piso == 1){
-										    			$piso = get_sub_field('imagem','option');
-										    		}
-												endwhile;
-											endif;
+												    // info produto
+												    $produto_ambiente[$produto->ID]['id'] = $produto->ID;
 
-										    // imagem parede
-										    if( have_rows('parede','option') ):
-										    	$qtd_parede = 0;
-										    	while ( have_rows('parede','option') ) : the_row();
-										    		$qtd_parede = $qtd_parede+1;
-										    		$produto_ambiente[$produto->ID]['parede'][] = array(
-										    			'nome' => get_sub_field('nome','option'),
-										    			'imagem' => get_sub_field('imagem','option'),
-										    			'miniatura' => get_sub_field('miniatura','option')
-										    		);
-										    		if($qtd_parede == 1){
-										    			$parede = get_sub_field('imagem','option');
-										    		}
-												endwhile;
-											endif;
+												    // imagem piso
+												    if( have_rows('imagem-piso-simulacao') ):
+												    	$qtd_piso = 0;
+												    	while ( have_rows('imagem-piso-simulacao') ) : the_row();
+												    	$qtd_piso = $qtd_piso+1;
+												    		$produto_ambiente[$produto->ID]['piso'][] = array(
+												    			'nome' => get_sub_field('nome-imagem-piso'),
+												    			'imagem' => get_sub_field('imagem-imagem-piso'),
+												    			'miniatura' => get_sub_field('miniatura-imagem-piso')
+												    		);
+												    		if($qtd_piso == 1){
+												    			$piso = get_sub_field('imagem-imagem-piso');
+												    		}
+														endwhile;
+													endif;
 
-										    // cor rejunte piso
-										    if( have_rows('rejunte-piso','option') ):
-										    	while ( have_rows('rejunte-piso','option') ) : the_row();
-										    		$produto_ambiente[$produto->ID]['rejunte-piso'][] = array(
-										    			'nome' => get_sub_field('nome','option'),
-										    			'cor' => get_sub_field('hexa','option')
-										    		);
-												endwhile;
-											endif;
+												    /* if( have_rows('piso','option') ):
+												    	$qtd_piso = 0;
+												    	while ( have_rows('piso','option') ) : the_row();
+												    	$qtd_piso = $qtd_piso+1;
+												    		$produto_ambiente[$produto->ID]['piso'][] = array(
+												    			'nome' => get_sub_field('nome','option'),
+												    			'imagem' => get_sub_field('imagem','option'),
+												    			'miniatura' => get_sub_field('miniatura','option')
+												    		);
+												    		if($qtd_piso == 1){
+												    			$piso = get_sub_field('imagem','option');
+												    		}
+														endwhile;
+													endif; */
 
-										    // cor rejunte parede
-										    if( have_rows('rejunte-parede','option') ):
-										    	while ( have_rows('rejunte-parede','option') ) : the_row();
-										    		$produto_ambiente[$produto->ID]['rejunte-parede'][] = array(
-										    			'nome' => get_sub_field('nome','option'),
-										    			'cor' => get_sub_field('hexa','option')
-										    		);
-												endwhile;
-											endif;
+												    // imagem parede
+												    if( have_rows('imagem-parede-simulacao') ):
+												    	$qtd_parede = 0;
+												    	while ( have_rows('imagem-parede-simulacao') ) : the_row();
+												    		$qtd_parede = $qtd_parede+1;
+												    		$produto_ambiente[$produto->ID]['parede'][] = array(
+												    			'nome' => get_sub_field('nome-imagem-parede'),
+												    			'imagem' => get_sub_field('imagem-imagem-parede'),
+												    			'miniatura' => get_sub_field('miniatura-imagem-parede')
+												    		);
+												    		if($qtd_parede == 1){
+												    			$parede = get_sub_field('imagem-imagem-parede');
+												    		}
+														endwhile;
+													endif;
 
-											$nome_produto = explode('{:}', strtoupper($produto->post_title));
-											if($idioma == 'pt'){
-												$titulo_prod = explode('{:PT}', strtoupper($nome_produto[0]));
-											}
+												    // cor rejunte piso
+												    if( have_rows('cor-rejunte-piso-simulacao') ):
+												    	while ( have_rows('cor-rejunte-piso-simulacao') ) : the_row();
+												    		$produto_ambiente[$produto->ID]['rejunte-piso'][] = array(
+												    			'nome' => get_sub_field('nome-cor-rejunte-piso'),
+												    			'cor' => get_sub_field('hexadecimal-cor-rejunte-piso')
+												    		);
+														endwhile;
+													endif;
 
-											if($idioma == 'en'){
-												$titulo_prod = explode('{:EN}', strtoupper($nome_produto[1]));
-											}
+												    // cor rejunte parede
+												    if( have_rows('cor-rejunte-parede-simulacao') ):
+												    	while ( have_rows('cor-rejunte-parede-simulacao') ) : the_row();
+												    		$produto_ambiente[$produto->ID]['rejunte-parede'][] = array(
+												    			'nome' => get_sub_field('nome-cor-rejunte-parede'),
+												    			'cor' => get_sub_field('hexadecimal-cor-rejunte-parede')
+												    		);
+														endwhile;
+													endif;
 
-											if($idioma == 'es'){
-												$titulo_prod = explode('{:ES}', strtoupper($nome_produto[2]));
-											}
+													//$nome_produto = explode('{:}', strtoupper($produto->post_title));
+													$nome_produto = get_field('prod-simulacao');
+													//var_dump($nome_produto);
+													$nome_produto = explode('{:}', strtoupper($nome_produto->post_title)); 
 
-											echo '<option value="'.$produto->ID.'" parede="'.$parede.'" piso="'.$piso.'">'.$titulo_prod[1].'</option>';
+													if($idioma == 'pt'){
+														$titulo_prod = explode('{:PT}', strtoupper($nome_produto[0]));
+													}
 
-										endif;
+													if($idioma == 'en'){
+														$titulo_prod = explode('{:EN}', strtoupper($nome_produto[1]));
+													}
 
-									endwhile; ?>
+													if($idioma == 'es'){
+														$titulo_prod = explode('{:ES}', strtoupper($nome_produto[2]));
+													}
+
+													echo '<option value="'.$produto->ID.'" parede="'.$parede.'" piso="'.$piso.'">'.$titulo_prod[1].'</option>';
+
+												endif;
+
+
+
+													
+											endwhile;
+
+								        }
+								    wp_reset_postdata();
+									//endwhile; ?>
 
 								</select>
 							</span>
 						</div>
 
-					<?php endif; 
+					<?php //endif;
 
 					if(count($produto_ambiente)):
 						foreach ($produto_ambiente as $produto){ ?>
@@ -375,7 +504,7 @@
 							</div>
 							<div class="option-produto dir <?php echo 'id-'.$produto['id']; ?> select-piso">			
 								<div class="slide-cor">
-									<span class="tit-cores"><?php echo $idioma_single_produto[7]; ?>:</span>
+									<span class="tit-cores"><?php echo $idioma_single_produto[8]; ?>:</span>
 									<div class="slide-item-cor slide-simulacao">
 										<?php if(count($produto['piso'])):
 											$i = 0;
@@ -397,6 +526,15 @@
 			<!-- #cozinha -->
 
 
+
+
+
+
+
+
+
+
+
 			<!-- #banheiro -->
 			<div class="tab-content" id="banheiro">
 				<div class="simulador base">
@@ -416,7 +554,7 @@
 					</div>
 				</div>
 				<?php 
-					if( have_rows('produto-banheiro','option') ):
+					//if( have_rows('produto-banheiro','option') ):
 						$produto_ambiente = []; ?>
 
 						<div class="bg-select">
@@ -424,90 +562,133 @@
 								<select name="produto" class="select-produto" rel="banheiro">
 									<option value="null" selected="selected"><?php echo $idioma_single_produto[4]; ?></option>
 
-									<?php while ( have_rows('produto-banheiro','option') ) : the_row();
+									<?php // while ( have_rows('produto-sala','option') ) : the_row();
+							        $getPosts = array(
+							            'posts_per_page' => 999,
+							            'post_type'   => 'banheiro',
+							            'post_status' => 'any'/*,
+										'tax_query' => array(
+										    array(
+										        'taxonomy' => 'categoria_produto',
+										        'terms' => $category->term_id,
+										        'include_children' => false,
+										        'operator' => 'IN'
+										    )
+										),*/
+							        );
+							        $posts = new WP_Query( $getPosts );
+								        if(count($posts) > 0){
 
-									    $produto = get_sub_field('produto','option');
-										if (!array_key_exists($produto->ID, $produto_ambiente)):
+											while($posts->have_posts()) : $posts->the_post();
 
-										    // info produto
-										    $produto_ambiente[$produto->ID]['id'] = $produto->ID;
+											    $produto = $post; //get_sub_field('produto','option');
+												if (!array_key_exists($produto->ID, $produto_ambiente)):
 
-										    // imagem piso
-										    if( have_rows('piso','option') ):
-										    	$qtd_piso = 0;
-										    	while ( have_rows('piso','option') ) : the_row();
-										    	$qtd_piso = $qtd_piso+1;
-										    		$produto_ambiente[$produto->ID]['piso'][] = array(
-										    			'nome' => get_sub_field('nome','option'),
-										    			'imagem' => get_sub_field('imagem','option'),
-										    			'miniatura' => get_sub_field('miniatura','option')
-										    		);
-										    		if($qtd_piso == 1){
-										    			$piso = get_sub_field('imagem','option');
-										    		}
-												endwhile;
-											endif;
+												    // info produto
+												    $produto_ambiente[$produto->ID]['id'] = $produto->ID;
 
-										    // imagem parede
-										    if( have_rows('parede','option') ):
-										    	$qtd_parede = 0;
-										    	while ( have_rows('parede','option') ) : the_row();
-										    		$qtd_parede = $qtd_parede+1;
-										    		$produto_ambiente[$produto->ID]['parede'][] = array(
-										    			'nome' => get_sub_field('nome','option'),
-										    			'imagem' => get_sub_field('imagem','option'),
-										    			'miniatura' => get_sub_field('miniatura','option')
-										    		);
-										    		if($qtd_parede == 1){
-										    			$parede = get_sub_field('imagem','option');
-										    		}
-												endwhile;
-											endif;
+												    // imagem piso
+												    if( have_rows('imagem-piso-simulacao') ):
+												    	$qtd_piso = 0;
+												    	while ( have_rows('imagem-piso-simulacao') ) : the_row();
+												    	$qtd_piso = $qtd_piso+1;
+												    		$produto_ambiente[$produto->ID]['piso'][] = array(
+												    			'nome' => get_sub_field('nome-imagem-piso'),
+												    			'imagem' => get_sub_field('imagem-imagem-piso'),
+												    			'miniatura' => get_sub_field('miniatura-imagem-piso')
+												    		);
+												    		if($qtd_piso == 1){
+												    			$piso = get_sub_field('imagem-imagem-piso');
+												    		}
+														endwhile;
+													endif;
 
-										    // cor rejunte piso
-										    if( have_rows('rejunte-piso','option') ):
-										    	while ( have_rows('rejunte-piso','option') ) : the_row();
-										    		$produto_ambiente[$produto->ID]['rejunte-piso'][] = array(
-										    			'nome' => get_sub_field('nome','option'),
-										    			'cor' => get_sub_field('hexa','option')
-										    		);
-												endwhile;
-											endif;
+												    /* if( have_rows('piso','option') ):
+												    	$qtd_piso = 0;
+												    	while ( have_rows('piso','option') ) : the_row();
+												    	$qtd_piso = $qtd_piso+1;
+												    		$produto_ambiente[$produto->ID]['piso'][] = array(
+												    			'nome' => get_sub_field('nome','option'),
+												    			'imagem' => get_sub_field('imagem','option'),
+												    			'miniatura' => get_sub_field('miniatura','option')
+												    		);
+												    		if($qtd_piso == 1){
+												    			$piso = get_sub_field('imagem','option');
+												    		}
+														endwhile;
+													endif; */
 
-										    // cor rejunte parede
-										    if( have_rows('rejunte-parede','option') ):
-										    	while ( have_rows('rejunte-parede','option') ) : the_row();
-										    		$produto_ambiente[$produto->ID]['rejunte-parede'][] = array(
-										    			'nome' => get_sub_field('nome','option'),
-										    			'cor' => get_sub_field('hexa','option')
-										    		);
-												endwhile;
-											endif;
+												    // imagem parede
+												    if( have_rows('imagem-parede-simulacao') ):
+												    	$qtd_parede = 0;
+												    	while ( have_rows('imagem-parede-simulacao') ) : the_row();
+												    		$qtd_parede = $qtd_parede+1;
+												    		$produto_ambiente[$produto->ID]['parede'][] = array(
+												    			'nome' => get_sub_field('nome-imagem-parede'),
+												    			'imagem' => get_sub_field('imagem-imagem-parede'),
+												    			'miniatura' => get_sub_field('miniatura-imagem-parede')
+												    		);
+												    		if($qtd_parede == 1){
+												    			$parede = get_sub_field('imagem-imagem-parede');
+												    		}
+														endwhile;
+													endif;
 
-											$nome_produto = explode('{:}', strtoupper($produto->post_title));
-											if($idioma == 'pt'){
-												$titulo_prod = explode('{:PT}', strtoupper($nome_produto[0]));
-											}
+												    // cor rejunte piso
+												    if( have_rows('cor-rejunte-piso-simulacao') ):
+												    	while ( have_rows('cor-rejunte-piso-simulacao') ) : the_row();
+												    		$produto_ambiente[$produto->ID]['rejunte-piso'][] = array(
+												    			'nome' => get_sub_field('nome-cor-rejunte-piso'),
+												    			'cor' => get_sub_field('hexadecimal-cor-rejunte-piso')
+												    		);
+														endwhile;
+													endif;
 
-											if($idioma == 'en'){
-												$titulo_prod = explode('{:EN}', strtoupper($nome_produto[1]));
-											}
+												    // cor rejunte parede
+												    if( have_rows('cor-rejunte-parede-simulacao') ):
+												    	while ( have_rows('cor-rejunte-parede-simulacao') ) : the_row();
+												    		$produto_ambiente[$produto->ID]['rejunte-parede'][] = array(
+												    			'nome' => get_sub_field('nome-cor-rejunte-parede'),
+												    			'cor' => get_sub_field('hexadecimal-cor-rejunte-parede')
+												    		);
+														endwhile;
+													endif;
 
-											if($idioma == 'es'){
-												$titulo_prod = explode('{:ES}', strtoupper($nome_produto[2]));
-											}
+													//$nome_produto = explode('{:}', strtoupper($produto->post_title));
+													$nome_produto = get_field('prod-simulacao');
+													//var_dump($nome_produto);
+													$nome_produto = explode('{:}', strtoupper($nome_produto->post_title)); 
 
-											echo '<option value="'.$produto->ID.'" parede="'.$parede.'" piso="'.$piso.'">'.$titulo_prod[1].'</option>';
+													if($idioma == 'pt'){
+														$titulo_prod = explode('{:PT}', strtoupper($nome_produto[0]));
+													}
 
-										endif;
+													if($idioma == 'en'){
+														$titulo_prod = explode('{:EN}', strtoupper($nome_produto[1]));
+													}
 
-									endwhile; ?>
+													if($idioma == 'es'){
+														$titulo_prod = explode('{:ES}', strtoupper($nome_produto[2]));
+													}
+
+													echo '<option value="'.$produto->ID.'" parede="'.$parede.'" piso="'.$piso.'">'.$titulo_prod[1].'</option>';
+
+												endif;
+
+
+
+													
+											endwhile;
+
+								        }
+								    wp_reset_postdata();
+									//endwhile; ?>
 
 								</select>
 							</span>
 						</div>
 
-					<?php endif; 
+					<?php //endif;
 
 					if(count($produto_ambiente)):
 						foreach ($produto_ambiente as $produto){ ?>
@@ -582,6 +763,12 @@
 			<!-- #banheiro -->
 
 
+
+
+
+
+
+
 			<!-- #piscina -->
 			<div class="tab-content" id="piscina">
 				<div class="simulador base">
@@ -597,7 +784,7 @@
 					</div>
 				</div>
 				<?php 
-					if( have_rows('produto-piscina','option') ):
+					//if( have_rows('produto-piscina','option') ):
 						$produto_ambiente = []; ?>
 
 						<div class="bg-select">
@@ -605,64 +792,92 @@
 								<select name="produto" class="select-produto" rel="piscina">
 									<option value="null" selected="selected"><?php echo $idioma_single_produto[4]; ?></option>
 
-									<?php while ( have_rows('produto-piscina','option') ) : the_row();
+									<?php // while ( have_rows('produto-sala','option') ) : the_row();
+							        $getPosts = array(
+							            'posts_per_page' => 999,
+							            'post_type'   => 'piscina',
+							            'post_status' => 'any'/*,
+										'tax_query' => array(
+										    array(
+										        'taxonomy' => 'categoria_produto',
+										        'terms' => $category->term_id,
+										        'include_children' => false,
+										        'operator' => 'IN'
+										    )
+										),*/
+							        );
+							        $posts = new WP_Query( $getPosts );
+								        if(count($posts) > 0){
 
-									    $produto = get_sub_field('produto','option');
-										if (!array_key_exists($produto->ID, $produto_ambiente)):
+											while($posts->have_posts()) : $posts->the_post();
 
-										    // info produto
-										    $produto_ambiente[$produto->ID]['id'] = $produto->ID;
+											    $produto = $post; //get_sub_field('produto','option');
+												if (!array_key_exists($produto->ID, $produto_ambiente)):
 
-										    // imagem piso
-										    if( have_rows('piso','option') ):
-										    	$qtd_piso = 0;
-										    	while ( have_rows('piso','option') ) : the_row();
-										    	$qtd_piso = $qtd_piso+1;
-										    		$produto_ambiente[$produto->ID]['piso'][] = array(
-										    			'nome' => get_sub_field('nome','option'),
-										    			'imagem' => get_sub_field('imagem','option'),
-										    			'miniatura' => get_sub_field('miniatura','option')
-										    		);
-										    		if($qtd_piso == 1){
-										    			$piso = get_sub_field('imagem','option');
-										    		}
-												endwhile;
-											endif;
+												    // info produto
+												    $produto_ambiente[$produto->ID]['id'] = $produto->ID;
 
-										    // cor rejunte piso
-										    if( have_rows('rejunte-piso','option') ):
-										    	while ( have_rows('rejunte-piso','option') ) : the_row();
-										    		$produto_ambiente[$produto->ID]['rejunte-piso'][] = array(
-										    			'nome' => get_sub_field('nome','option'),
-										    			'cor' => get_sub_field('hexa','option')
-										    		);
-												endwhile;
-											endif;
+												    // imagem piso
+												    if( have_rows('imagem-piso-simulacao-piscina') ):
+												    	$qtd_piso = 0;
+												    	while ( have_rows('imagem-piso-simulacao-piscina') ) : the_row();
+												    	$qtd_piso = $qtd_piso+1;
+												    		$produto_ambiente[$produto->ID]['piso'][] = array(
+												    			'nome' => get_sub_field('nome-imagem-piso'),
+												    			'imagem' => get_sub_field('imagem-imagem-piso'),
+												    			'miniatura' => get_sub_field('miniatura-imagem-piso')
+												    		);
+												    		if($qtd_piso == 1){
+												    			$piso = get_sub_field('imagem-imagem-piso');
+												    		}
+														endwhile;
+													endif;
 
-											$nome_produto = explode('{:}', strtoupper($produto->post_title));
-											if($idioma == 'pt'){
-												$titulo_prod = explode('{:PT}', strtoupper($nome_produto[0]));
-											}
+												    // cor rejunte piso
+												    if( have_rows('cor-rejunte-piso-simulacao-piscina') ):
+												    	while ( have_rows('cor-rejunte-piso-simulacao-piscina') ) : the_row();
+												    		$produto_ambiente[$produto->ID]['rejunte-piso'][] = array(
+												    			'nome' => get_sub_field('nome-cor-rejunte-piso'),
+												    			'cor' => get_sub_field('hexadecimal-cor-rejunte-piso')
+												    		);
+														endwhile;
+													endif;
 
-											if($idioma == 'en'){
-												$titulo_prod = explode('{:EN}', strtoupper($nome_produto[1]));
-											}
+													//$nome_produto = explode('{:}', strtoupper($produto->post_title));
+													$nome_produto = get_field('prod-simulacao-piscina');
+													//var_dump($nome_produto);
+													$nome_produto = explode('{:}', strtoupper($nome_produto->post_title)); 
 
-											if($idioma == 'es'){
-												$titulo_prod = explode('{:ES}', strtoupper($nome_produto[2]));
-											}
+													if($idioma == 'pt'){
+														$titulo_prod = explode('{:PT}', strtoupper($nome_produto[0]));
+													}
 
-											echo '<option value="'.$produto->ID.'" piso="'.$piso.'">'.$titulo_prod[1].'</option>';
+													if($idioma == 'en'){
+														$titulo_prod = explode('{:EN}', strtoupper($nome_produto[1]));
+													}
 
-										endif;
+													if($idioma == 'es'){
+														$titulo_prod = explode('{:ES}', strtoupper($nome_produto[2]));
+													}
 
-									endwhile; ?>
+													echo '<option value="'.$produto->ID.'" piso="'.$piso.'">'.$titulo_prod[1].'</option>';
+
+												endif;
+
+
+
+													
+											endwhile;
+
+								        }
+								    wp_reset_postdata();
+									//endwhile; ?>
 
 								</select>
 							</span>
 						</div>
 
-					<?php endif; 
+					<?php //endif;
 
 					if(count($produto_ambiente)):
 						foreach ($produto_ambiente as $produto){ ?>
@@ -707,6 +922,13 @@
 			</div>
 			<!-- #piscina -->
 
+
+
+
+
+
+
+
 		</div>
 	</div>
 </section>
@@ -720,7 +942,7 @@
 	var owl = jQuery('.slide-simulacao');
 	owl.owlCarousel({
 		margin: 5,
-		autoWidth:true,
+		//autoWidth:true,
 		nav:true,
 		loop: false
 	});

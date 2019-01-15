@@ -263,7 +263,7 @@
 					<nav class="nav">
 						<ul class="menu-principal">
 
-							<li class="<?php if((is_post_type_archive('lojas')) or (is_post_type_archive('produto')) or (is_tax('categoria_produto')) or (is_singular('produto'))){ echo 'active'; } ?>">
+							<li class="<?php if((is_post_type_archive('lojas')) or (is_post_type_archive('produto')) or (is_tax('categoria_produto')) or (is_tag()) or (is_singular('produto'))){ echo 'active'; } ?>">
 								<a href="<?php echo get_home_url(); ?>/produto" title="<?php echo $menu_idioma[0]; ?>" class=""><?php echo $menu_idioma[0]; ?></a>
 								<ul class="submenu">
 									<?php if( have_rows('imagem_categoria_produto','option') ):

@@ -15,7 +15,10 @@
 
       private function loadSearchCore() {
 
-        if ((defined('DOING_AJAX') && DOING_AJAX) && (isset($_POST['action']) && in_array($_POST['action'], ['query-attachments'])))
+        $isAjax      = (defined('DOING_AJAX') && DOING_AJAX);
+        $isMediaAjax = (isset($_POST['action']) && in_array($_POST['action'], ['query-attachments']));
+
+        if ($isAjax && $isMediaAjax)
           return;
 
         $this->loadClass('Search');

@@ -88,6 +88,165 @@
 	// end Remove tags
 
 
+	/* SIMULADORES DE CORES */
+		// SALA
+		add_action( 'init', 'create_sala' );
+		function create_sala() {
+
+			$labels = array(
+			    'name' => _x('Sala', 'post type general name'),
+			    'singular_name' => _x('Sala', 'post type singular name'),
+			    'add_new' => _x('Adicionar Novo', 'Sala'),
+			    'add_new_item' => __('Adicionar Novo'),
+			    'edit_item' => __('Editar'),
+			    'new_item' => __('Novo'),
+			    'all_items' => __('Mostrar Todos'),
+			    'view_item' => __('Visualisar Todos'),
+			    'search_items' => __('Pesquisar'),
+			    'not_found' =>  __('Nenhum Item Encontrado'),
+			    'not_found_in_trash' => __('Nenhum Item Encontrado na Lixeira'),
+			    'parent_item_colon' => '',
+			    'menu_name' => 'Simulador Sala'
+			);
+			$args = array(
+			    'labels' => $labels,
+			    'public' => true,
+			    'publicly_queryable' => true,
+			    'show_ui' => true,
+			    'show_in_menu' => true,
+			    'rewrite' => true,
+			    'capability_type' => 'post',
+			    'has_archive' => true,
+			    'hierarchical' => false,
+			    'menu_position' => null,
+			    'menu_icon' => 'dashicons-art',
+			    'supports' => array('')
+			  );
+
+		    register_post_type( 'sala', $args );
+		}	
+
+
+		// COZINHA
+		add_action( 'init', 'create_cozinha' );
+		function create_cozinha() {
+
+			$labels = array(
+			    'name' => _x('Cozinha', 'post type general name'),
+			    'singular_name' => _x('Cozinha', 'post type singular name'),
+			    'add_new' => _x('Adicionar Novo', 'Cozinha'),
+			    'add_new_item' => __('Adicionar Novo'),
+			    'edit_item' => __('Editar'),
+			    'new_item' => __('Novo'),
+			    'all_items' => __('Mostrar Todos'),
+			    'view_item' => __('Visualisar Todos'),
+			    'search_items' => __('Pesquisar'),
+			    'not_found' =>  __('Nenhum Item Encontrado'),
+			    'not_found_in_trash' => __('Nenhum Item Encontrado na Lixeira'),
+			    'parent_item_colon' => '',
+			    'menu_name' => 'Simulador Cozinha'
+			);
+			$args = array(
+			    'labels' => $labels,
+			    'public' => true,
+			    'publicly_queryable' => true,
+			    'show_ui' => true,
+			    'show_in_menu' => true,
+			    'rewrite' => true,
+			    'capability_type' => 'post',
+			    'has_archive' => true,
+			    'hierarchical' => false,
+			    'menu_position' => null,
+			    'menu_icon' => 'dashicons-art',
+			    'supports' => array('')
+			  );
+
+		    register_post_type( 'cozinha', $args );
+		}
+
+
+
+
+		// BANHEIRO
+		add_action( 'init', 'create_banheiro' );
+		function create_banheiro() {
+
+			$labels = array(
+			    'name' => _x('Banheiro', 'post type general name'),
+			    'singular_name' => _x('Banheiro', 'post type singular name'),
+			    'add_new' => _x('Adicionar Novo', 'Banheiro'),
+			    'add_new_item' => __('Adicionar Novo'),
+			    'edit_item' => __('Editar'),
+			    'new_item' => __('Novo'),
+			    'all_items' => __('Mostrar Todos'),
+			    'view_item' => __('Visualisar Todos'),
+			    'search_items' => __('Pesquisar'),
+			    'not_found' =>  __('Nenhum Item Encontrado'),
+			    'not_found_in_trash' => __('Nenhum Item Encontrado na Lixeira'),
+			    'parent_item_colon' => '',
+			    'menu_name' => 'Simulador Banheiro'
+			);
+			$args = array(
+			    'labels' => $labels,
+			    'public' => true,
+			    'publicly_queryable' => true,
+			    'show_ui' => true,
+			    'show_in_menu' => true,
+			    'rewrite' => true,
+			    'capability_type' => 'post',
+			    'has_archive' => true,
+			    'hierarchical' => false,
+			    'menu_position' => null,
+			    'menu_icon' => 'dashicons-art',
+			    'supports' => array('')
+			  );
+
+		    register_post_type( 'banheiro', $args );
+		}
+
+
+
+
+		// PISCINA
+		add_action( 'init', 'create_piscina' );
+		function create_piscina() {
+
+			$labels = array(
+			    'name' => _x('Piscina', 'post type general name'),
+			    'singular_name' => _x('Piscina', 'post type singular name'),
+			    'add_new' => _x('Adicionar Novo', 'Piscina'),
+			    'add_new_item' => __('Adicionar Novo'),
+			    'edit_item' => __('Editar'),
+			    'new_item' => __('Novo'),
+			    'all_items' => __('Mostrar Todos'),
+			    'view_item' => __('Visualisar Todos'),
+			    'search_items' => __('Pesquisar'),
+			    'not_found' =>  __('Nenhum Item Encontrado'),
+			    'not_found_in_trash' => __('Nenhum Item Encontrado na Lixeira'),
+			    'parent_item_colon' => '',
+			    'menu_name' => 'Simulador Piscina'
+			);
+			$args = array(
+			    'labels' => $labels,
+			    'public' => true,
+			    'publicly_queryable' => true,
+			    'show_ui' => true,
+			    'show_in_menu' => true,
+			    'rewrite' => true,
+			    'capability_type' => 'post',
+			    'has_archive' => true,
+			    'hierarchical' => false,
+			    'menu_position' => null,
+			    'menu_icon' => 'dashicons-art',
+			    'supports' => array('')
+			  );
+
+		    register_post_type( 'piscina', $args );
+		}
+
+	/* FIM - SIMULADORES DE CORES */
+
+
 	// PRODUTOS
 	add_action( 'init', 'create_post_type_produto' );
 	function create_post_type_produto() {
@@ -156,6 +315,11 @@
 	        )
 	    );
 	}
+
+	add_action( 'init', 'gp_register_taxonomy_for_object_type' );
+	function gp_register_taxonomy_for_object_type() {
+	    register_taxonomy_for_object_type( 'post_tag', 'produto' );
+	};
 
 
 	// matriz e filiais
@@ -231,6 +395,186 @@
 		register_post_type( 'lojas' , $args );
 		flush_rewrite_rules();
 	}*/
+
+
+
+
+
+
+/*if (function_exists( 'add_theme_support' )){
+    add_filter('manage_posts_columns', 'posts_columns', 5);
+    add_action('manage_posts_custom_column', 'posts_custom_columns', 5, 2);
+   
+    add_filter('manage_pages_columns', 'posts_columns', 5);
+    add_action('manage_pages_custom_column', 'posts_custom_columns', 5, 2);
+}
+
+function posts_columns($defaults){
+    $defaults['nome_prod_simulacao'] = __('Name');
+    return $defaults;
+}
+function posts_custom_columns($column_name, $id){
+    if($column_name === 'nome_prod_simulacao'){
+        echo the_post_thumbnail( array(125,125) );
+    }
+}
+*/
+
+
+
+add_filter( 'manage_sala_posts_columns', 'smashing_realestate_columns' );
+function smashing_realestate_columns( $columns ) {
+  
+  
+    $columns = array(
+      'cb' => $columns['cb'],
+      //'image_prod_simulacao' => __( 'Imagem' ),//
+      'nome_prod_simulacao' => __( 'Name' )
+      //'title' => __( 'Title' ),
+    );
+  
+  
+  return $columns;
+}
+
+add_action( 'manage_sala_posts_custom_column', 'smashing_realestate_column', 10, 2);
+function smashing_realestate_column( $column, $post_id ) {
+
+  /*// Image column
+  if ( 'image_prod_simulacao' === $column ) {
+    echo get_the_post_thumbnail( get_field_object('prod-simulacao',$post_id)['value']->ID, array(80, 80) );
+  }*/
+
+  // Name
+  if ( 'nome_prod_simulacao' === $column ) {
+  	//$produto_obj = get_post_meta($post_id, 'prod-simulacao', true);
+    //echo $produto_obj->post_title; //var_dump($produto_obj);
+	//$field = get_field_object('prod-simulacao')->post_title;
+
+
+	$nome_produto = explode('{:}', get_field_object('prod-simulacao',$post_id)['value']->post_title); 
+	$idioma = WPGlobus::Config()->language;
+
+	//var_dump($nome_produto);
+
+	if($idioma == 'pt'){
+		$nome_produto = explode('{:pt}', strtolower($nome_produto[0]));
+	}
+
+	if($idioma == 'en'){
+		$nome_produto = explode('{:en}', strtolower($nome_produto[1]));
+	}
+
+	if($idioma == 'es'){
+		$nome_produto = explode('{:es}', strtolower($nome_produto[2]));
+	}
+
+	//var_dump($nome_produto);
+	echo '<a class="row-title" href="'.get_edit_post_link( $post_id ).'" aria-label="'.ucwords($nome_produto[1]).' ('.__( 'Edit' ).')">'.ucwords($nome_produto[1]).'</a>';
+
+
+  }
+
+}
+
+
+
+// COZINHA
+add_filter( 'manage_cozinha_posts_columns', 'smashing_cozinha_columns' );
+function smashing_cozinha_columns( $columns ) {
+    $columns = array(
+      'cb' => $columns['cb'],
+      'nome_prod_simulacao' => __( 'Name' )
+    );
+  return $columns;
+}
+
+add_action( 'manage_cozinha_posts_custom_column', 'smashing_cozinha_column', 10, 2);
+function smashing_cozinha_column( $column, $post_id ) {
+  // Name
+  if ( 'nome_prod_simulacao' === $column ) {
+	$nome_produto = explode('{:}', get_field_object('prod-simulacao',$post_id)['value']->post_title); 
+	$idioma = WPGlobus::Config()->language;
+	if($idioma == 'pt'){
+		$nome_produto = explode('{:pt}', strtolower($nome_produto[0]));
+	}
+	if($idioma == 'en'){
+		$nome_produto = explode('{:en}', strtolower($nome_produto[1]));
+	}
+	if($idioma == 'es'){
+		$nome_produto = explode('{:es}', strtolower($nome_produto[2]));
+	}
+	echo '<a class="row-title" href="'.get_edit_post_link( $post_id ).'" aria-label="'.ucwords($nome_produto[1]).' ('.__( 'Edit' ).')">'.ucwords($nome_produto[1]).'</a>';
+  }
+}
+
+
+
+
+
+// BANHEIRO
+add_filter( 'manage_banheiro_posts_columns', 'smashing_banheiro_columns' );
+function smashing_banheiro_columns( $columns ) {
+    $columns = array(
+      'cb' => $columns['cb'],
+      'nome_prod_simulacao' => __( 'Name' )
+    );
+  return $columns;
+}
+
+add_action( 'manage_banheiro_posts_custom_column', 'smashing_banheiro_column', 10, 2);
+function smashing_banheiro_column( $column, $post_id ) {
+  // Name
+  if ( 'nome_prod_simulacao' === $column ) {
+	$nome_produto = explode('{:}', get_field_object('prod-simulacao',$post_id)['value']->post_title); 
+	$idioma = WPGlobus::Config()->language;
+	if($idioma == 'pt'){
+		$nome_produto = explode('{:pt}', strtolower($nome_produto[0]));
+	}
+	if($idioma == 'en'){
+		$nome_produto = explode('{:en}', strtolower($nome_produto[1]));
+	}
+	if($idioma == 'es'){
+		$nome_produto = explode('{:es}', strtolower($nome_produto[2]));
+	}
+	echo '<a class="row-title" href="'.get_edit_post_link( $post_id ).'" aria-label="'.ucwords($nome_produto[1]).' ('.__( 'Edit' ).')">'.ucwords($nome_produto[1]).'</a>';
+  }
+}
+
+
+
+
+
+// PISCINA
+add_filter( 'manage_piscina_posts_columns', 'smashing_piscina_columns' );
+function smashing_piscina_columns( $columns ) {
+    $columns = array(
+      'cb' => $columns['cb'],
+      'nome_prod_simulacao' => __( 'Name' )
+    );
+  return $columns;
+}
+
+add_action( 'manage_piscina_posts_custom_column', 'smashing_piscina_column', 10, 2);
+function smashing_piscina_column( $column, $post_id ) {
+  // Name
+  if ( 'nome_prod_simulacao' === $column ) {
+	$nome_produto = explode('{:}', get_field_object('prod-simulacao-piscina',$post_id)['value']->post_title); 
+	$idioma = WPGlobus::Config()->language;
+	if($idioma == 'pt'){
+		$nome_produto = explode('{:pt}', strtolower($nome_produto[0]));
+	}
+	if($idioma == 'en'){
+		$nome_produto = explode('{:en}', strtolower($nome_produto[1]));
+	}
+	if($idioma == 'es'){
+		$nome_produto = explode('{:es}', strtolower($nome_produto[2]));
+	}
+	echo '<a class="row-title" href="'.get_edit_post_link( $post_id ).'" aria-label="'.ucwords($nome_produto[1]).' ('.__( 'Edit' ).')">'.ucwords($nome_produto[1]).'</a>';
+  }
+}
+
+
 
 
 

@@ -90,7 +90,7 @@
 								<span class="img_preloader" style="top:0; left: 5px; visibility: hidden; display: inline;"></span>
 							</div>
 							<div class="wpallimport-note" style="margin: 20px auto 0; font-size: 13px;">
-								<?php _e('<strong>Hint:</strong> After you create this import, you can schedule it to run automatically, on a pre-defined schedule, with cron jobs. If anything in your file has changed, WP All Import can update your site with the changed data automatically.', 'wp_all_import_plugin'); ?>
+								<?php _e('<strong>Hint:</strong> After you create this import, you can schedule it to run automatically, on a pre-defined schedule, with cron jobs.', 'wp_all_import_plugin'); ?>
 								<div class="wpallimport-free-edition-notice" style="display:none;">									
 									<a href="https://www.wpallimport.com/checkout/?edd_action=add_to_cart&download_id=1748&edd_options%5Bprice_id%5D=0&utm_source=free-plugin&utm_medium=in-plugin&utm_campaign=download-from-url" target="_blank" class="upgrade_link"><?php _e('Upgrade to the Pro edition of WP All Import to Download from URL', 'wp_all_import_plugin');?></a>
 									<p><?php _e('If you already own it, remove the free edition and install the Pro edition.', 'wp_all_import_plugin'); ?></p>
@@ -147,10 +147,24 @@
 								</div>
 
 								<?php
-									
+									$hiddenPosts = array(
+                                        'attachment',
+                                        'revision',
+                                        'nav_menu_item',
+                                        'shop_webhook',
+                                        'import_users',
+                                        'wp-types-group',
+                                        'wp-types-user-group',
+                                        'wp-types-term-group',
+                                        'acf-field',
+                                        'acf-field-group',
+                                        'custom_css',
+                                        'customize_changeset',
+                                        'oembed_cache'
+                                    );
 									$custom_types = get_post_types(array('_builtin' => true), 'objects') + get_post_types(array('_builtin' => false, 'show_ui' => true), 'objects'); 
 									foreach ($custom_types as $key => $ct) {
-										if (in_array($key, array('attachment', 'revision', 'nav_menu_item', 'shop_webhook', 'import_users'))) unset($custom_types[$key]);
+										if (in_array($key, $hiddenPosts)) unset($custom_types[$key]);
 									}
 									$custom_types = apply_filters( 'pmxi_custom_types', $custom_types );
 
@@ -187,7 +201,7 @@
 
 									$hidden_post_types = get_post_types(array('_builtin' => false, 'show_ui' => false), 'objects');
 									foreach ($hidden_post_types as $key => $ct) {
-										if (in_array($key, array('attachment', 'revision', 'nav_menu_item'))) unset($hidden_post_types[$key]);
+										if (in_array($key, $hiddenPosts)) unset($hidden_post_types[$key]);
 									}
 									$hidden_post_types = apply_filters( 'pmxi_custom_types', $hidden_post_types );
 

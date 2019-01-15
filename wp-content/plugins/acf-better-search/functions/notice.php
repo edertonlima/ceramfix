@@ -5,8 +5,9 @@
     function __construct() {
 
       add_action('admin_notices', [$this, 'showAdminNotice']);
+      add_action('admin_notices', [$this, 'showAdminError']);
 
-      add_action('activated_plugin',                 [$this, 'hideNoticeByDefault']);
+      add_action('admin_init',                       [$this, 'hideNoticeByDefault']);
       add_action('wp_ajax_acf_better_search_notice', [$this, 'hideNotice']);
 
     }
@@ -16,6 +17,13 @@
     --- */
 
       public function showAdminNotice() {
+
+        if (get_option(ACFBS_NOTICE, false) === false) {
+
+          $this->saveNoticeExpires();
+          return;
+
+        }
 
         if ((get_option(ACFBS_NOTICE, 0) >= time()) || (get_current_screen()->id != 'dashboard'))
           return;
@@ -47,13 +55,33 @@
 
       }
 
+      public function showAdminError() {
+
+        if (function_exists('acf_get_setting'))
+          return;
+
+        ?>
+
+          <div class="notice notice-error is-dismissible">
+            <h2>
+              <?= __('ACF: Better Search error!', 'acf-better-search'); ?>
+            </h2>
+            <p>
+              <?= __('Unfortunately, but this plugin requires the Advanced Custom Field plugin version 5 for all functionalities to work properly. Please install the latest version of the ACF plugin.', 'acf-better-search'); ?>
+            </p>
+          </div>
+
+        <?php
+
+      }
+
     /* ---
       Turn off notice
     --- */
 
-      public function hideNoticeByDefault($plugin) {
+      public function hideNoticeByDefault() {
 
-        if ((basename($plugin) != 'acf-better-search.php') || (get_option(ACFBS_NOTICE, false) !== false))
+        if (get_option(ACFBS_NOTICE, false) !== false)
           return;
 
         $expires = strtotime('+1 week');
@@ -70,7 +98,9 @@
 
       }
 
-      public function saveNoticeExpires($expires) {
+      public function saveNoticeExpires($expires = 0) {
+
+        $expires = $expires ? $expires : strtotime('+1 week');
 
         if (get_option(ACFBS_NOTICE, false) !== false)
           update_option(ACFBS_NOTICE, $expires);
