@@ -71,33 +71,68 @@
 	display: none;
 	position: fixed;
 	z-index: 999;
-	top: 50%;
-	margin-top: -156px;
+	top: 0%;
 	left: 0;
 	width: 100%;
 	height: 100%;
+	background-color: rgba(0,0,0,0.1);
 
 	.form-search {
 		position: relative;
 		display: block;
-		margin: 0 auto 0;
+		margin: -156px auto 0;
 		width: 100%;
+		top: 50%;
 		max-width: 600px;
-		background: #e55a24;
+		background: #ffffff;
 		height: 312px;
 		padding: 60px;
 		@include box-sizing();
 
 		form {
 			margin: 0;
+
+			input[type="text"] {
+				display: block;
+				background-color: transparent;
+				font-size: 1.5rem;
+				color: #231f20;
+				font-weight: 300;
+				line-height: 35px;
+				box-sizing: border-box;
+
+				&::-webkit-input-placeholder {
+					color: #5a5758;
+				}
+
+				&:-moz-placeholder {
+					color: #5a5758; 
+				}
+
+				&::-moz-placeholder {
+					color: #5a5758;
+				}
+
+				&:-ms-input-placeholder {  
+					color: #5a5758;
+				}
+			}
+
+			input[type="submit"] {
+				background-color: #0077C8;
+
+				&:hover {
+					background-color: #0068af;
+				}
+			}
 		}
 
 		label {
-			color: #ffffff;
+			color: #231f20;
 		}
 
 		span {
-			border-color: #ffffff;
+			border-color: #231f20;
 			input {
 				color: #ffffff;
 				width: 100%;
@@ -106,8 +141,8 @@
 	}
 
 	#close-search {
-		color: #ffffff;
-		background: #e55a24;
+		color: #0077C8;
+		background: #ffffff;
 		position: absolute;
 		right: 10px;
 		top: 10px;
@@ -206,19 +241,32 @@
 }
 
 .solucoes {
-	margin: 30px 0;
+	margin: 60px 0;
 	display: block;
 	text-align: center;
 
 	h5 {
+		font-size: 1.25rem;
 		color: #0077C8;
 		display: block;
-		padding: 0 0px 5px 8px;
+		padding: 0 0px 20px 8px;
 	}
 
 	a {
 		display: inline;
 		font-weight: 300;
 		padding: 2px 8px;
+
+		text-transform: lowercase;
+		background-color: #f6f5f5;
+		border-radius: 5px;
+		padding: 5px 10px;
+		@include animacao();
+
+		&:hover {
+			background-color: rgba(0,119,200,0.1);
+			color: #00549d;
+			text-decoration: none;
+		}
 	}
 }

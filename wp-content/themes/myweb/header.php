@@ -14,7 +14,8 @@
 			$url_idioma = explode('/es',home_url());
 			$url_idioma = $url_idioma[0];
 		}else{
-			$url_idioma = home_url();
+			$url_idioma = explode('/pt',home_url());
+			$url_idioma = $url_idioma[0];
 		}
 	}
 ?>
@@ -246,10 +247,14 @@
 
 							<a href="<?php echo $url_idioma.'/en/'.add_query_arg(array(),$wp->request); ?>" class="<?php echo $class_en; ?>" style="<?php echo $on_en; ?>" title="EN">
 								<img src="<?php echo get_template_directory_uri(); ?>/assets/images/en.png">
-							</a>
-							<a href="<?php echo $url_idioma_pt; ?>" class="<?php echo $class_pt; ?>" style="<?php echo $on_pt; ?>" title="PT">
+							<?php /* <a href="<?php echo $url_idioma_pt; ?>" class="<?php echo $class_pt; ?>" style="<?php echo $on_pt; ?>" title="PT">
 								<img src="<?php echo get_template_directory_uri(); ?>/assets/images/pt.png">
-								</a>
+							</a> */ ?>
+
+							<a href="<?php echo $url_idioma.'/'.add_query_arg(array(),$wp->request); ?>" class="<?php echo $class_pt; ?>" style="<?php echo $on_pt; ?>" title="PT">
+								<img src="<?php echo get_template_directory_uri(); ?>/assets/images/pt.png">
+							</a>
+
 							<a href="<?php echo $url_idioma.'/es/'.add_query_arg(array(),$wp->request); ?>" class="<?php echo $class_es; ?>" style="<?php echo $on_es; ?>" title="ES">
 								<img src="<?php echo get_template_directory_uri(); ?>/assets/images/es.png">
 							</a>
