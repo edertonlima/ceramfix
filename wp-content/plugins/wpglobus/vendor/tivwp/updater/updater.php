@@ -9,7 +9,7 @@
  *
  * @package   TIVWP_Updater
  * @author    WPGlobus
- * @copyright Copyright 2017 TIV.NET INC. and Gregory Karpinsky
+ * @copyright Copyright 2018 TIV.NET INC. and Gregory Karpinsky
  */
 
 // Exit if accessed directly.
@@ -43,7 +43,7 @@ if ( is_admin() ) {
 			 * Load the class and tell others that it's done.
 			 */
 			require_once dirname( __FILE__ ) . '/class-tivwp-updater.php';
-			define( 'TIVWP_UPDATER_VERSION', '1.0.7' );
+			define( 'TIVWP_UPDATER_VERSION', '1.0.9' );
 
 			if ( isset( $GLOBALS['pagenow'] ) && 'plugins.php' === $GLOBALS['pagenow'] ) {
 				require_once dirname( __FILE__ ) .
@@ -58,7 +58,7 @@ if ( is_admin() ) {
 			do_action( 'tivwp_updater_factory' );
 		}
 		// TODO: Increase the "minus" part with every new release.
-		, 9999 - 8
+		, 9999 - 10
 	);
 }
 

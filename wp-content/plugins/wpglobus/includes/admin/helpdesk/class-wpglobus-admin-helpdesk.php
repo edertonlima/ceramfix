@@ -13,36 +13,85 @@
 class WPGlobus_Admin_HelpDesk {
 
 	/**
-	 * CSS class for the menu icon.
+	 * Nonce.
+	 *
 	 * @var string
 	 */
-	const ICON_CLASS = 'dashicons dashicons-before dashicons-format-chat';
+	const NONCE_ACTION = 'wpglobus-helpdesk';
+
+	/**
+	 * Email address of the Support.
+	 *
+	 * @var string
+	 */
+	const EMAIL_SUPPORT = 'support@wpglobus.com';
 
 	/**
 	 * Admin page title.
+	 *
 	 * @var string
 	 */
 	public static $page_title;
 	/**
 	 * Admin menu title.
+	 *
 	 * @var string
 	 */
 	protected static $menu_title;
+
 	/**
-	 * Admin menu tooltip.
 	 * @var string
 	 */
-	protected static $menu_tooltip;
+	protected static $name;
+
 	/**
-	 * Admin page URL.
+	 * @return string
+	 */
+	public static function getName() {
+		return self::$name;
+	}
+
+	/**
 	 * @var string
 	 */
-	public static $admin_page_url;
+	protected static $email;
+
+	/**
+	 * @return string
+	 */
+	public static function getEmail() {
+		return self::$email;
+	}
+
+	/**
+	 * @var string
+	 */
+	protected static $submission_status = 'success';
+
+	/**
+	 * @return string
+	 */
+	public static function getSubmissionStatus() {
+		return self::$submission_status;
+	}
+
+	/**
+	 * @var string
+	 */
+	protected static $submission_message = '';
+
+	/**
+	 * @return string
+	 */
+	public static function getSubmissionMessage() {
+		return self::$submission_message;
+	}
 
 	/**
 	 * Static "constructor".
 	 */
 	public static function construct() {
+		self::set_vars();
 		self::set_hooks();
 	}
 
@@ -50,32 +99,26 @@ class WPGlobus_Admin_HelpDesk {
 	 * Set class variables.
 	 */
 	public static function set_vars() {
-		self::$page_title   = __( 'WPGlobus Help Desk', 'wpglobus' );
-		self::$menu_title   = __( 'Help Desk', 'wpglobus' );
-		self::$menu_tooltip = __( 'Contact WPGlobus Support', 'wpglobus' );
-
-		self::$admin_page_url = admin_url( 'admin.php?page=' ) .
-		                        WPGlobus::PAGE_WPGLOBUS_HELPDESK;
+		self::$page_title = __( 'WPGlobus Help Desk', 'wpglobus' );
+		self::$menu_title = __( 'Help Desk', 'wpglobus' );
 	}
 
 	/**
 	 * Setup actions and filters.
 	 */
 	protected static function set_hooks() {
-		add_action( 'admin_init', array( __CLASS__, 'set_vars' ) );
-		add_action( 'admin_menu', array( __CLASS__, 'add_menu' ) );
-		add_action( 'admin_footer', array( __CLASS__, 'show_submenu' ), PHP_INT_MAX );
+		add_action( 'admin_menu', array( __CLASS__, 'add_menu' ), PHP_INT_MAX );
 	}
 
 	/**
-	 * Add a hidden admin menu item.
-	 * It will become visible in @see WPGlobus_Admin_HelpDesk::show_submenu
+	 * Add admin menu item.
 	 */
 	public static function add_menu() {
 		add_submenu_page(
-			null,
-			'',
-			'',
+			WPGlobus::OPTIONS_PAGE_SLUG,
+			self::$page_title,
+			'<span class="' . esc_attr( WPGlobus_Admin_Page::nav_tab_icon( 'Helpdesk' ) ) . '"></span> '
+			. self::$menu_title,
 			'administrator',
 			WPGlobus::PAGE_WPGLOBUS_HELPDESK,
 			array( __CLASS__, 'helpdesk_page' )
@@ -83,83 +126,112 @@ class WPGlobus_Admin_HelpDesk {
 	}
 
 	/**
-	 * Make the admin menu item visible.
-	 * This is a workaround because the WPGlobus options panel is made by ReduxFramework.
-	 */
-	public static function show_submenu() {
-		?>
-		<script>
-			jQuery(function ($) {
-				$('#toplevel_page_wpglobus_options')
-					.find("ul")
-					.prepend($("<li>")
-						.append($("<a>")
-							.attr({
-								href: "<?php echo esc_url( self::$admin_page_url ); ?>",
-								title: "<?php echo esc_js( self::$menu_tooltip ); ?>"
-							})
-							.html(' <?php echo esc_js( self::$menu_title ); ?>')
-							.prepend($("<span>")
-								.attr({"class": "<?php echo esc_js( self::ICON_CLASS ); ?>"})
-							)
-						)
-					);
-			});
-		</script>
-		<?php
-	}
-
-	/**
 	 * The admin page.
 	 */
 	public static function helpdesk_page() {
+		/** @noinspection PhpUnusedLocalVariableInspection */
 		$data = self::get_data();
 
-		include dirname( __FILE__ ) . '/wpglobus-admin-helpdesk-page.php';
+		self::handle_submit();
 
-		// Split one-cell formatted list of plugins into the separate rows.
+		/*
+		 * Prepare data for the view.
+		 */
+
 		$active_plugins = explode( ', ', $data['active_plugins'] );
 		unset( $data['active_plugins'] );
+
+		$tech_info = '';
+		foreach ( $data as $key => $value ) {
+			$tech_info .= $key . ' = ' . $value . "\n";
+		}
+
+		// Split one-cell formatted list of plugins into the separate rows.
 		foreach ( $active_plugins as $active_plugin ) {
 			list( $name, $version ) = explode( ':', $active_plugin );
-			$data[ $name ] = $version;
+
+			$tech_info .= $name . ' = ' . $version . "\n";
 		}
-		?>
 
-		<script>
-			<?php require dirname( __FILE__ ) . '/beacon-loader.min.js'; ?>
-			HS.beacon.config({
-				icon: 'message',
-				attachment: 1,
-				poweredBy: 0
-			});
+		/** @noinspection PhpUnusedLocalVariableInspection */
+		$subject = empty( $_POST['subject'] ) ? '' : sanitize_text_field( $_POST['subject'] ); // phpcs:ignore WordPress.CSRF.NonceVerification
 
-			jQuery(function ($) {
-				HS.beacon.ready(function () {
-					//noinspection JSUnresolvedFunction
-					HS.beacon.identify(<?php echo wp_kses( wp_json_encode( $data ), array() );?>);
-				});
+		/** @noinspection PhpUnusedLocalVariableInspection */
+		$details = empty( $_POST['details'] ) ? '' : sanitize_textarea_field( $_POST['details'] ); // phpcs:ignore WordPress.CSRF.NonceVerification
 
-				// Set a special class for the menu item.
-				$(".wpglobus_admin_hs_beacon_toggle").on("click", function (e) {
-					e.preventDefault();
-					HS.beacon.toggle();
-				});
-			});
-		</script>
-		<?php
+		// Render view.
+		include dirname( __FILE__ ) . '/wpglobus-admin-helpdesk-page.php';
+
 	}
 
 	/**
-	 * Collect data for the beacon.
+	 * Handle the form submit.
+	 */
+	protected static function handle_submit() {
+		if ( ! empty( $_POST ) ) {
+			check_admin_referer( self::NONCE_ACTION );
+
+			if (
+				empty( $_POST['name'] )
+				|| empty( $_POST['email'] )
+				|| empty( $_POST['subject'] )
+				|| empty( $_POST['details'] )
+			) {
+				self::$submission_status  = 'error';
+				self::$submission_message = __( 'Email not sent. Please fill in the entire form.', 'wpglobus' );
+
+				return;
+			}
+
+			self::$name  = sanitize_text_field( $_POST['name'] );
+			self::$email = sanitize_email( $_POST['email'] );
+
+			if ( ! self::$name || ! self::$email ) {
+				self::$submission_status  = 'error';
+				self::$submission_message = __( 'Email not sent. Please verify that your name and email are entered correctly.', 'wpglobus' );
+
+				return;
+			}
+
+			$message = sanitize_textarea_field( $_POST['details'] );
+			if ( ! empty( $_POST['info'] ) ) {
+				$message .= "\n-----\n" . sanitize_textarea_field( $_POST['info'] );
+			}
+
+			$headers = array(
+				'from: ' . self::$name . ' <' . self::$email . '>',
+				'reply-to: ' . self::$email,
+				'cc: ' . self::$email,
+			);
+
+			add_action( 'wp_mail_failed', array( __CLASS__, 'action__wp_mail_failed' ) );
+
+			if ( wp_mail( self::EMAIL_SUPPORT, $_POST['subject'], $message, $headers ) ) :
+
+				self::$submission_status  = 'success';
+				self::$submission_message = __( 'Email sent.', 'wpglobus' );
+
+			endif;
+
+			remove_action( 'wp_mail_failed', array( __CLASS__, 'action__wp_mail_failed' ) );
+
+		}
+	}
+
+	/**
+	 * Collect technical data.
+	 *
 	 * @return array
 	 */
 	protected static function get_data() {
-		$user  = wp_get_current_user();
+		$user        = wp_get_current_user();
+		self::$name  = WPGlobus_Filters::filter__text( $user->display_name );
+		self::$email = $user->user_email;
+
 		$theme = wp_get_theme();
 
 		/**
-		 * @see php_uname can be disabled in php.ini for security reasons
+		 * @see   php_uname can be disabled in php.ini for security reasons
 		 * disable_functions=php_uname
 		 * @since 1.7.13
 		 */
@@ -173,12 +245,12 @@ class WPGlobus_Admin_HelpDesk {
 		}
 
 		$data = array(
-			'name'              => WPGlobus_Filters::filter__text( $user->display_name ),
-			'email'             => $user->user_email,
 			'home_url'          => home_url(),
 			'site_url'          => site_url(),
-			'REMOTE_ADDR'       => $_SERVER['REMOTE_ADDR'],
-			'SERVER_PORT'       => $_SERVER['SERVER_PORT'],
+			'REMOTE_ADDR'       => sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ),
+			// WPCS: input var ok, sanitization ok.
+			'SERVER_PORT'       => sanitize_text_field( wp_unslash( $_SERVER['SERVER_PORT'] ) ),
+			// WPCS: input var ok, sanitization ok.
 			'OS'                => $OS,
 			'PHP_SAPI'          => PHP_SAPI,
 			'PHP_VERSION'       => PHP_VERSION,
@@ -203,6 +275,14 @@ class WPGlobus_Admin_HelpDesk {
 		return $data;
 
 	}
-}
 
-/* EOF */
+	/**
+	 * Print admin notice if sending failed.
+	 *
+	 * @param WP_Error $error
+	 */
+	public static function action__wp_mail_failed( WP_Error $error ) {
+		self::$submission_status  = 'error';
+		self::$submission_message = $error->get_error_message();
+	}
+}

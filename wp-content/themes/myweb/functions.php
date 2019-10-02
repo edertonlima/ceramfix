@@ -244,6 +244,45 @@
 		    register_post_type( 'piscina', $args );
 		}
 
+
+
+		// FACHADA
+		add_action( 'init', 'create_fachada' );
+		function create_fachada() {
+
+			$labels = array(
+			    'name' => _x('Fachada', 'post type general name'),
+			    'singular_name' => _x('Fachada', 'post type singular name'),
+			    'add_new' => _x('Adicionar Novo', 'Fachada'),
+			    'add_new_item' => __('Adicionar Novo'),
+			    'edit_item' => __('Editar'),
+			    'new_item' => __('Novo'),
+			    'all_items' => __('Mostrar Todos'),
+			    'view_item' => __('Visualisar Todos'),
+			    'search_items' => __('Pesquisar'),
+			    'not_found' =>  __('Nenhum Item Encontrado'),
+			    'not_found_in_trash' => __('Nenhum Item Encontrado na Lixeira'),
+			    'parent_item_colon' => '',
+			    'menu_name' => 'Simulador Fachada'
+			);
+			$args = array(
+			    'labels' => $labels,
+			    'public' => true,
+			    'publicly_queryable' => true,
+			    'show_ui' => true,
+			    'show_in_menu' => true,
+			    'rewrite' => true,
+			    'capability_type' => 'post',
+			    'has_archive' => true,
+			    'hierarchical' => false,
+			    'menu_position' => null,
+			    'menu_icon' => 'dashicons-art',
+			    'supports' => array('')
+			  );
+
+		    register_post_type( 'fachada', $args );
+		}
+
 	/* FIM - SIMULADORES DE CORES */
 
 
@@ -440,38 +479,10 @@ function smashing_realestate_columns( $columns ) {
 add_action( 'manage_sala_posts_custom_column', 'smashing_realestate_column', 10, 2);
 function smashing_realestate_column( $column, $post_id ) {
 
-  /*// Image column
-  if ( 'image_prod_simulacao' === $column ) {
-    echo get_the_post_thumbnail( get_field_object('prod-simulacao',$post_id)['value']->ID, array(80, 80) );
-  }*/
-
-  // Name
   if ( 'nome_prod_simulacao' === $column ) {
-  	//$produto_obj = get_post_meta($post_id, 'prod-simulacao', true);
-    //echo $produto_obj->post_title; //var_dump($produto_obj);
-	//$field = get_field_object('prod-simulacao')->post_title;
 
-
-	$nome_produto = explode('{:}', get_field_object('prod-simulacao',$post_id)['value']->post_title); 
-	$idioma = WPGlobus::Config()->language;
-
-	//var_dump($nome_produto);
-
-	if($idioma == 'pt'){
-		$nome_produto = explode('{:pt}', strtolower($nome_produto[0]));
-	}
-
-	if($idioma == 'en'){
-		$nome_produto = explode('{:en}', strtolower($nome_produto[1]));
-	}
-
-	if($idioma == 'es'){
-		$nome_produto = explode('{:es}', strtolower($nome_produto[2]));
-	}
-
-	//var_dump($nome_produto);
-	echo '<a class="row-title" href="'.get_edit_post_link( $post_id ).'" aria-label="'.ucwords($nome_produto[1]).' ('.__( 'Edit' ).')">'.ucwords($nome_produto[1]).'</a>';
-
+	$nome_produto = get_field_object('prod-simulacao',$post_id)['value']->post_title;
+	echo '<a class="row-title" href="'.get_edit_post_link( $post_id ).'" aria-label="'.ucwords($nome_produto).' ('.__( 'Edit' ).')">'.ucwords($nome_produto).'</a>';
 
   }
 
@@ -491,21 +502,14 @@ function smashing_cozinha_columns( $columns ) {
 
 add_action( 'manage_cozinha_posts_custom_column', 'smashing_cozinha_column', 10, 2);
 function smashing_cozinha_column( $column, $post_id ) {
-  // Name
+
   if ( 'nome_prod_simulacao' === $column ) {
-	$nome_produto = explode('{:}', get_field_object('prod-simulacao',$post_id)['value']->post_title); 
-	$idioma = WPGlobus::Config()->language;
-	if($idioma == 'pt'){
-		$nome_produto = explode('{:pt}', strtolower($nome_produto[0]));
-	}
-	if($idioma == 'en'){
-		$nome_produto = explode('{:en}', strtolower($nome_produto[1]));
-	}
-	if($idioma == 'es'){
-		$nome_produto = explode('{:es}', strtolower($nome_produto[2]));
-	}
-	echo '<a class="row-title" href="'.get_edit_post_link( $post_id ).'" aria-label="'.ucwords($nome_produto[1]).' ('.__( 'Edit' ).')">'.ucwords($nome_produto[1]).'</a>';
+
+	$nome_produto = get_field_object('prod-simulacao',$post_id)['value']->post_title;
+	echo '<a class="row-title" href="'.get_edit_post_link( $post_id ).'" aria-label="'.ucwords($nome_produto).' ('.__( 'Edit' ).')">'.ucwords($nome_produto).'</a>';
+
   }
+
 }
 
 
@@ -524,23 +528,15 @@ function smashing_banheiro_columns( $columns ) {
 
 add_action( 'manage_banheiro_posts_custom_column', 'smashing_banheiro_column', 10, 2);
 function smashing_banheiro_column( $column, $post_id ) {
-  // Name
-  if ( 'nome_prod_simulacao' === $column ) {
-	$nome_produto = explode('{:}', get_field_object('prod-simulacao',$post_id)['value']->post_title); 
-	$idioma = WPGlobus::Config()->language;
-	if($idioma == 'pt'){
-		$nome_produto = explode('{:pt}', strtolower($nome_produto[0]));
-	}
-	if($idioma == 'en'){
-		$nome_produto = explode('{:en}', strtolower($nome_produto[1]));
-	}
-	if($idioma == 'es'){
-		$nome_produto = explode('{:es}', strtolower($nome_produto[2]));
-	}
-	echo '<a class="row-title" href="'.get_edit_post_link( $post_id ).'" aria-label="'.ucwords($nome_produto[1]).' ('.__( 'Edit' ).')">'.ucwords($nome_produto[1]).'</a>';
-  }
-}
 
+  if ( 'nome_prod_simulacao' === $column ) {
+
+	$nome_produto = get_field_object('prod-simulacao',$post_id)['value']->post_title;
+	echo '<a class="row-title" href="'.get_edit_post_link( $post_id ).'" aria-label="'.ucwords($nome_produto).' ('.__( 'Edit' ).')">'.ucwords($nome_produto).'</a>';
+
+  }
+
+}
 
 
 
@@ -557,23 +553,69 @@ function smashing_piscina_columns( $columns ) {
 
 add_action( 'manage_piscina_posts_custom_column', 'smashing_piscina_column', 10, 2);
 function smashing_piscina_column( $column, $post_id ) {
+
+  if ( 'nome_prod_simulacao' === $column ) {
+
+	$nome_produto = get_field_object('prod-simulacao-piscina',$post_id)['value']->post_title;
+	echo '<a class="row-title" href="'.get_edit_post_link( $post_id ).'" aria-label="'.ucwords($nome_produto).' ('.__( 'Edit' ).')">'.ucwords($nome_produto).'</a>';
+
+  }
+
+}
+
+
+
+
+// FACHADA
+add_filter( 'manage_fachada_posts_columns', 'smashing_fachada_columns' );
+function smashing_fachada_columns( $columns ) {
+    $columns = array(
+      'cb' => $columns['cb'],
+      'nome_prod_simulacao' => __( 'Name' )
+    );
+  return $columns;
+}
+
+add_action( 'manage_fachada_posts_custom_column', 'smashing_fachada_column', 10, 2);
+function smashing_fachada_column( $column, $post_id ) {
+
+  if ( 'nome_prod_simulacao' === $column ) {
+
+	$nome_produto = get_field_object('prod-simulacao-fachada',$post_id)['value']->post_title;
+	echo '<a class="row-title" href="'.get_edit_post_link( $post_id ).'" aria-label="'.ucwords($nome_produto).' ('.__( 'Edit' ).')">'.ucwords($nome_produto).'</a>';
+
+  }
+
+}
+
+/*
   // Name
   if ( 'nome_prod_simulacao' === $column ) {
 	$nome_produto = explode('{:}', get_field_object('prod-simulacao-piscina',$post_id)['value']->post_title); 
+
+	//var_dump($nome_produto);
 	$idioma = WPGlobus::Config()->language;
 	if($idioma == 'pt'){
 		$nome_produto = explode('{:pt}', strtolower($nome_produto[0]));
+		//var_dump($nome_produto);
+		$nome_produto = $nome_produto[0];
 	}
+
 	if($idioma == 'en'){
 		$nome_produto = explode('{:en}', strtolower($nome_produto[1]));
+		$nome_produto = $nome_produto[0];
 	}
+
 	if($idioma == 'es'){
 		$nome_produto = explode('{:es}', strtolower($nome_produto[2]));
+		$nome_produto = $nome_produto[0];
 	}
-	echo '<a class="row-title" href="'.get_edit_post_link( $post_id ).'" aria-label="'.ucwords($nome_produto[1]).' ('.__( 'Edit' ).')">'.ucwords($nome_produto[1]).'</a>';
+
+	//var_dump($nome_produto);
+	echo '<a class="row-title" href="'.get_edit_post_link( $post_id ).'" aria-label="'.ucwords($nome_produto).' ('.__( 'Edit' ).')">'.ucwords($nome_produto).'</a>';
   }
 }
-
+*/
 
 
 
@@ -692,6 +734,12 @@ if( function_exists('acf_add_options_page') ) {
 		'parent_slug'	=> 'simuladores',
 	));
 
+	acf_add_options_sub_page(array(
+		'page_title' 	=> 'Simuladores Fachada',
+		'menu_title'	=> 'Fachada',
+		'parent_slug'	=> 'simuladores',
+	));
+
 	acf_add_options_page(array(
 		'page_title' 	=> 'Prêmios',
 		'menu_title'	=> 'Prêmios',
@@ -775,8 +823,30 @@ if( function_exists('acf_add_options_page') ) {
 }
 
 
+function wpse28145_add_custom_types( $query ) {
+    if( is_tag() && $query->is_main_query() ) {
+
+        // this gets all post types:
+        $post_types = get_post_types();
+
+        // alternately, you can add just specific post types using this line instead of the above:
+        // $post_types = array( 'post', 'your_custom_type' );
+
+        $query->set( 'post_type', $post_types );
+    }
+}
+add_filter( 'pre_get_posts', 'wpse28145_add_custom_types' );
+
+
 function paginacao() {
     global $wp_query;
+    //var_dump($wp_query);
+    //echo $wp_query->max_num_pages;
+
+/*if{is_tax('categoria_produto')){
+
+}*/
+
     $big = 999999999; // need an unlikely integer
     $pages = paginate_links( array(
             'base' => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
@@ -788,18 +858,19 @@ function paginacao() {
             'prev_next'   => TRUE,
 			'prev_text'    => __('<i class="fa fa-2x fa-angle-left"></i>'),
 			'next_text'    => __('<i class="fa fa-2x fa-angle-right"></i>'),
-        ) );
-        if( is_array( $pages ) ) {
-            $paged = ( get_query_var('paged') == 0 ) ? 1 : get_query_var('paged');
-            echo '<ul class="paginacao">';
-            foreach ( $pages as $page ) {
-                    echo "<li>$page</li>";
-            }
-           echo '</ul>';
+    ) );
+
+    //var_dump($pages);
+
+    if( is_array( $pages ) ) {
+        $paged = ( get_query_var('paged') == 0 ) ? 1 : get_query_var('paged');
+        echo '<ul class="paginacao">';
+        foreach ( $pages as $page ) {
+                echo "<li>$page</li>";
         }
+       echo '</ul>';
+    }
 }
-
-
 
 
 function my_pre_get_posts( $query ) {

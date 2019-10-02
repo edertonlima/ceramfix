@@ -2,7 +2,7 @@
 
 <?php 
 	$idioma_empresa = [];
-	if($idioma == 'pt'){
+	if($idioma == 'pt-br'){
 		$idioma_empresa = ['PRÊMIOS','IDEOLOGIA CORPORATIVA'];
 	}
 
@@ -33,21 +33,21 @@
 <section class="box-container box-empresa premios" id="premios">
 	<div class="container">
 		<h2><?php echo $idioma_empresa[0]; ?></h2>
-		<img src="<?php the_field('imagem_premios',49); ?>" class="img-page">
+		<img src="<?php the_field('imagem_premios'); ?>" class="img-page">
 
 		<div class="conteudo">
-			<p><?php the_field('texto_empresa_premios',49); ?></p>
+			<p><?php the_field('texto_empresa_premios'); ?></p>
 		</div>
 
 		<div class="row sub-conteudo">
-			<?php if( have_rows('prêmios',49) ):
-				while ( have_rows('prêmios',49) ) : the_row(); ?>
+			<?php if( have_rows('prêmios') ):
+				while ( have_rows('prêmios') ) : the_row(); ?>
 
 					<div class="item-premio">
 						<span class="ico-item-premio">
-							<img typeof="foaf:Image" src="<?php the_sub_field('imagem_premio',49); ?>" width="200" height="100" alt="">
+							<img typeof="foaf:Image" src="<?php the_sub_field('imagem_premio'); ?>" width="200" height="100" alt="">
 						</span>
-						<p class="subtitulo"><?php the_sub_field('texto_premios',49); ?></p>
+						<p class="subtitulo"><?php the_sub_field('texto_premios'); ?></p>
 					</div>
 
 				<?php endwhile;

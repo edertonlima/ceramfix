@@ -8,15 +8,20 @@
 
 ob_start();
 ?>
-	<h1>WPGlobus <?php echo esc_html( WPGLOBUS_VERSION ); ?></h1>
-	<div class="wpg-bnr wpg-bnr-left">
-		<a class="wpg-a-img"
-		   href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=SLF8M4YNZHNQN">
-			<img src="<?php echo esc_url( WPGlobus::$PLUGIN_DIR_URL ); ?>includes/css/images/btn_donateCC_LG_global.gif"
-			     style="margin-top: 27px;"/>
-		</a>
+	<div class="grid__item wpg-bnr-title">
+		<!-- <h1>WPGlobus <?php//  echo esc_html( WPGLOBUS_VERSION ); ?></h1> -->
+		<!-- to use h2 or another header here -->
+	</div>
+	<div class="wpg-bnr wpg-bnr-left grid__item">
+		<div class="wpg-img-block wpg-bnr__item">
+			<a class="wpg-a-img"
+			   href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=SLF8M4YNZHNQN">
+				<img src="<?php echo esc_url( WPGlobus::$PLUGIN_DIR_URL ); ?>includes/css/images/btn_donateCC_LG_global.gif"
+					 style="margin-top:50px;margin-left:15px;"/>
+			</a>
+		</div>
 
-		<div class="wpg-text-block">
+		<div class="wpg-text-block wpg-bnr__item">
 			<div class="wpg-title"><?php esc_html_e( 'We rely on your support!', 'wpglobus' ); ?></div>
 
 			<div class="wpg-body">
@@ -38,13 +43,15 @@ ob_start();
 	$_url_wpglobus_plus_logo  = WPGlobus::$PLUGIN_DIR_URL .
 	                            'includes/css/images/wpglobus-plus-logo-150x150.png';
 	?>
-	<div class="wpg-bnr wpg-bnr-right">
-		<a class="wpg-a-img" href="<?php echo esc_url( $_url_wpglobus_plus_store ); ?>">
-			<img src="<?php echo esc_url( $_url_wpglobus_plus_logo ); ?>"
-			     alt="WPGlobus Plus"/>
-		</a>
-
-		<div class="wpg-text-block">
+	<div class="wpg-bnr wpg-bnr-right grid__item">
+		<div class="wpg-img-block wpg-bnr__item">
+			<a class="wpg-a-img wpg-bnr__item" href="<?php echo esc_url( $_url_wpglobus_plus_store ); ?>">
+				<img src="<?php echo esc_url( $_url_wpglobus_plus_logo ); ?>"
+					 alt="WPGlobus Plus"/>
+			</a>
+		</div>
+		
+		<div class="wpg-text-block wpg-bnr__item">
 			<div class="wpg-title"><?php esc_html_e( 'WPGlobus Plus!', 'wpglobus' ); ?></div>
 
 			<div class="wpg-body">

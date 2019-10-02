@@ -21,7 +21,7 @@ if ( is_admin() ) {
 /**
  * Filter @see wp_get_object_terms()
  */
-if ( empty( $_GET['wpglobus'] ) || 'off' !== $_GET['wpglobus'] ) {
+if ( empty( $_GET['wpglobus'] ) || 'off' !== $_GET['wpglobus'] ) { // WPCS: input var ok, sanitization ok.
 	add_filter( 'wp_get_object_terms', array( 'WPGlobus_Filters', 'filter__wp_get_object_terms' ), 0 );
 }
 
@@ -32,7 +32,7 @@ if ( empty( $_GET['wpglobus'] ) || 'off' !== $_GET['wpglobus'] ) {
  * @since 1.6.4
  */
 if (
-	( empty( $_GET['wpglobus'] ) || 'off' !== $_GET['wpglobus'] )
+	( empty( $_GET['wpglobus'] ) || 'off' !== $_GET['wpglobus'] ) // WPCS: input var ok, sanitization ok.
 	&& is_admin()
 	&& WPGlobus_WP::is_pagenow( 'post.php' )
 ) {
@@ -61,7 +61,7 @@ if (
  * @since 1.7.0
  */
 if (
-	( empty( $_GET['wpglobus'] ) || 'off' !== $_GET['wpglobus'] )
+	( empty( $_GET['wpglobus'] ) || 'off' !== $_GET['wpglobus'] ) // WPCS: input var ok, sanitization ok.
 	&& is_admin()
 	&& WPGlobus_WP::is_pagenow( 'post.php' )
 ) {
@@ -324,6 +324,28 @@ add_filter( 'oembed_request_post_id', array( 'WPGlobus_Filters', 'filter__oembed
  */
 add_filter( 'oembed_response_data', array( 'WPGlobus_Filters', 'filter__oembed_response_data' ), - PHP_INT_MAX );
 
+/**
+ * Filters the name to associate with the "from" email address.
+ * @see wp-includes\pluggable.php
+ * @since 1.9.5
+ */
+add_filter( 'wp_mail_from_name', array( 'WPGlobus_Filters', 'filter__text' ), 5 );
+
+/**
+ * Filters the wp_mail() arguments.
+ * @see wp-includes\pluggable.php
+ * @since 1.9.5
+ */
+add_filter( 'wp_mail', array( 'WPGlobus_Filters', 'filter__wp_mail' ), 5 );
+
+/**
+ * Filters oEmbed HTML. 
+ * Case when post has embedded local URL in content.
+ *
+ * @see wp-includes\class-wp-embed.php
+ * @since 1.9.8
+ */
+add_filter( 'embed_oembed_html', array( 'WPGlobus_Filters', 'filter__embed_oembed_html' ), 5, 4 );
 
 /**
  * ACF filters
@@ -377,6 +399,16 @@ if ( defined( 'AIOSEOP_VERSION' ) ) {
 		 */
 		add_filter( 'aioseop_title', array( 'WPGlobus_All_in_One_SEO', 'filter__title' ), 0 );
 
+	}
+}
+
+/**
+ * Yoast SEO filters.
+ * @since 2.0
+ */
+if ( defined( 'WPSEO_VERSION' ) ) {
+	if ( is_admin() ) {
+		add_filter( "pre_update_option_wpseo_taxonomy_meta", array( 'WPGlobus_Filters', 'filter__pre_update_wpseo_taxonomy_meta' ), 5, 3 );
 	}
 }
 

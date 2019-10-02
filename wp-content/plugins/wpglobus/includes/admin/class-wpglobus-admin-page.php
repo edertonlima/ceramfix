@@ -18,7 +18,7 @@ class WPGlobus_Admin_Page {
 		?>
 		<style>
 			.wp-badge.wpglobus-badge {
-				background:      #ffffff url(<?php echo esc_url( $url_wpglobus_logo ); ?>) no-repeat;
+				background: #ffffff url(<?php echo esc_url( $url_wpglobus_logo ); ?>) no-repeat;
 				background-size: contain;
 			}
 		</style>
@@ -47,10 +47,14 @@ class WPGlobus_Admin_Page {
 
 	/**
 	 * URL of the WPGlobus Add-ons page.
+	 *
+	 * @param bool $relative Set it to true to get the URL relative to the admin.
+	 *
 	 * @return string
 	 */
-	public static function url_addons() {
-		return add_query_arg(
+	public static function url_addons( $relative = false ) {
+
+		$url = add_query_arg(
 			array(
 				'tab'    => 'search',
 				's'      => 'WPGlobus',
@@ -58,24 +62,111 @@ class WPGlobus_Admin_Page {
 			),
 			self_admin_url( 'plugin-install.php' )
 		);
+
+		if ( $relative ) {
+			$url = str_replace( self_admin_url(), '', $url );
+		}
+
+		return $url;
+
 	}
 
 	/**
 	 * URL of the WPGlobus Settings page.
+	 *
 	 * @return string
 	 */
 	public static function url_settings() {
-		return admin_url( 'admin.php' ) . '?page=wpglobus_options';
+		return add_query_arg( 'page', WPGlobus::OPTIONS_PAGE_SLUG, admin_url( 'admin.php' ) );
 	}
 
 	/**
-	 * Print icon for navigation tab item.
+	 * URL of the WPGlobus Helpdesk page.
 	 *
-	 * @param string $icon_class A Dashicon CSS class or our internal alias.
+	 * @return string
+	 * @since 1.9.10
+	 */
+	public static function url_helpdesk() {
+		return add_query_arg( 'page', WPGlobus::PAGE_WPGLOBUS_HELPDESK, admin_url( 'admin.php' ) );
+	}
+
+	/**
+	 * URL of the Clean-up Tool page.
+	 *
+	 * @return string
+	 * @since 1.9.10
+	 */
+	public static function url_clean_up_tool() {
+		return add_query_arg( 'page', WPGlobus::PAGE_WPGLOBUS_CLEAN, admin_url( 'admin.php' ) );
+	}
+
+	/**
+	 * URL of the About page.
+	 *
+	 * @return string
+	 * @since 1.9.10
+	 */
+	public static function url_about() {
+		return add_query_arg( 'page', WPGlobus::PAGE_WPGLOBUS_ABOUT, admin_url( 'admin.php' ) );
+	}
+
+	/**
+	 * URL of the Admin Central page.
+	 *
+	 * @param string $central_tab_id Tab on the page.
+	 *
+	 * @return string
+	 * @since 1.9.10
+	 */
+	public static function url_admin_central( $central_tab_id = '' ) {
+		return add_query_arg( 'page', WPGlobus::PAGE_WPGLOBUS_ADMIN_CENTRAL . '#' . $central_tab_id, admin_url( 'admin.php' ) );
+	}
+
+	/**
+	 * URL of the Options Panel.
+	 *
+	 * @param string $tab Tab on the page.
+	 *
+	 * @return string
+	 * @since 1.9.10
+	 */
+	public static function url_options_panel( $tab = WPGlobus_Options::DEFAULT_TAB ) {
+
+		return add_query_arg( array(
+			'page' => WPGlobus::OPTIONS_PAGE_SLUG,
+			'tab'  => $tab,
+		), admin_url( 'admin.php' ) );
+	}
+
+	/**
+	 * URL of the WPGlobus-Plus Panel.
+	 *
+	 * @param string $tab Tab on the page.
+	 *
+	 * @return string
+	 * @since 1.9.10
+	 */
+	public static function url_wpglobus_plus_panel( $tab = 'modules' ) {
+		if ( class_exists( 'WPGlobusPlus', false ) ) {
+			return add_query_arg( array(
+				'page' => WPGlobusPlus::WPGLOBUS_PLUS_OPTIONS_PAGE,
+				'tab'  => $tab,
+			), admin_url( 'admin.php' ) );
+		} else {
+			return admin_url();
+		}
+	}
+
+	/**
+	 * Icon for navigation tab item.
+	 *
+	 * @param string  $icon_class          A Dashicon CSS class or our internal alias.
+	 * @param boolean $add_dashicons_class Add "dashicons" class before icon class.
 	 *
 	 * @link https://developer.wordpress.org/resource/dashicons/
+	 * @return string
 	 */
-	public static function nav_tab_icon_e( $icon_class ) {
+	public static function nav_tab_icon( $icon_class, $add_dashicons_class = true ) {
 
 		static $aliases = array(
 			'faq'      => 'dashicons-editor-help',
@@ -93,9 +184,20 @@ class WPGlobus_Admin_Page {
 			$icon_class = $aliases[ $icon_class ];
 		}
 
-		echo '<span class="dashicons ' . esc_attr( $icon_class ) .
-		     '" style="vertical-align: middle"></span>';
+		if ( $add_dashicons_class ) {
+			$icon_class = 'dashicons dashicons-before ' . $icon_class;
+		}
+
+		return $icon_class;
+
+	}
+
+	/**
+	 * Print icon for navigation tab item.
+	 *
+	 * @param string $icon_class A Dashicon CSS class or our internal alias.
+	 */
+	public static function nav_tab_icon_e( $icon_class ) {
+		echo '<span class="' . esc_attr( self::nav_tab_icon( $icon_class ) ) . '"></span>';
 	}
 }
-
-/* EOF */

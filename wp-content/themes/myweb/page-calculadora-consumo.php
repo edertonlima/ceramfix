@@ -2,7 +2,7 @@
 
 <?php
 	$idioma_single_produto = [];
-	if($idioma == 'pt'){
+	if($idioma == 'pt-br'){
 		$idioma_single_produto = ['Calcule a quantidade e evite desperdício','ESCOLHA UM PRODUTO','DIMENSÕES DO REVESTIMENTO','LARGURA DA JUNTA','ESPESSURA DO REVESTIMENTO','ÁREA TOTAL A SER REVESTIDA','CALCULAR!','O seu consumo médio para rejuntar será de <span></span> Kg. <p>Obs: Para calculo do assentamento de pastilhas e revestimentos o consumo está disponível na página do produto.</p>','CENTRAL DE RELACIONAMENTO CERAMFIX'];
 	}
 

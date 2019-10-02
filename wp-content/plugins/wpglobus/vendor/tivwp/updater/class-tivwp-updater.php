@@ -161,6 +161,7 @@ class TIVWP_Updater {
 
 		/**
 		 * Override the $ok_to_run value.
+		 *
 		 * @example
 		 * <code>
 		 *    add_filter( 'tivwp-updater-ok-to-run', '__return_true' );
@@ -378,7 +379,7 @@ class TIVWP_Updater {
 		$response = $this->_get_upgrade_api_response( $request_parameters );
 
 		if ( isset( $response->new_version )
-		     && version_compare( (string) $response->new_version, $current_version, '>' )
+			 && version_compare( (string) $response->new_version, $current_version, '>' )
 		) {
 			$transient->response[ $this->plugin_name ] = $response;
 		}
@@ -519,8 +520,8 @@ class TIVWP_Updater {
 			'product_id'       => $this->product_id,
 		), $request_parameters );
 
-		$url = add_query_arg( 'wc-api', 'upgrade-api', $this->url_product )
-		       . '&' . http_build_query( $request_parameters );
+		$url = add_query_arg( 'wc-api', 'upgrade-api', $this->url_product ) . '&' .
+			   http_build_query( $request_parameters, '', '&' );
 
 		$result = wp_safe_remote_get( esc_url_raw( $url ) );
 
@@ -533,8 +534,8 @@ class TIVWP_Updater {
 		) {
 
 			$error_message = '<h3>' .
-			                 esc_html__( 'Licensing server connection error.', 'tivwp-updater' ) .
-			                 '</h3>';
+							 esc_html__( 'Licensing server connection error.', 'tivwp-updater' ) .
+							 '</h3>';
 
 			/* @noinspection NotOptimalIfConditionsInspection */
 			if ( is_wp_error( $result ) ) {
@@ -624,9 +625,9 @@ class TIVWP_Updater {
 
 
 		$url = add_query_arg( 'wc-api', 'am-software-api', $this->url_product ) . '&' .
-		       http_build_query( $args );
+			   http_build_query( $args, '', '&' );
 
-		if ( class_exists('TIVWP_Debug_Bar') ) {
+		if ( class_exists( 'TIVWP_Debug_Bar' ) ) {
 			TIVWP_Debug_Bar::print_link( $url );
 		}
 
@@ -713,7 +714,8 @@ class TIVWP_Updater {
 			}
 		}
 
-		return json_decode( $response_body, JSON_OBJECT_AS_ARRAY );
+		// The JSON_OBJECT_AS_ARRAY constant exists since PHP 5.4
+		return json_decode( $response_body, true );
 	}
 
 	/**
@@ -771,9 +773,9 @@ class TIVWP_Updater {
 		$key = 'action';
 		$_sk = $this->slug . '_' . $key;
 		if ( 1
-		     && $this->licence_key
-		     && $this->email
-		     && isset( $form_data[ $_sk ] )
+			 && $this->licence_key
+			 && $this->email
+			 && isset( $form_data[ $_sk ] )
 
 		) {
 			if ( 'activate' === $form_data[ $_sk ] ) {
@@ -896,7 +898,7 @@ class TIVWP_Updater {
 		if ( ! empty( $result[ self::KEY_ERROR ] ) ) {
 			$this->_notification_add( $result[ self::KEY_ERROR ] );
 		} elseif ( isset( $result['activated'] )
-		           && $result['activated']
+				   && $result['activated']
 		) {
 			$this->status = self::STATUS_ACTIVE;
 			$this->_notification_add( $result['message'] );
@@ -919,14 +921,14 @@ class TIVWP_Updater {
 			 * combination "instance-key-email" is not in the database.
 			 * In that case, let's set the local status as inactive.
 			 * Otherwise, all fields are disabled and the user is "stuck".
+			 *
 			 * @since 1.0.7
 			 */
 			if ( isset( $result['activated'] ) && self::STATUS_INACTIVE === $result['activated'] ) {
 				$this->status = self::STATUS_INACTIVE;
 			}
-
 		} elseif ( isset( $result['deactivated'] )
-		           && $result['deactivated']
+				   && $result['deactivated']
 		) {
 			$this->status = self::STATUS_INACTIVE;
 			if ( ! empty( $result['activations_remaining'] ) ) {
@@ -961,5 +963,3 @@ class TIVWP_Updater {
 		return ( $this->licence_key && $this->email );
 	}
 }
-
-/*EOF*/

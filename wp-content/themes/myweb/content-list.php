@@ -1,4 +1,4 @@
-<?php
+<?php /*
 	global $idioma;
 	global $url_idioma;
 	$idioma = WPGlobus::Config()->language;
@@ -12,12 +12,12 @@
 		}else{
 			$url_idioma = home_url();
 		}
-	}
+	} */
 ?>
 
 <?php 
 	$idioma_front_page = [];
-	if($idioma == 'pt'){
+	if($idioma == 'pt-br'){
 		$idioma_front_page = ['SAIBA MAIS'];
 	}
 

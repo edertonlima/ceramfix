@@ -2,7 +2,7 @@
 
 <?php
 	$idioma_single_produto = [];
-	if($idioma == 'pt'){
+	if($idioma == 'pt-br'){
 		$idioma_single_produto = ['CENTRAL DE RELACIONAMENTO CERAMFIX','Nome','E-mail','Telefone principal','Mensagem','ENVIAR!','ENVIANDO!','Enviado com sucesso! Obrigado.','Você também pode enviar suas críticas, sugestões ou dúvidas preenchendo os campos abaixo:','Estado','Cidade','Campos obrigatórios não podem estar vazios.'];
 	}
 

@@ -2,7 +2,7 @@
 
 <?php 
 	$idioma_front_page = [];
-	if($idioma == 'pt'){
+	if($idioma == 'pt-br'){
 		$idioma_front_page = ['PRÊMIOS','CENTRAL DE RELACIONAMENTO CERAMFIX','Você também pode enviar suas críticas, sugestões ou dúvidas preenchendo os campos abaixo:','Nome','E-mail','Telefone principal','Mensagem','Enviar!','ENVIANDO!','Enviado com sucesso! Obrigado.','Por favor, digite um e-mail válido.','Estado','Cidade','Campos obrigatórios não podem estar vazios.'];
 	}
 
@@ -112,17 +112,32 @@
 <section class="box-home premios" id="premios">
 	<div class="container">
 		<h2><?php echo $idioma_front_page[0]; ?></h2>
-		<p class="subtitulo"><?php the_field('texto_home_premios',49); ?></p>
+
+		<?php
+			if($idioma == 'en'){
+				$id_page_empresa = 31777;
+			}
+
+			if($idioma == 'pt-br'){
+				$id_page_empresa = 49;
+			}
+
+			if($idioma == 'es'){
+				$id_page_empresa = 31780;
+			}
+		?>
+
+		<p class="subtitulo"><?php the_field('texto_home_premios',$id_page_empresa); ?></p>
 
 		<div>
-			<?php if( have_rows('prêmios',49) ):
-				while ( have_rows('prêmios',49) ) : the_row(); ?>
+			<?php if( have_rows('prêmios',$id_page_empresa) ):
+				while ( have_rows('prêmios',$id_page_empresa) ) : the_row(); ?>
 
 					<div class="item-premio">
 						<span class="ico-item-premio">
-							<img typeof="foaf:Image" src="<?php the_sub_field('imagem_premio',49); ?>" width="200" height="100" alt="">
+							<img typeof="foaf:Image" src="<?php the_sub_field('imagem_premio',$id_page_empresa); ?>" width="200" height="100" alt="">
 						</span>
-						<p class="subtitulo"><?php the_sub_field('texto_premios',49); ?></p>
+						<p class="subtitulo"><?php the_sub_field('texto_premios',$id_page_empresa); ?></p>
 					</div>
 
 				<?php endwhile;

@@ -4,7 +4,7 @@
  *
  * @package   WPGlobus
  * @author    TIV.NET INC, Alex Gor (alexgff) and Gregory Karpinsky (tivnet)
- * @copyright 2015-2017 TIV.NET INC. / WPGlobus
+ * @copyright 2015-2018 TIV.NET INC. / WPGlobus
  * @license   http://www.gnu.org/licenses/gpl.txt GNU General Public License, version 3
  */
 
@@ -15,12 +15,12 @@
  * Description: A WordPress Globalization / Multilingual Plugin. Posts, pages, menus, widgets and even custom fields - in multiple languages!
  * Text Domain: wpglobus
  * Domain Path: /languages/
- * Version: 1.8.8
+ * Version: 2.1.6
  * Author: WPGlobus
  * Author URI: https://wpglobus.com/
  * Network: false
- * License: GPL-3.0
- * License URI: http://www.gnu.org/licenses/gpl.txt
+ * License: GPL-3.0-or-later
+ * License URI: https://spdx.org/licenses/GPL-3.0-or-later.html
  */
 // </editor-fold>
 // <editor-fold desc="GNU Clause">
@@ -42,21 +42,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-// Translate plugin name and description in the Admin/Plugins.
-if ( 0 ):
-	/// Plugin Name
-	__( 'WPGlobus', 'wpglobus' );
-	/// Plugin Description
-	__( 'A WordPress Globalization / Multilingual Plugin. Posts, pages, menus, widgets and even custom fields - in multiple languages!', 'wpglobus' );
-	/// Plugin URI
-	__( 'https://github.com/WPGlobus/WPGlobus', 'wpglobus' );
-	/// Plugin Author
-	__( 'WPGlobus', 'wpglobus' );
-	/// Plugin Author URI
-	__( 'https://wpglobus.com/', 'wpglobus' );
-endif;
-
-define( 'WPGLOBUS_VERSION', '1.8.8' );
+define( 'WPGLOBUS_VERSION', '2.1.6' );
 define( 'WPGLOBUS_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 
 /**
@@ -97,7 +83,15 @@ require_once dirname( __FILE__ ) . '/includes/class-wpglobus.php';
 require_once dirname( __FILE__ ) . '/includes/class-wpglobus-core.php';
 
 /**
+ * Admin page helpers.
+ *
+ * @since 1.6.5
+ */
+require_once dirname( __FILE__ ) . '/includes/admin/class-wpglobus-admin-page.php';
+
+/**
  * Initialize
+ *
  * @todo Rename uppercase variables.
  */
 // @codingStandardsIgnoreStart
@@ -116,6 +110,7 @@ require_once dirname( __FILE__ ) . '/includes/wpglobus-yoastseo.php';
 
 /**
  * Support of theme option panels and customizer
+ *
  * @since 1.4.0
  */
 require_once dirname( __FILE__ ) . '/includes/admin/customize/wpglobus-customize.php';
@@ -123,11 +118,13 @@ require_once dirname( __FILE__ ) . '/includes/admin/customize/wpglobus-customize
 /**
  * To disable WPGlobus Customizer Options, put this to wp-config:
  * define( 'WPGLOBUS_CUSTOMIZE', false )
+ *
  * @since 1.8.6
  */
 if ( ! defined( 'WPGLOBUS_CUSTOMIZE' ) || WPGLOBUS_CUSTOMIZE ) {
 	/**
 	 * WPGlobus customize options
+	 *
 	 * @since 1.4.6
 	 */
 	require_once dirname( __FILE__ ) . '/includes/admin/class-wpglobus-customize-options.php';
@@ -149,17 +146,19 @@ if (
 	require_once dirname( __FILE__ ) . '/vendor/tivwp/updater/updater.php';
 }
 
+
+/**
+ * WPGlobus Post Types
+ *
+ * @since   1.9.10
+ */
+require_once dirname( __FILE__ ) . '/includes/class-wpglobus-post-types.php';
+
+
 /**
  * In admin area
  */
 if ( WPGlobus_WP::in_wp_admin() ) :
-
-	/**
-	 * Admin page helpers
-	 *
-	 * @since 1.6.5
-	 */
-	require_once dirname( __FILE__ ) . '/includes/admin/class-wpglobus-admin-page.php';
 
 	/**
 	 * HelpDesk
@@ -178,6 +177,7 @@ if ( WPGlobus_WP::in_wp_admin() ) :
 
 	/**
 	 * WPGlobus News admin dashboard widget.
+	 *
 	 * @since 1.7.7
 	 */
 	require_once dirname( __FILE__ ) . '/includes/admin/class-wpglobus-dashboard-news.php';
@@ -185,23 +185,17 @@ if ( WPGlobus_WP::in_wp_admin() ) :
 
 	/**
 	 * WPGlobus News admin dashboard widget.
+	 *
 	 * @since 1.7.8
 	 */
 	require_once dirname( __FILE__ ) . '/includes/admin/class-wpglobus-admin-menu.php';
 	WPGlobus_Admin_Menu::construct();
 
 	/**
-	 * Disable "Redux Blast"
-	 * @see   ReduxFramework::__construct
-	 * (wpglobus/lib/ReduxCore/framework.php:416)
-	 * @since 1.7.9
-	 */
-	$GLOBALS['redux_notice_check'] = 1;
-
-	/**
 	 * WPGlobus Recommendations.
 	 * To disable recommendations, put this to wp-config:
 	 * define( 'WPGLOBUS_RECOMMENDATIONS', false );
+	 *
 	 * @since 1.8.7
 	 */
 	if ( ! defined( 'WPGLOBUS_RECOMMENDATIONS' ) || WPGLOBUS_RECOMMENDATIONS ) {
@@ -218,6 +212,7 @@ if ( ! is_admin() && ! WPGlobus_WP::is_doing_ajax() ) :
 
 	/**
 	 * First-time automatic redirect to the primary language specified in the browser.
+	 *
 	 * @since 1.8.0
 	 */
 

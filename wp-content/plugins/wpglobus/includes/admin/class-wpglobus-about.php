@@ -28,10 +28,7 @@ class WPGlobus_About {
 			<a href="<?php echo esc_url( WPGlobus_Admin_Page::url_settings() ); ?>"
 			   class="nav-tab">
 				<?php WPGlobus_Admin_Page::nav_tab_icon_e( 'Settings' ); ?>
-				<?php
-				/// Do not translate
-				esc_html_e( 'Settings' );
-				?>
+				<?php esc_html_e( 'Settings' ); ?>
 			</a>
 			<a href="<?php echo esc_url( WPGlobus_Admin_Page::url_addons() ); ?>"
 			   class="nav-tab">
@@ -50,7 +47,7 @@ class WPGlobus_About {
 				<?php WPGlobus_Admin_Page::nav_tab_icon_e( 'FAQ' ); ?>
 				<?php esc_html_e( 'FAQ', 'wpglobus' ); ?>
 			</a>
-			<a href="<?php echo esc_url( WPGlobus_Admin_HelpDesk::$admin_page_url ); ?>"
+			<a href="<?php echo esc_url( WPGlobus_Admin_Page::url_helpdesk() ); ?>"
 			   class="nav-tab">
 				<?php WPGlobus_Admin_Page::nav_tab_icon_e( 'Helpdesk' ); ?>
 				<?php echo esc_html( WPGlobus_Admin_HelpDesk::$page_title ); ?>
@@ -120,7 +117,7 @@ class WPGlobus_About {
 			              target="_blank"><?php esc_html_e( 'Guide', 'wpglobus' ); ?></a></li>
 			<li>&bull; <a href="<?php echo esc_url( WPGlobus_Utils::url_wpglobus_site() . 'faq/' . self::QA_CAMPAIGN ); ?>"
 			              target="_blank"><?php esc_html_e( 'FAQs', 'wpglobus' ); ?></a></li>
-			<li>&bull; <a href="<?php echo esc_url( WPGlobus_Admin_HelpDesk::$admin_page_url ); ?>"
+			<li>&bull; <a href="<?php echo esc_url( WPGlobus_Admin_Page::url_helpdesk() ); ?>"
 			              target="_blank"><?php esc_html_e( 'Contact Us', 'wpglobus' ); ?></a></li>
 			<li>&bull; <a href="https://wordpress.org/support/plugin/wpglobus/reviews/?filter=5"
 			              target="_blank"><?php esc_html_e( 'Please give us 5 stars!', 'wpglobus' ); ?></a>
@@ -142,7 +139,7 @@ class WPGlobus_About {
 		<p>
 			<?php
 			printf(
-				/// translators: %s are used to insert HTML link. Keep them in place.
+				// translators: %s are used to insert HTML link. Keep them in place.
 				esc_html__( 'We are planning to maintain a %s list of translators %s on the WPGlobus website. This is not an endorsement, just a courtesy. Please contact them directly and let us know how did it work for you!', 'wpglobus' ),
 				'<a href="' . esc_url( WPGlobus_Utils::url_wpglobus_site() . 'translator/' . self::QA_CAMPAIGN ) . '">',
 				'</a>'
@@ -166,7 +163,7 @@ class WPGlobus_About {
 				<?php esc_html_e( 'They might display some texts with no translation, or with all languages mixed together.', 'wpglobus' ); ?>
 				<?php
 				printf(
-					/// translators: %s are used to insert HTML link. Keep them in place.
+					// translators: %s are used to insert HTML link. Keep them in place.
 					esc_html__( 'Please contact the theme / plugin author. If they are unable to assist, consider %s hiring the WPGlobus Team %s to write a custom code for you.', 'wpglobus' ),
 					'<a href="' . esc_url( WPGlobus_Utils::url_wpglobus_site() . 'professional-support/' . self::QA_CAMPAIGN ) . '">',
 					'</a>'

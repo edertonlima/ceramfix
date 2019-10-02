@@ -5,7 +5,9 @@
 <?php
 	global $idioma;
 	global $url_idioma;
-	$idioma = WPGlobus::Config()->language;
+	//$idioma = WPGlobus::Config()->language;
+	$idioma = ICL_LANGUAGE_CODE;
+	
 	if($idioma == 'en'){
 		$url_idioma = explode('/en',home_url());
 		$url_idioma = $url_idioma[0];
@@ -18,6 +20,9 @@
 			$url_idioma = $url_idioma[0];
 		}
 	}
+
+
+/*if(ICL_LANGUAGE_CODE == 'pt')*/
 ?>
 
 <?php 
@@ -173,6 +178,7 @@
 		jQuery('.nav').css('left','100vw');
 		jQuery('.region').css('left','100vw');
 		jQuery('.info-tel').css('left','100vw');
+		
 		if(jQuery('body').height() <= jQuery(window).height()){
 			jQuery('.footer').css({position: 'absolute', bottom: '0px'});
 		}else{
@@ -226,7 +232,7 @@
 									$menu_idioma = ['Products','Simulators','Color Simulator','Consumption Calculator','Company','Matrix and Units','Work with us','Awards & Reviews','Corporate Ideology','Contact','Contact us','Media','Releases','In the Media','Download'];
 								}
 
-								if($idioma == 'pt'){
+								if($idioma == 'pt-br'){
 									$class_pt = 'ativo';
 									$on_pt = '';
 									$menu_idioma = ['Produtos','Simuladores','Simulador de Cores','Calculadora de Consumo','Empresa','Matriz e Unidades','Trabalhe Conosco','Prêmios','Ideologia Corporativa','Contato','Fale Conosco','Mídia','Releases','Na Mídia','Download'];
@@ -245,11 +251,13 @@
 								}
 						 	?>
 
+
+						 	<!-- IDIOMAS --> <?php /*
 							<a href="<?php echo $url_idioma.'/en/'.add_query_arg(array(),$wp->request); ?>" class="<?php echo $class_en; ?>" style="<?php echo $on_en; ?>" title="EN">
 								<img src="<?php echo get_template_directory_uri(); ?>/assets/images/en.png">
 							<?php /* <a href="<?php echo $url_idioma_pt; ?>" class="<?php echo $class_pt; ?>" style="<?php echo $on_pt; ?>" title="PT">
 								<img src="<?php echo get_template_directory_uri(); ?>/assets/images/pt.png">
-							</a> */ ?>
+							</a> */ /*?>
 
 							<a href="<?php echo $url_idioma.'/'.add_query_arg(array(),$wp->request); ?>" class="<?php echo $class_pt; ?>" style="<?php echo $on_pt; ?>" title="PT">
 								<img src="<?php echo get_template_directory_uri(); ?>/assets/images/pt.png">
@@ -257,7 +265,25 @@
 
 							<a href="<?php echo $url_idioma.'/es/'.add_query_arg(array(),$wp->request); ?>" class="<?php echo $class_es; ?>" style="<?php echo $on_es; ?>" title="ES">
 								<img src="<?php echo get_template_directory_uri(); ?>/assets/images/es.png">
-							</a>
+							</a> */ ?>
+
+
+						<?php 
+							$langs = icl_get_languages('skip_missing=0&orderby=KEY&order=DIR&link_empty_to=str');
+
+							foreach ($langs as $key => $info_idioma) { //var_dump($info_idioma);
+								//if($info_idioma['active']){ ?>
+
+										<a href="<?php echo $info_idioma['url']; ?>" title="<?php echo $info_idioma['native_name']; ?>" class="<?php if($info_idioma['active']){ echo 'ativo'; } ?>">
+											<img src="<?php echo get_template_directory_uri() . '/assets/images/' . $info_idioma['code'] . '.png'; ?>">
+										</a>
+
+								<?php // }
+
+							}
+						?>
+
+							<!-- IDIOMAS -->
 
 							<a href="javascript:" class="search" style="" title="BUSCAR" id="btn-buscar">
 								<i class="fa fa-search"></i>

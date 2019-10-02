@@ -29,20 +29,33 @@
 											        ?>
 
 
-
+<style type="text/css">
+	.page .box-container.box-simulador-cores .tab > .item {
+		width: 20%;
+	}
+</style>
 
 <?php
 	$idioma_single_produto = [];
-	if($idioma == 'pt'){
-		$idioma_single_produto = ['SALA','COZINHA','BANHEIRO','PISCINA','ESCOLHA UM PRODUTO','SELECIONE A COR DO REJUNTE DA PAREDE','SELECIONE A COR DO REJUNTE DO PISO','SELECIONE A IMAGEM DA PAREDE','SELECIONE A IMAGEM DO PISO','SELECIONE A IMAGEM DA PASTILHA','SELECIONE A COR DO REJUNTE DA PASTILHA'];
+	if($idioma == 'pt-br'){
+		$idioma_single_produto = ['SALA','COZINHA','BANHEIRO','PISCINA','ESCOLHA UM PRODUTO','SELECIONE A COR DO REJUNTE DA PAREDE','SELECIONE A COR DO REJUNTE DO PISO','SELECIONE A IMAGEM DA PAREDE','SELECIONE A IMAGEM DO PISO','SELECIONE A IMAGEM DA PASTILHA','SELECIONE A COR DO REJUNTE DA PASTILHA','FACHADA'];
 	}
 
 	if($idioma == 'en'){
-		$idioma_single_produto = ['LIVING ROOM','KITCHEN','WC','POOL','CHOOSE A PRODUCT','SELECT THE COLOR OF THE WALL JOINT', 'SELECT THE COLOR OF THE FLOOR JOINT', 'SELECT THE WALL IMAGE', 'SELECT THE IMAGE FROM THE FLOOR','SELECT THE PICTURE OF THE SHEET', 'SELECT THE COLOR OF THE SHEET OF THE SHEET'];
+		$idioma_single_produto = ['LIVING ROOM','KITCHEN','WC','POOL','CHOOSE A PRODUCT','SELECT THE COLOR OF THE WALL JOINT', 'SELECT THE COLOR OF THE FLOOR JOINT', 'SELECT THE WALL IMAGE', 'SELECT THE IMAGE FROM THE FLOOR','SELECT THE PICTURE OF THE SHEET', 'SELECT THE COLOR OF THE SHEET OF THE SHEET','FACHADA'];
 	}
 
 	if($idioma == 'es'){
-		$idioma_single_produto = ['SALA','COCINA','BAÑO','PISCINA','ELEGIR UN PRODUCTO','SELECCIONE EL COLOR DEL REJUNTO DE LA PARED', 'SELECCIONE EL COLOR DEL REJUNTE DEL PISO', 'SELECCIONE LA IMAGEN DE LA PARED', 'SELECCIONE LA IMAGEN DEL PISO','SELECCIONE LA IMAGEN DE LA PASTILLA', 'SELECCIONE EL COLOR DEL REJUNTE DE LA PASTILLA'];
+		$idioma_single_produto = ['SALA','COCINA','BAÑO','PISCINA','ELEGIR UN PRODUCTO','SELECCIONE EL COLOR DEL REJUNTO DE LA PARED', 'SELECCIONE EL COLOR DEL REJUNTE DEL PISO', 'SELECCIONE LA IMAGEN DE LA PARED', 'SELECCIONE LA IMAGEN DEL PISO','SELECCIONE LA IMAGEN DE LA PASTILLA', 'SELECCIONE EL COLOR DEL REJUNTE DE LA PASTILLA','FACHADA'];
+	}
+
+
+
+	/* produto pré-selecionado */
+	if($_GET['prod']){
+		$simulacao_prod = $_GET['prod'];
+
+		$set_prod_amb = false;
 	}
 ?>
 
@@ -57,6 +70,7 @@
 			<div class="item item-ambiente" rel="#cozinha"><?php echo $idioma_single_produto[1]; ?></div>
 			<div class="item item-ambiente" rel="#banheiro"><?php echo $idioma_single_produto[2]; ?></div>
 			<div class="item item-ambiente" rel="#piscina"><?php echo $idioma_single_produto[3]; ?></div>
+			<div class="item item-ambiente" rel="#fachada" style="display: none;"><?php echo $idioma_single_produto[11]; ?></div>
 
 			<!-- #sala -->
 			<div class="tab-content active" id="sala">
@@ -64,9 +78,12 @@
 					<div class="cor-parede"></div>
 					<div class="cor-piso"></div>
 					<?php
-						$base = get_field('produto-sala','option');
+						/*$base = get_field('produto-sala','option');
 						$piso = $base[0]['piso'][0]['imagem'];
-						$parede = $base[0]['parede'][0]['imagem'];
+						$parede = $base[0]['parede'][0]['imagem'];*/
+
+						$piso = get_field('piso-sala','option');
+						$parede = get_field('parede-sala','option');
 					?>
 					<div class="piso" style="background-image: url('<?php echo $piso; ?>">
 						<div class="parede" style="background-image: url('<?php echo $parede; ?>">
@@ -178,9 +195,15 @@
 													endif;
 
 													//$nome_produto = explode('{:}', strtoupper($produto->post_title));
+													
 													$nome_produto = get_field('prod-simulacao');
+													
 													//var_dump($nome_produto);
-													$nome_produto = explode('{:}', strtoupper($nome_produto->post_title)); 
+													$ID_produto = $nome_produto->ID;
+													$nome_produto = $nome_produto->post_title;
+
+													//var_dump($nome_produto);
+													/*$nome_produto = explode('{:}', strtoupper($nome_produto->post_title)); 
 
 													if($idioma == 'pt'){
 														$titulo_prod = explode('{:PT}', strtoupper($nome_produto[0]));
@@ -192,14 +215,45 @@
 
 													if($idioma == 'es'){
 														$titulo_prod = explode('{:ES}', strtoupper($nome_produto[2]));
+													}*/
+
+
+  /*echo '<script>';
+  echo 'console.log('. $ID_produto .')';
+  echo '</script>';*/
+
+													if($simulacao_prod){
+														if($ID_produto == $simulacao_prod){
+															//$select_prod_true = ' selected="selected" ';
+															$select_prod_true = '';
+															$prod_sala = $produto->ID;
+
+  /*echo '<script>';
+  echo 'console.log("ENCONTRADO")';
+  echo '</script>';*/
+
+														}else{
+															$select_prod_true = '';
+
+															//$set_prod_amb = false;
+														}
+
+
+														if(!$set_prod_amb){
+															if($ID_produto == $simulacao_prod){
+																$set_prod_amb = true;
+																$id_pro_amb = $produto->ID;
+																$set_amb = '#sala';
+															}
+														}
 													}
 
-													echo '<option value="'.$produto->ID.'" parede="'.$parede.'" piso="'.$piso.'">'.$titulo_prod[1].'</option>';
+													//echo '<option value="'.$produto->ID.'" parede="'.$parede.'" piso="'.$piso.'">'.$titulo_prod[1].'</option>';
+													if($nome_produto != ''){
+														echo '<option value="'.$produto->ID.'" parede="'.$parede.'" piso="'.$piso.'"' . $select_prod_true . '>'.$nome_produto.'</option>';
+													}
 
 												endif;
-
-
-
 													
 											endwhile;
 
@@ -304,9 +358,12 @@
 					<div class="cor-parede"></div>
 					<div class="cor-piso"></div>
 					<?php
-						$base = get_field('produto-cozinha','option');
+						/*$base = get_field('produto-cozinha','option');
 						$piso = $base[0]['piso'][0]['imagem'];
-						$parede = $base[0]['parede'][0]['imagem'];
+						$parede = $base[0]['parede'][0]['imagem'];*/
+
+						$piso = get_field('piso-cozinha','option');
+						$parede = get_field('parede-cozinha','option');
 					?>
 					<div class="piso" style="background-image: url('<?php echo $piso; ?>">
 						<div class="parede" style="background-image: url('<?php echo $parede; ?>">
@@ -419,8 +476,10 @@
 
 													//$nome_produto = explode('{:}', strtoupper($produto->post_title));
 													$nome_produto = get_field('prod-simulacao');
+													$ID_produto = $nome_produto->ID;
+													$nome_produto = $nome_produto->post_title;
 													//var_dump($nome_produto);
-													$nome_produto = explode('{:}', strtoupper($nome_produto->post_title)); 
+													/*$nome_produto = explode('{:}', strtoupper($nome_produto->post_title)); 
 
 													if($idioma == 'pt'){
 														$titulo_prod = explode('{:PT}', strtoupper($nome_produto[0]));
@@ -432,9 +491,30 @@
 
 													if($idioma == 'es'){
 														$titulo_prod = explode('{:ES}', strtoupper($nome_produto[2]));
+													}*/
+
+													if($simulacao_prod){
+														if($ID_produto == $simulacao_prod){
+															//$select_prod_true = ' selected ';
+															$select_prod_true = '';
+															$prod_cozinha = $ID_produto;
+														}else{
+															$select_prod_true = '';
+														}
+
+
+														if(!$set_prod_amb){
+															if($ID_produto == $simulacao_prod){
+																$set_prod_amb = true;
+																$id_pro_amb = $produto->ID;
+																$set_amb = '#cozinha';
+															}
+														}
 													}
 
-													echo '<option value="'.$produto->ID.'" parede="'.$parede.'" piso="'.$piso.'">'.$titulo_prod[1].'</option>';
+													if($nome_produto != ''){
+														echo '<option value="'.$produto->ID.'" parede="'.$parede.'" piso="'.$piso.'"' . $select_prod_true . '>'.$nome_produto.'</option>';
+													}
 
 												endif;
 
@@ -541,9 +621,12 @@
 					<div class="cor-parede"></div>
 					<div class="cor-piso"></div>
 					<?php
-						$base = get_field('produto-banheiro','option');
+						/*$base = get_field('produto-banheiro','option');
 						$piso = $base[0]['piso'][0]['imagem'];
-						$parede = $base[0]['parede'][0]['imagem'];
+						$parede = $base[0]['parede'][0]['imagem'];*/
+
+						$piso = get_field('piso-banheiro','option');
+						$parede = get_field('parede-banheiro','option');
 					?>
 					<div class="piso" style="background-image: url('<?php echo $piso; ?>">
 						<div class="parede" style="background-image: url('<?php echo $parede; ?>">
@@ -654,7 +737,7 @@
 														endwhile;
 													endif;
 
-													//$nome_produto = explode('{:}', strtoupper($produto->post_title));
+													/*//$nome_produto = explode('{:}', strtoupper($produto->post_title));
 													$nome_produto = get_field('prod-simulacao');
 													//var_dump($nome_produto);
 													$nome_produto = explode('{:}', strtoupper($nome_produto->post_title)); 
@@ -669,9 +752,35 @@
 
 													if($idioma == 'es'){
 														$titulo_prod = explode('{:ES}', strtoupper($nome_produto[2]));
+													}*/
+
+													$nome_produto = get_field('prod-simulacao');
+													$ID_produto = $nome_produto->ID;
+													$nome_produto = $nome_produto->post_title;
+
+
+													if($simulacao_prod){
+														if($ID_produto == $simulacao_prod){
+															//$select_prod_true = ' selected ';
+															$select_prod_true = '';
+															$prod_banheiro = $ID_produto;
+														}else{
+															$select_prod_true = '';
+														}
+
+
+														if(!$set_prod_amb){
+															if($ID_produto == $simulacao_prod){
+																$set_prod_amb = true;
+																$id_pro_amb = $produto->ID;
+																$set_amb = '#banheiro';
+															}
+														}
 													}
 
-													echo '<option value="'.$produto->ID.'" parede="'.$parede.'" piso="'.$piso.'">'.$titulo_prod[1].'</option>';
+													if($nome_produto != ''){
+														echo '<option value="'.$produto->ID.'" parede="'.$parede.'" piso="'.$piso.'"' . $select_prod_true . '>'.$nome_produto.'</option>';
+													}
 
 												endif;
 
@@ -769,13 +878,18 @@
 
 
 
+
+
+
 			<!-- #piscina -->
 			<div class="tab-content" id="piscina">
 				<div class="simulador base">
 					<div class="cor-piso"></div>
 					<?php
-						$base = get_field('produto-piscina','option');
-						$piso = $base[0]['piso'][0]['imagem'];
+						/*$base = get_field('produto-piscina','option');
+						$piso = $base[0]['piso'][0]['imagem'];*/
+
+						$piso = get_field('piso-piscina','option');
 					?>
 					<div class="piso" style="background-image: url('<?php echo $piso; ?>">
 						<div class="moveis" style="background-image: url('<?php the_field('moveis-piscina','option'); ?>">
@@ -843,6 +957,7 @@
 														endwhile;
 													endif;
 
+													/*
 													//$nome_produto = explode('{:}', strtoupper($produto->post_title));
 													$nome_produto = get_field('prod-simulacao-piscina');
 													//var_dump($nome_produto);
@@ -858,9 +973,34 @@
 
 													if($idioma == 'es'){
 														$titulo_prod = explode('{:ES}', strtoupper($nome_produto[2]));
+													}*/
+
+													$nome_produto = get_field('prod-simulacao-piscina');
+													echo $ID_produto = $nome_produto->ID;
+													$nome_produto = $nome_produto->post_title;
+
+													if($simulacao_prod){
+														if($ID_produto == $simulacao_prod){
+															//$select_prod_true = ' selected ';
+															$select_prod_true = '';
+															$prod_piscina = $ID_produto;
+														}else{
+															$select_prod_true = '';
+														}
+
+
+														if(!$set_prod_amb){
+															if($ID_produto == $simulacao_prod){
+																$set_prod_amb = true;
+																$id_pro_amb = $produto->ID;
+																$set_amb = '#piscina';
+															}
+														}
 													}
 
-													echo '<option value="'.$produto->ID.'" piso="'.$piso.'">'.$titulo_prod[1].'</option>';
+													if($nome_produto != ''){
+														echo '<option value="'.$produto->ID.'" piso="'.$piso.'"' . $select_prod_true . '>'.$nome_produto.'</option>';
+													}
 
 												endif;
 
@@ -924,8 +1064,186 @@
 
 
 
+			<!-- #fachada -->
+			<div class="tab-content" id="fachada">
+				<div class="simulador base">
+					<div class="cor-piso"></div>
+					<?php
+						/*$base = get_field('produto-piscina','option');
+						$piso = $base[0]['piso'][0]['imagem'];*/
+
+						$piso = get_field('piso-fachada','option');
+					?>
+					<div class="piso" style="background-image: url('<?php echo $piso; ?>">
+						<div class="moveis" style="background-image: url('<?php the_field('moveis-fachada','option'); ?>">
+							<div class="mask" style="background-image: url('<?php the_field('mask-fachada','option'); ?>');"></div>
+						</div>
+					</div>
+				</div>
+				<?php 
+					//if( have_rows('produto-piscina','option') ):
+						$produto_ambiente = []; ?>
+
+						<div class="bg-select">
+							<span class="select">
+								<select name="produto" class="select-produto" rel="fachada">
+									<option value="null" selected="selected"><?php echo $idioma_single_produto[4]; ?></option>
+
+									<?php // while ( have_rows('produto-sala','option') ) : the_row();
+							        $getPosts = array(
+							            'posts_per_page' => 999,
+							            'post_type'   => 'fachada',
+							            'post_status' => 'any'/*,
+										'tax_query' => array(
+										    array(
+										        'taxonomy' => 'categoria_produto',
+										        'terms' => $category->term_id,
+										        'include_children' => false,
+										        'operator' => 'IN'
+										    )
+										),*/
+							        );
+							        $posts = new WP_Query( $getPosts );
+								        if(count($posts) > 0){
+
+											while($posts->have_posts()) : $posts->the_post();
+
+											    $produto = $post; //get_sub_field('produto','option');
+												if (!array_key_exists($produto->ID, $produto_ambiente)):
+
+												    // info produto
+												    $produto_ambiente[$produto->ID]['id'] = $produto->ID;
+
+												    // imagem piso
+												    if( have_rows('imagem-piso-simulacao-fachada') ):
+												    	$qtd_piso = 0;
+												    	while ( have_rows('imagem-piso-simulacao-fachada') ) : the_row();
+												    	$qtd_piso = $qtd_piso+1;
+												    		$produto_ambiente[$produto->ID]['piso'][] = array(
+												    			'nome' => get_sub_field('nome-imagem-piso'),
+												    			'imagem' => get_sub_field('imagem-imagem-piso'),
+												    			'miniatura' => get_sub_field('miniatura-imagem-piso')
+												    		);
+												    		if($qtd_piso == 1){
+												    			$piso = get_sub_field('imagem-imagem-piso');
+												    		}
+														endwhile;
+													endif;
+
+												    // cor rejunte piso
+												    if( have_rows('cor-rejunte-piso-simulacao-fachada') ):
+												    	while ( have_rows('cor-rejunte-piso-simulacao-fachada') ) : the_row();
+												    		$produto_ambiente[$produto->ID]['rejunte-piso'][] = array(
+												    			'nome' => get_sub_field('nome-cor-rejunte-piso'),
+												    			'cor' => get_sub_field('hexadecimal-cor-rejunte-piso')
+												    		);
+														endwhile;
+													endif;
+
+													/*
+													//$nome_produto = explode('{:}', strtoupper($produto->post_title));
+													$nome_produto = get_field('prod-simulacao-piscina');
+													//var_dump($nome_produto);
+													$nome_produto = explode('{:}', strtoupper($nome_produto->post_title)); 
+
+													if($idioma == 'pt'){
+														$titulo_prod = explode('{:PT}', strtoupper($nome_produto[0]));
+													}
+
+													if($idioma == 'en'){
+														$titulo_prod = explode('{:EN}', strtoupper($nome_produto[1]));
+													}
+
+													if($idioma == 'es'){
+														$titulo_prod = explode('{:ES}', strtoupper($nome_produto[2]));
+													}*/
+
+													$nome_produto = get_field('prod-simulacao-fachada');
+													echo $ID_produto = $nome_produto->ID;
+													$nome_produto = $nome_produto->post_title;
+
+													if($simulacao_prod){
+														if($ID_produto == $simulacao_prod){
+															//$select_prod_true = ' selected ';
+															$select_prod_true = '';
+															$prod_fachada = $ID_produto;
+														}else{
+															$select_prod_true = '';
+														}
 
 
+														if(!$set_prod_amb){
+															if($ID_produto == $simulacao_prod){
+																$set_prod_amb = true;
+																$id_pro_amb = $produto->ID;
+																$set_amb = '#fachada';
+															}
+														}
+													}
+
+													if($nome_produto != ''){
+														echo '<option value="'.$produto->ID.'" piso="'.$piso.'"' . $select_prod_true . '>'.$nome_produto.'</option>';
+													}
+
+												endif;
+
+
+
+													
+											endwhile;
+
+								        }
+								    wp_reset_postdata();
+									//endwhile; ?>
+
+								</select>
+							</span>
+						</div>
+
+					<?php //endif;
+
+					if(count($produto_ambiente)):
+						foreach ($produto_ambiente as $produto){ ?>
+
+							<div class="option-produto esq <?php echo 'id-'.$produto['id']; ?> select-piso">			
+								<div class="slide-cor">
+									<span class="tit-cores"><?php echo $idioma_single_produto[8]; ?>:</span>
+									<div class="slide-item-cor slide-simulacao">
+										<?php if(count($produto['piso'])):
+											$i = 0;
+											foreach ($produto['piso'] as $piso){ 
+												$i = $i+1; ?>
+												<div class="item item-<?php echo $i; ?>" rel="<?php echo $piso['imagem']; ?>" ambiente="fachada" local="piso">
+													<span class="cor" style="background-image: url('<?php echo $piso['miniatura']; ?>');"></span>
+													<span class="nome-cor"><?php echo $piso['nome']; ?></span>
+												</div>
+											<?php }
+										endif; ?>
+									</div>
+								</div>		
+							</div>
+
+							<div class="option-produto dir <?php echo 'id-'.$produto['id']; ?>"">			
+								<div class="slide-cor">
+									<span class="tit-cores"><?php echo $idioma_single_produto[9]; ?>:</span>
+									<div class="slide-item-cor slide-simulacao">
+										<?php if(count($produto['rejunte-piso'])):
+											foreach ($produto['rejunte-piso'] as $rejunte){ ?>
+												<div class="item" rel="<?php echo $rejunte['cor']; ?>" ambiente="fachada" local="cor-piso">
+													<span class="cor" style="background-color: <?php echo $rejunte['cor']; ?>"></span>
+													<span class="nome-cor"><?php echo $rejunte['nome']; ?></span>
+												</div>
+											<?php }
+										endif; ?>
+									</div>
+								</div>		
+							</div>
+
+						<?php } 
+					endif;
+				?>
+			</div>
+			<!-- #fachada -->
 
 
 
@@ -951,6 +1269,75 @@
 		jQuery('.cor-rejunte .item').removeClass('active');
 		jQuery(this).addClass('active');
 	});*/
+
+	<?php if($simulacao_prod){ ?>
+		jQuery(document).ready(function(){	
+
+			<?php /*if($prod_sala){ ?>
+				prod_selecionado = jQuery('select.select-produto').find('option[value=<?php echo $prod_sala; ?>]');
+				id_ambiente = '#sala';
+			<?php }else{
+				if($prod_cozinha){ ?>
+					prod_selecionado = jQuery('select.select-produto').find('option[value=<?php echo $prod_cozinha; ?>]');
+					id_ambiente = '#sala';
+				<?php }
+			} */?>
+
+			//alert(<?php echo $set_prod_amb; ?>);
+
+				<?php if($set_prod_amb){ ?>
+					prod_selecionado = jQuery('select.select-produto').find('option[value=<?php echo $id_pro_amb; ?>]');
+					id_ambiente = '<?php echo $set_amb; ?>'; 
+					//alert(id_ambiente);
+
+																//$id_pro_amb
+																//$set_amb;
+
+		jQuery('select.select-produto').val("null").change();
+		jQuery('.tab .item-ambiente').removeClass('active');
+
+		jQuery('.item.item-ambiente[rel="'+id_ambiente+'"]').addClass('active');
+		jQuery('.tab-content').removeClass('active');
+		jQuery(id_ambiente).addClass('active');
+
+					prod_selecionado.attr("selected",true);
+
+					option_produto = id_ambiente+' .id-'+(prod_selecionado.val());
+					jQuery(option_produto).show();	
+
+					piso = prod_selecionado.attr('piso');
+					imagemPiso = "url('"+piso+"')";
+					jQuery(id_ambiente+' .simulador .piso').css('background-image',imagemPiso);
+					
+					parede = prod_selecionado.attr('parede');
+					imagemParede = "url('"+parede+"')";
+					jQuery(id_ambiente+' .simulador .parede').css('background-image',imagemParede);
+
+					jQuery(option_produto+'.select-piso .item-1').addClass('active');
+					jQuery(option_produto+'.select-parede .item-1').addClass('active');
+															
+				<?php } ?>
+
+
+		
+			/*cleanAmbiente();
+			if((jQuery(this).val()) != 'null'){			
+				option_produto = '#'+(jQuery(this).attr('rel'))+' .id-'+(jQuery(this).val());
+				jQuery(option_produto).show();	
+
+				piso = jQuery('option:selected',this).attr('piso');
+				imagemPiso = "url('"+piso+"')";
+				jQuery('#'+(jQuery(this).attr('rel'))+' .simulador .piso').css('background-image',imagemPiso);
+				parede = jQuery('option:selected',this).attr('parede');
+				imagemParede = "url('"+parede+"')";
+				jQuery('#'+(jQuery(this).attr('rel'))+' .simulador .parede').css('background-image',imagemParede);
+
+				jQuery(option_produto+'.select-piso .item-1').addClass('active');
+				jQuery(option_produto+'.select-parede .item-1').addClass('active');
+			}*/
+		
+		});
+	<?php } ?>
 
 	function cleanAmbiente(){
 		jQuery('.option-produto').hide();
@@ -1001,4 +1388,27 @@
 			jQuery(option_produto+'.select-parede .item-1').addClass('active');
 		}
 	});
+
+	<?php /*
+		if($simulacao_prod){ ?>
+			jQuery(document).ready(function(){
+				cleanAmbiente();
+				if((jQuery(this).val()) != 'null'){			
+					option_produto = '#'+(jQuery(this).attr('rel'))+' .id-'+(jQuery(this).val());
+					jQuery(option_produto).show();	
+
+					piso = jQuery('option:selected',this).attr('piso');
+					imagemPiso = "url('"+piso+"')";
+					jQuery('#'+(jQuery(this).attr('rel'))+' .simulador .piso').css('background-image',imagemPiso);
+					parede = jQuery('option:selected',this).attr('parede');
+					imagemParede = "url('"+parede+"')";
+					jQuery('#'+(jQuery(this).attr('rel'))+' .simulador .parede').css('background-image',imagemParede);
+
+					jQuery(option_produto+'.select-piso .item-1').addClass('active');
+					jQuery(option_produto+'.select-parede .item-1').addClass('active');
+				}
+			});
+
+		<?php } */
+	?>
 </script>

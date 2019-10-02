@@ -6,7 +6,7 @@
 		$menu_idioma = ['Products','Know the product lines<br>with the specialty Ceramfix.'];
 	}
 
-	if($idioma == 'pt'){
+	if($idioma == 'pt-br'){
 		$menu_idioma = ['Produtos','Conheça as linhas de produtos<br>com a especialidade Ceramfix.'];
 	}
 

@@ -58,6 +58,20 @@ class WPGlobus_Config {
 	public $flags_url = '';
 
 	/**
+	 * Path to flags.
+	 * @var array
+	 * @since 1.9.17
+	 */
+	public $flag_path = array();
+	
+	/**
+	 * Location of flags.
+	 * @var array
+	 * @since 1.9.17
+	 */	
+	public $flag_urls = array();
+	
+	/**
 	 * Stores languages in pairs code=>name
 	 * @var array
 	 */
@@ -201,6 +215,22 @@ class WPGlobus_Config {
 	protected $language_for_oembed = '';
 
 	/**
+	 * Builder.
+	 *
+	 * @var WPGlobus_Config_Builder
+	 * @since 1.9.17
+	 */
+	public $builder = null;
+	
+	/**
+	 * True if builder is disabled.
+	 *
+	 * @var boolean
+	 * @since 1.9.17
+	 */	
+	public $builder_disabled = true;
+
+	/**
 	 * Can get it only once.
 	 * @return string
 	 * @since 1.8.4
@@ -238,10 +268,40 @@ class WPGlobus_Config {
 			'on_load_textdomain'
 		), 1 );
 
+		/**
+		 * Sets the current language and switches the translations according to the given locale.
+		 *
+		 * @param string $locale The locale to switch to.
+		 *
+		 * @since 1.9.14
+		 */
+		add_action( 'switch_locale', array( $this, 'on_switch_locale' ), - PHP_INT_MAX );
+
+		/**
+		 * Sets the current language and switches the translations according to the given locale.
+		 *
+		 * @param string $locale The locale to switch to.
+		 *
+		 * @since 1.9.14
+		 */
+		add_action( 'restore_previous_locale', array( $this, 'on_switch_locale' ), - PHP_INT_MAX );
+
 		add_action( 'upgrader_process_complete', array( $this, 'on_activate' ), 10, 2 );
 
 
 		$this->_get_options();
+	}
+
+	/**
+	 * Sets the current language and switches the translations according to the given locale.
+	 *
+	 * @param string $locale The locale to switch to.
+	 *
+	 * @since 1.9.14
+	 */
+	public function on_switch_locale( $locale ) {
+		$this->set_language( $locale );
+		$this->on_load_textdomain();
 	}
 
 	/**
@@ -266,8 +326,8 @@ class WPGlobus_Config {
 			 * because it's always `admin-ajax`.
 			 * Therefore, we'll rely on the HTTP_REFERER (if it exists).
 			 */
-			if ( ! empty( $_SERVER['HTTP_REFERER'] ) ) {
-				$url_to_check = $_SERVER['HTTP_REFERER'];
+			if ( ! empty( $_SERVER['HTTP_REFERER'] ) ) { // WPCS: input var ok, sanitization ok.
+				$url_to_check = $_SERVER['HTTP_REFERER']; // WPCS: input var ok, sanitization ok.
 			}
 		} else {
 			/**
@@ -287,6 +347,22 @@ class WPGlobus_Config {
 			if ( $language_from_url ) {
 				$this->language = $language_from_url;
 			}
+			/**
+			 * @since 1.9.17
+			 * Set language for builder.
+			 * For compatibility we set language here for front-end only.
+			 * As for the setting in admin @see wpglobus\includes\builders\class-wpglobus-config-builder.php
+			 */
+			if ( $this->builder && ! is_admin() ) {
+				/**
+				 * We can work with Gutenberg that was defined as front-end but we should set 'language' for real front-end without builder.
+				 * Any builder may have behavior like Gutenberg.
+				 * @todo check each builder that WPGlobus will be support.
+				 */
+				if ( ! $this->builder->is_builder_page() ) {
+					$this->builder->set_language($this->language);
+				}	
+			}			
 		}
 
 	}
@@ -333,20 +409,19 @@ class WPGlobus_Config {
 	}
 
 	/**
-	 * Set current language
+	 * Set the current language to match the given locale.
 	 *
-	 * @param string $locale
+	 * @since 1.9.14 : If we do not know such locale, set to default.
+	 *
+	 * @param string $locale The locale ('en_US', 'fr_FR', etc.).
 	 */
 	public function set_language( $locale ) {
-		/**
-		 * @todo Maybe use option for disable/enable setting current language corresponding with $locale ?
-		 */
-		foreach ( $this->locale as $language => $value ) {
-			if ( $locale === $value ) {
-				$this->language = $language;
-				break;
-			}
-		}
+
+		$locale_to_language = array_flip( $this->locale );
+
+		$this->language = empty( $locale_to_language[ $locale ] )
+			? $this->default_language
+			: $locale_to_language[ $locale ];
 	}
 
 	/**
@@ -367,19 +442,65 @@ class WPGlobus_Config {
 	 * @return void
 	 */
 	public function on_load_textdomain() {
-		load_plugin_textdomain( 'wpglobus', false, basename( dirname( dirname( __FILE__ ) ) ) . '/languages' );
+		self::load_mofile();
+
+		/**
+		 * Can use this action to load additional translations.
+		 *
+		 * @since 1.9.14
+		 */
+		do_action( 'wpglobus_after_load_textdomain' );
 	}
 
 	/**
-	 * Set flags URL
+	 * Load .MO file from the plugin's `languages` folder.
+	 * Used instead of @see load_plugin_textdomain to ignore translation files from WordPress.org, which are outdated.
+	 * To force loading from a different place, use the `load_textdomain_mofile` filter.
+	 *
+	 * @since 1.9.6
+	 */
+	protected function load_mofile() {
+		$domain = 'wpglobus';
+
+		/**
+		 * Delete translations that could be loaded already from the main /languages/ folder.
+		 *
+		 * @since 1.9.10
+		 */
+		unload_textdomain( $domain );
+
+		/**
+		 * Load our translations.
+		 */
+		$locale = apply_filters( 'plugin_locale', is_admin() ? get_user_locale() : get_locale(), $domain );
+		$mofile = WPGlobus::languages_path() . '/' . $domain . '-' . $locale . '.mo';
+		load_textdomain( $domain, $mofile );
+	}
+
+	/**
+	 * Set flags URL.
 	 * @return void
 	 */
 	public function _set_flags_url() {
 		$this->flags_url = WPGlobus::$PLUGIN_DIR_URL . 'flags/';
+		/**
+		 * @since 1.9.17
+		 */
+		$this->flag_urls['small'] = WPGlobus::$PLUGIN_DIR_URL . 'flags/';
+		$this->flag_urls['big']   = WPGlobus::$PLUGIN_DIR_URL . 'flags/big/';
 	}
 
 	/**
-	 *    Set languages by default
+	 * Set flag PATH.
+	 * @return void
+	 */
+	public function _set_flag_path() {
+		$this->flag_path['small'] = WPGlobus::$PLUGIN_DIR_PATH . 'flags/';
+		$this->flag_path['big']   = WPGlobus::$PLUGIN_DIR_PATH . 'flags/big/';
+	}	
+	
+	/**
+	 * Set languages by default.
 	 */
 	public function _set_languages() {
 
@@ -467,31 +588,12 @@ class WPGlobus_Config {
 		 *
 		 * @link wp-admin/?wpglobus-reset-language-table=1
 		 */
-		if ( ! defined( 'DOING_AJAX' ) && ! empty( $_GET['wpglobus-reset-language-table'] ) && is_admin() ) {
+		if ( ! defined( 'DOING_AJAX' ) && ! empty( $_GET['wpglobus-reset-language-table'] ) && is_admin() ) { // WPCS: input var ok, sanitization ok.
 			delete_option( $this->option_language_names );
 		}
 
 
 		$wpglobus_option = get_option( $this->option );
-
-		/**
-		 * FIX: after "Reset All" Redux options we must reset all WPGlobus options
-		 * first of all look at $wpglobus_option['more_languages']
-		 */
-		if ( isset( $wpglobus_option['more_languages'] ) && is_array( $wpglobus_option['more_languages'] ) ) {
-
-			$wpglobus_option = array();
-			delete_option( $this->option );
-			delete_option( $this->option_language_names );
-			delete_option( $this->option_en_language_names );
-			delete_option( $this->option_locale );
-			delete_option( $this->option_flags );
-
-		}
-
-		if ( isset( $wpglobus_option['more_languages'] ) ) {
-			unset( $wpglobus_option['more_languages'] );
-		}
 
 		/**
 		 * Get enabled languages and default language ( just one main language )
@@ -521,6 +623,11 @@ class WPGlobus_Config {
 		 * Set flags URL
 		 */
 		$this->_set_flags_url();
+
+		/**
+		 * Set flags PATH.
+		 */		
+		$this->_set_flag_path();
 
 		/**
 		 * Get languages name
@@ -574,13 +681,17 @@ class WPGlobus_Config {
 		}
 
 		/**
-		 * Get navigation menu slug for add flag in front-end 'use_nav_menu'
+		 * Get navigation menu slug for add flag in front-end 'use_nav_menu'.
 		 */
 		$this->nav_menu = '';
+
 		if ( isset( $wpglobus_option['use_nav_menu'] ) ) {
-			$this->nav_menu = $wpglobus_option['use_nav_menu'];
+			if ( '--none--' != $wpglobus_option['use_nav_menu'] ) {
+				$this->nav_menu = $wpglobus_option['use_nav_menu'];
+			}
 			unset( $wpglobus_option['use_nav_menu'] );
 		}
+		
 		// This can be used in `wp-config` to override the options settings.
 		if ( defined( 'WPGLOBUS_USE_NAV_MENU' ) ) {
 			$this->nav_menu = WPGLOBUS_USE_NAV_MENU;
@@ -638,7 +749,7 @@ class WPGlobus_Config {
 		/**
 		 * WPGlobus devmode.
 		 */
-		if ( isset( $_GET['wpglobus'] ) && 'off' === $_GET['wpglobus'] ) {
+		if ( isset( $_GET['wpglobus'] ) && 'off' === $_GET['wpglobus'] ) { // WPCS: input var ok, sanitization ok.
 			$this->toggle = 'off';
 		} else {
 			$this->toggle = 'on';
@@ -651,10 +762,10 @@ class WPGlobus_Config {
 		 * @see WPGlobus::on_save_post_data
 		 */
 		if (
-			empty( $_SERVER['QUERY_STRING'] )
-			&& isset( $_SERVER['HTTP_REFERER'] )
+			empty( $_SERVER['QUERY_STRING'] ) // WPCS: input var ok, sanitization ok.
+			&& isset( $_SERVER['HTTP_REFERER'] ) // WPCS: input var ok, sanitization ok.
 			&& WPGlobus_WP::is_pagenow( 'post.php' )
-			&& false !== strpos( $_SERVER['HTTP_REFERER'], 'wpglobus=off' )
+			&& false !== strpos( $_SERVER['HTTP_REFERER'], 'wpglobus=off' ) // WPCS: input var ok, sanitization ok.
 		) {
 			$this->toggle = 'off';
 		}
@@ -664,11 +775,47 @@ class WPGlobus_Config {
 		}
 
 		/**
+		 * Builders.
+		 * @since 1.9.17
+		 */
+		if ( isset( $wpglobus_option['builder_disabled'] ) && 1 === (int) $wpglobus_option['builder_disabled'] ) {
+		
+			require_once dirname( __FILE__ ).'/builders/class-wpglobus-config-builder.php' ; 
+			$this->builder = new WPGlobus_Config_Builder(false);
+			
+			$this->builder_disabled = true;
+			unset( $wpglobus_option['builder_disabled'] );
+
+		} else {
+			
+			$this->builder_disabled = false;
+			
+			require_once dirname( __FILE__ ).'/builders/class-wpglobus-config-builder.php' ; 
+			$this->builder = new WPGlobus_Config_Builder(true, array('default_language' => $this->default_language));
+		
+			if ( is_admin() ) {
+				
+				require_once dirname( __FILE__ ) . '/class-wpglobus-config-vendor.php';
+				$config_vendor = WPGlobus_Config_Vendor::get_instance( $this->builder );					
+
+				require_once dirname( __FILE__ ).'/admin/meta/class-wpglobus-meta.php' ; 
+				WPGlobus_Meta::get_instance( $config_vendor::get_meta_fields(), $this->builder );
+				$this->meta = $config_vendor::get_meta_fields();
+				
+				require_once dirname( __FILE__ ).'/wp_options/class-wpglobus-wp_options.php' ; 
+				WPGlobus_WP_Options::get_instance( $config_vendor::get_wp_options() );
+
+				$this->builder->set_multilingual_fields($config_vendor::get_ml_fields());
+			}
+		}
+
+		
+		/**
 		 * Remaining wpglobus options after unset() is extended options
 		 * @since 1.2.3
 		 */
 		$this->extended_options = $wpglobus_option;
-
+		
 		/**
 		 * Option browser_redirect.
 		 * @since 1.8.0

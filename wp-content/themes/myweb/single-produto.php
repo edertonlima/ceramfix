@@ -17,7 +17,7 @@
 
 						<?php 
 							if($idioma == 'es'){ echo 'NUESTRAS SOLUCIONES'; }
-							if($idioma == 'pt'){ echo 'NOSSAS SOLUÇÕES'; }
+							if($idioma == 'pt-br'){ echo 'NOSSAS SOLUÇÕES'; }
 							if($idioma == 'en'){ echo 'OUR SOLUTIONS'; }
 						?>
 

@@ -43,7 +43,7 @@ class TIVWP_Updater_Setup_Admin_Area {
 			}
 
 			.tivwp-updater-status-inactive .tivwp-updater-status-value {
-				color:            #cc0000;
+				color: #cc0000;
 				background-color: #ffffff;
 			}
 
@@ -57,7 +57,12 @@ class TIVWP_Updater_Setup_Admin_Area {
 		if ( ! defined( 'SCRIPT_DEBUG' ) || ! SCRIPT_DEBUG ) {
 			$the_css = preg_replace( '/\s+/', ' ', $the_css );
 		}
-		echo wp_kses( $the_css, array( 'style' => array( 'id' => array(), 'data-version' => array() ) ) );
+		echo wp_kses( $the_css, array(
+			'style' => array(
+				'id'           => array(),
+				'data-version' => array(),
+			),
+		) );
 	}
 
 	/**
@@ -71,21 +76,26 @@ class TIVWP_Updater_Setup_Admin_Area {
 		?>
 
 		<script id="tivwp-updater-js" data-version="<?php echo esc_attr( TIVWP_UPDATER_VERSION ); ?>">
-			jQuery(function ($) {
-				$('.tivwp-updater-action-button').on("click", function () {
-					var dataPlugin = $(this).data('tivwp-updater-plugin');
-					$(this).css({cursor: "wait", opacity: ".3"});
-					$('input[type="checkbox"]').prop("checked", false);
-					$('tr[data-plugin="' + dataPlugin + '"]').find('input[type="checkbox"]').prop("checked", true);
-				})
-			});
+            jQuery(function ($) {
+                $('.tivwp-updater-action-button').on("click", function () {
+                    var dataPlugin = $(this).data('tivwp-updater-plugin');
+                    $(this).css({cursor: "wait", opacity: ".3"});
+                    $('input[type="checkbox"]').prop("checked", false);
+                    $('tr[data-plugin="' + dataPlugin + '"]').find('input[type="checkbox"]').prop("checked", true);
+                })
+            });
 		</script>
 		<?php
 		$the_script = ob_get_clean();
 		if ( ! defined( 'SCRIPT_DEBUG' ) || ! SCRIPT_DEBUG ) {
 			$the_script = preg_replace( '/\s+/', ' ', $the_script );
 		}
-		echo wp_kses( $the_script, array( 'script' => array( 'id' => array(), 'data-version' => array() ) ) );
+		echo wp_kses( $the_script, array(
+			'script' => array(
+				'id'           => array(),
+				'data-version' => array(),
+			),
+		) );
 	}
 
 	/**
@@ -108,4 +118,3 @@ class TIVWP_Updater_Setup_Admin_Area {
 
 	}
 }
-/*EOF*/

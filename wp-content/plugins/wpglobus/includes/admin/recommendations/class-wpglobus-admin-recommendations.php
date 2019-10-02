@@ -1,21 +1,35 @@
 <?php
 /**
  * WPGlobus Recommendations.
- * @since 1.8.7
+ *
+ * @package WPGlobus\Admin
+ *
+ * @since   1.8.7
  */
 
+/**
+ * Class Admin Recommendations.
+ */
 class WPGlobus_Admin_Recommendations {
 
+	protected static $run_js = false;
+	
+	/**
+	 * Setup actions and filters.
+	 */
 	public static function setup_hooks() {
 		add_filter( 'woocommerce_general_settings', array( __CLASS__, 'for_woocommerce' ) );
-
-
+		add_filter( 'wpglobus_edit_slug_box', array( __CLASS__, 'wpg_plus_slug' ) );
+		add_action( 'admin_footer', array( __CLASS__, 'on__admin_footer' ), 1000 );
+		add_action( 'wpglobus_gutenberg_metabox', array( __CLASS__, 'on__gutenberg_metabox' ) );
 	}
 
 	/**
+	 * Recommendations for WooCommerce.
+	 *
 	 * @internal
 	 *
-	 * @param array $settings
+	 * @param array $settings Passed by WooCommerce.
 	 *
 	 * @return array
 	 */
@@ -41,7 +55,7 @@ class WPGlobus_Admin_Recommendations {
 			$desc  =
 				'<h2><span class="wp-ui-notification" style="padding:10px 20px;">' .
 				'<span class="dashicons dashicons-admin-site"></span> ' .
-				__( 'WPGlobus Recommends:', 'wpglobus' ) .
+				esc_html__( 'WPGlobus Recommends:', 'wpglobus' ) .
 				'</span></h2>';
 
 			self::add_wc_section( $settings, $id, $title, $desc );
@@ -50,7 +64,7 @@ class WPGlobus_Admin_Recommendations {
 		if ( $need_to_recommend_wpg_wc ) {
 			$url   = WPGlobus_Utils::url_wpglobus_site() . 'product/woocommerce-wpglobus/';
 			$id    = 'wpglobus-recommend-wpg-wc';
-			$title = '&bull; ' . __( 'WPGlobus for WooCommerce', 'wpglobus' );
+			$title = '&bull; ' . esc_html__( 'WPGlobus for WooCommerce', 'wpglobus' );
 			$desc  =
 				'<p class="wp-ui-text-notification">' .
 				'<strong>' .
@@ -61,7 +75,7 @@ class WPGlobus_Admin_Recommendations {
 				'<strong>' .
 				esc_html__( 'Get it now:', 'wpglobus' ) . ' ' .
 				'</strong>' .
-				'<a href="' . $url . '">' . $url . '</a>' .
+				'<a href="' . esc_url( $url ) . '">' . esc_html( $url ) . '</a>' .
 				'</p>';
 			self::add_wc_section( $settings, $id, $title, $desc );
 		}
@@ -102,9 +116,102 @@ class WPGlobus_Admin_Recommendations {
 	 */
 	protected static function add_wc_section( &$settings, $id, $title, $desc ) {
 		$settings[] =
-			array( 'type' => 'title', 'id' => $id, 'title' => $title, 'desc' => $desc );
+			array(
+				'type'  => 'title',
+				'id'    => $id,
+				'title' => $title,
+				'desc'  => $desc,
+			);
 
 		$settings[] =
-			array( 'type' => 'sectionend', 'id' => $id );
+			array(
+				'type' => 'sectionend',
+				'id'   => $id,
+			);
 	}
+
+	/**
+	 * Recommend WPGlobus Plus to edit permalinks.
+	 *
+	 * @since 1.9.6
+	 */
+	public static function wpg_plus_slug() {
+
+		global $pagenow;
+
+		if ( 'post-new.php' == $pagenow ) {
+			return;
+		}
+	
+		$container_start = '<p id="wpglobus-plus-slug-recommendation" style="padding:5px; font-weight: bold"><span class="dashicons dashicons-admin-site"></span> ';
+		$container_end   = '</p>';
+
+		if ( ! is_plugin_active( 'wpglobus-plus/wpglobus-plus.php' ) ) {
+			$url = WPGlobus_Utils::url_wpglobus_site() . 'product/wpglobus-plus/#slug';
+			echo $container_start; // WPCS: XSS ok.
+			esc_html_e( 'Translate permalinks with our premium add-on, WPGlobus Plus!', 'wpglobus' );
+			echo ' ';
+			esc_html_e( 'Check it out:', 'wpglobus' );
+			echo ' ';
+			echo '<a href="' . esc_url( $url ) . '" target="_blank">' . esc_html( $url ) . '</a>';
+			echo $container_end; // WPCS: XSS ok.
+
+			self::$run_js = true;
+
+		} elseif ( ! class_exists( 'WPGlobusPlus_Slug', false ) ) {
+			$url = admin_url( 'admin.php' ) . '?page=' . WPGlobusPlus::WPGLOBUS_PLUS_OPTIONS_PAGE . '&tab=modules';
+			echo $container_start; // WPCS: XSS ok.
+			esc_html_e( 'To translate permalinks, please activate the module Slug.', 'wpglobus' );
+			echo ' ';
+			// Do not translate
+			$msg = __( 'Go to WPGlobus Plus Options page', 'wpglobus-plus' );
+
+			echo '<a href="' . esc_url( $url ) . '" target="_blank">' . esc_html( $msg ) . '.</a>';
+			echo $container_end; // WPCS: XSS ok.
+
+			self::$run_js = true;
+
+		}
+	}
+
+	/**
+	 * @since 1.9.17
+	 */		
+	public static function on__gutenberg_metabox() {
+
+		if ( WPGlobus::Config()->builder->is_running() ) {
+			self::wpg_plus_slug();
+			self::$run_js = false;
+		}
+
+	}
+	
+	/**
+	 * @since 1.9.17
+	 */	
+	public static function on__admin_footer() {
+
+		if ( ! self::$run_js ) {
+			return;
+		}
+		
+		if ( ! WPGlobus::Config()->builder->is_running() ) {
+			return;
+		}		
+		
+		if ( WPGlobus::Config()->builder->get_language() == WPGlobus::Config()->default_language ) {
+			return;
+		}
+
+		?>
+		<script type='text/javascript'>
+			/* <![CDATA[ */
+			jQuery('#edit-slug-box').css({'display':'none'});
+			var wpglobus_slug_recomm_box = jQuery('#wpglobus-plus-slug-recommendation').remove();
+			jQuery('#edit-slug-box').before(wpglobus_slug_recomm_box);
+			/* ]]> */
+		</script>
+		<?php		
+	}
+	
 }

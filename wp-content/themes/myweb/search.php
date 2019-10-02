@@ -2,7 +2,7 @@
 
 <?php 
 	$idioma_busca = [];
-	if($idioma == 'pt'){
+	if($idioma == 'pt-br'){
 		$idioma_busca = ['BUSCA','IDEOLOGIA CORPORATIVA'];
 	}
 

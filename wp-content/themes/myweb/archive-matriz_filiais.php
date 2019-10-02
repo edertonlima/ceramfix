@@ -2,7 +2,21 @@
 
 <section class="box-container box-matriz-filiais">
 	<div class="container">
-		<h2>CONTATO<br>MATRIZ E UNIDADES</h2>
+		<h2>
+			<?php
+				if($idioma == 'en'){
+					echo 'CONTACT<br>MATRIX AND UNITS';
+				}
+
+				if($idioma == 'pt-br'){
+					echo 'CONTATO<br>MATRIZ E UNIDADES';
+				}
+
+				if($idioma == 'es'){
+					echo 'CONTACTO<br>MATRIZ Y UNIDADES';
+				}
+			?>
+		</h2>
 	</div>
 	
 	<div id="map" class="mapa-google"></div>
@@ -61,11 +75,32 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBgFPAcmDR1PFBimQax_CVbjOjbC0sGj8A&callback=initMap" async defer></script>
 
 	<div class="container">
-		<?php if(get_field('descricao',49)){ ?>
-			<div class="conteudo">
-				<p><?php the_field('descricao',49) ?></p>
-			</div>
-		<?php } ?>
+
+		<?php
+			if($idioma == 'en'){
+				if(get_field('descricao',31777)){ ?>
+					<div class="conteudo">
+						<p><?php the_field('descricao',31777); ?></p>
+					</div>
+				<?php }
+			}
+
+			if($idioma == 'pt-br'){
+				if(get_field('descricao',49)){ ?>
+					<div class="conteudo">
+						<p><?php the_field('descricao',49); ?></p>
+					</div>
+				<?php }
+			}
+
+			if($idioma == 'es'){
+				if(get_field('descricao',31780)){ ?>
+					<div class="conteudo">
+						<p><?php the_field('descricao',31780); ?></p>
+					</div>
+				<?php }
+			}
+		?>
 
 		<div class="row sub-conteudo">
 			<?php 
@@ -76,7 +111,21 @@
 						$matriz = $matriz+1;
 						if($matriz == 1){ ?>
 							<div class="col-12 item">
-								<h3>MATRIZ</h3>
+								<h3>
+									<?php
+										if($idioma == 'en'){
+											echo 'MATRIX';
+										}
+
+										if($idioma == 'pt-br'){
+											echo 'MATRIZ';
+										}
+
+										if($idioma == 'es'){
+											echo 'MATRIZ';
+										}
+									?>
+								</h3>
 							</div>
 						<?php }
 						get_template_part( 'content-matriz_filiais', get_post_format() );
@@ -94,7 +143,21 @@
 						$filiais = $filiais+1;
 						if($filiais == 1){ ?>
 							<div class="col-12 item">
-								<h3>UNIDADES</h3>
+								<h3>
+									<?php
+										if($idioma == 'en'){
+											echo 'UNITS';
+										}
+
+										if($idioma == 'pt-br'){
+											echo 'UNIDADES';
+										}
+
+										if($idioma == 'es'){
+											echo 'UNIDADES';
+										}
+									?>
+								</h3>
 							</div>
 						<?php }
 						get_template_part( 'content-matriz_filiais', get_post_format() );

@@ -23,10 +23,23 @@ class WPGlobus_WP {
 	const ADMIN_NOTICE_WARNING = 'notice-warning';
 
 	/**
+	 * Check if doing AJAX call.
+	 *
 	 * @return bool
+	 * @since 1.9.13 - also checks for WC AJAX.
 	 */
 	public static function is_doing_ajax() {
-		return ( defined( 'DOING_AJAX' ) && DOING_AJAX );
+		return ( defined( 'DOING_AJAX' ) && DOING_AJAX ) || self::is_doing_wc_ajax();
+	}
+
+	/**
+	 * Check if doing WooCommerce AJAX call.
+	 *
+	 * @return bool
+	 * @since 1.9.13
+	 */
+	public static function is_doing_wc_ajax() {
+		return ( ! empty( $_GET['wc-ajax'] ) );
 	}
 
 	/**
@@ -109,7 +122,7 @@ class WPGlobus_WP {
 
 		$action = (array) $action;
 
-		return ( ! empty( $_POST['action'] ) && in_array( $_POST['action'], $action ) );
+		return ( ! empty( $_POST['action'] ) && in_array( $_POST['action'], $action, true ) ); // WPCS: input var ok, sanitization ok.
 	}
 
 	/**
@@ -121,7 +134,7 @@ class WPGlobus_WP {
 
 		$action = (array) $action;
 
-		return ( ! empty( $_GET['action'] ) && in_array( $_GET['action'], $action ) );
+		return ( ! empty( $_GET['action'] ) && in_array( $_GET['action'], $action, true ) ); // WPCS: input var ok, sanitization ok.
 	}
 
 	/**

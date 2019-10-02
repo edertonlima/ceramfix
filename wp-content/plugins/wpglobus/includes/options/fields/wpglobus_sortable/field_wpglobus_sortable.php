@@ -11,45 +11,56 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( ! class_exists( 'ReduxFramework_wpglobus_sortable' ) ) {
+if ( ! class_exists( 'WPGlobusOptions_wpglobus_sortable' ) ) {
 	/**
-	 * Class ReduxFramework_wpglobus_sortable
+	 * Class WPGlobusOptions_wpglobus_sortable.
 	 */
-	class ReduxFramework_wpglobus_sortable {
-		/** @noinspection PhpUndefinedClassInspection */
+	// phpcs:ignore PEAR.NamingConventions
+	class WPGlobusOptions_wpglobus_sortable {
+
+		/**
+		 * @var array
+		 */
+		private $field;
+
+		/**
+		 * @var string
+		 */
+		private $value;
 
 		/**
 		 * Field Constructor.
-		 * Required - must call the parent constructor, then assign field and value to vars, and obviously call the render field function
 		 *
-		 * @since Redux_Options 2.0.1
-		 * @param array  $field
+		 * @param array        $field
 		 * @param string|array $value
-		 * @param ReduxFramework $parent
 		 */
-		public function __construct( $field = array(), $value = '', $parent ) {
-			$this->parent = $parent;
-			$this->field  = $field;
-			$this->value  = $value;
+		public function __construct( $field = array(), $value = '' ) {
+
+			$this->field = $field;
+			if ( ! empty( $field['value'] ) ) {
+				$this->value = $field['value'];
+			} else {
+				$this->value = $value;
+			}
+
+			$this->render();
 		}
 
 		/**
 		 * Field Render Function.
-		 * Takes the vars and outputs the HTML for the field in the settings
-		 *
-		 * @since Redux_Options 2.0.1
+		 * Takes the vars and outputs the HTML for the field in the settings.
 		 */
 		public function render() {
 			if ( empty( $this->field['mode'] ) ) {
-				$this->field['mode'] = "text";
+				$this->field['mode'] = 'text';
 			}
 
-			if ( $this->field['mode'] !== "checkbox" && $this->field['mode'] !== "text" ) {
-				$this->field['mode'] = "text";
+			if ( 'checkbox' !== $this->field['mode'] && 'text' !== $this->field['mode'] ) {
+				$this->field['mode'] = 'text';
 			}
 
-			$class   = ( isset( $this->field['class'] ) ) ? $this->field['class'] : '';
-			$options = $this->field['options'];
+			$field_class = ( isset( $this->field['class'] ) ) ? $this->field['class'] : '';
+			$options     = $this->field['options'];
 
 			// This is to weed out missing options that might be in the default
 			// Why?  Who knows.  Call it a dummy check.
@@ -95,30 +106,39 @@ if ( ! class_exists( 'ReduxFramework_wpglobus_sortable' ) ) {
 
 			$use_labels  = false;
 			$label_class = '';
-			if ( $this->field['mode'] !== "checkbox" ) {
-				if ( ( isset( $this->field['label'] ) && $this->field['label'] == true ) ) {
+			if ( 'checkbox' !== $this->field['mode'] ) {
+				if ( ( isset( $this->field['label'] ) && true == $this->field['label'] ) ) { // phpcs:ignore WordPress.PHP.StrictComparisons
 					$use_labels  = true;
 					$label_class = ' labeled';
 				}
 			}
 
-			echo '<ul id="' . $this->field['id'] . '-list" class="redux-sortable ' . $class . ' ' . $label_class . '">';
+			echo $this->render_wrapper( 'before' ); // phpcs:ignore WordPress.XSS
 
+			echo '<ul id="' . esc_attr( $this->field['id'] ) . '-list" class="wpglobus-sortable ' . esc_attr( $field_class . ' ' . $label_class ) . '">';
 
 			foreach ( $this->value as $k => $nicename ) {
-				echo '<li>';
 
-				$checked = "";
-				$name    = 'name="' . $this->field['name'] . $this->field['name_suffix'] . '[' . $k . ']' . '" ';
-				if ( $this->field['mode'] === "checkbox" ) {
+				$class = $field_class;
+
+				echo '<li class="ui-state-default">';
+
+				$checked = '';
+				$name    = 'name="' . $this->field['name'] . $this->field['name_suffix'] . '[' . $k . ']" ';
+				if ( 'checkbox' === $this->field['mode'] ) {
 					$value_display = $this->value[ $k ];
 
 					if ( ! empty( $this->value[ $k ] ) ) {
 						$checked = 'checked="checked" ';
 					}
-					$class .= " checkbox_sortable";
-					$name = "";
-					echo '<input type="hidden" name="' . $this->field['name'] . $this->field['name_suffix'] . '[' . $k . ']' . '" id="' . $this->field['id'] . '-' . $k . '-hidden" value="' . $value_display . '" />';
+					$class .= ' checkbox_sortable';
+
+					$name = '';
+					echo '<input type="hidden" name="'
+						 . esc_attr( $this->field['name'] . $this->field['name_suffix'] . '[' . $k . ']' )
+						 . '" id="'
+						 . esc_attr( $this->field['id'] . '-' . $k ) . '-hidden" value="' . esc_attr( $value_display )
+						 . '" />';
 
 					echo '<div class="checkbox-container">';
 				} else {
@@ -127,53 +147,91 @@ if ( ! class_exists( 'ReduxFramework_wpglobus_sortable' ) ) {
 
 				}
 
-				if ( $this->field['mode'] !== "checkbox" ) {
+				if ( 'checkbox' !== $this->field['mode'] ) {
 					if ( $use_labels ) {
-						echo '<label class="bugger" for="' . $this->field['id'] . '[' . $k . ']"><strong>' . $k . '</strong></label>';
-						echo "<br />";
+						echo '<label class="bugger" for="'
+							 . esc_attr( $this->field['id'] . '[' . $k . ']' )
+							 . '"><strong>'
+							 . esc_html( $k )
+							 . '</strong></label>';
+						echo '<br />';
 					}
 				}
 
-				echo '<input rel="' . $this->field['id'] . '-' . $k . '-hidden" class="' . $class . '" ' . $checked . 'type="' . $this->field['mode'] . '" ' . $name . 'id="' . $this->field['id'] . '[' . $k . ']" value="' . esc_attr( $value_display ) . '" placeholder="' . $nicename . '" />';
+				echo '<input rel="'
+					 . esc_attr( $this->field['id'] . '-' . $k . '-hidden' )
+					 . '" class="' . esc_attr( $class ) . '" ';
+				echo $checked; // WPCS: XSS ok.
+				echo 'type="'
+					 . esc_attr( $this->field['mode'] )
+					 . '" ';
+				echo $name; // WPCS: XSS ok.
+				echo 'id="'
+					 . esc_attr( $this->field['id'] . '[' . $k . ']' )
+					 . '" value="' . esc_attr( $value_display ) . '" placeholder="' . esc_attr( $nicename ) . '" />';
 
-				echo '<span class="compact drag"><i class="el el-move icon-large"></i></span>';
+				//echo '<span class="compact drag"><i class="el el-move icon-large"></i></span>';
+				echo '&nbsp;<span class="compact drag"><i class="dashicons dashicons-move icon-large"></i></span>&nbsp;';
 				//if ( ( isset( $this->field['label'] ) && $this->field['label'] == true ) ) {
-				if ( $this->field['mode'] === "checkbox" ) {
-					if ( $this->field['mode'] !== "checkbox" ) {
-						//echo "<br />";
-						//echo '<label for="' . $this->field['id'] . '[' . $k . ']"><strong>' . $k . '</strong></label>';
-					} else {
-						echo '<label for="' . $this->field['id'] . '[' . $k . ']"><strong>' . $options[ $k ] . '</strong></label>';
-					}
+				if ( 'checkbox' === $this->field['mode'] ) {
+					// if ( 'checkbox' !== $this->field['mode'] ) {
+					//echo "<br />";
+					//echo '<label for="' . $this->field['id'] . '[' . $k . ']"><strong>' . $k . '</strong></label>';
+					// } else {
+					echo '<label for="'
+						 . esc_attr( $this->field['id'] . '[' . $k . ']' )
+						 . '"><strong>' . esc_html( $options[ $k ] ) . '</strong></label>';
+					// }
 				}
-				if ( $this->field['mode'] === "checkbox" ) {
+				if ( 'checkbox' === $this->field['mode'] ) {
 					echo '</div>';
 				}
 				echo '</li>';
 			}
 			echo '</ul>';
+
+			echo $this->render_wrapper( 'after' ); // phpcs:ignore WordPress.XSS
+
 		}
 
-		public function enqueue() {
-			/** @var array $parent_args */
-			$parent_args = $this->parent->args;
+		/**
+		 * Print DIV around.
+		 *
+		 * @param string $wrapper
+		 *
+		 * @return false|string
+		 */
+		public function render_wrapper( $wrapper = 'before' ) {
+			ob_start();
 
-			if ( $parent_args['dev_mode'] ) {
-				wp_enqueue_style(
-					'redux-field-wpglobus_sortable-css',
-					plugins_url( '/field_wpglobus_sortable' . WPGlobus::SCRIPT_SUFFIX() . '.css', __FILE__ ),
-					array(),
-					WPGlobus::SCRIPT_VER()
-				);
+			if ( 'before' === $wrapper ) {
+				?>
+				<div
+				id="wpglobus-options-<?php echo esc_attr( $this->field['id'] ); ?>"
+				class="wpglobus-options-field wpglobus-options-field-wpglobus_sortable"
+				data-id="<?php echo esc_attr( $this->field['id'] ); ?>"
+				data-type="<?php echo esc_attr( $this->field['type'] ); ?>"
+				data-js-handler="handler<?php echo esc_attr( ucfirst( $this->field['id'] ) ); ?>">
+				<div class="grid__item">
+					<p class="title"><?php echo esc_html( $this->field['title'] ); ?></p>
+					<p class="subtitle"><?php echo esc_html( $this->field['subtitle'] ); ?></p>
+				</div>
+				<div class="grid__item">
+				<?php
+			} elseif ( 'after' === $wrapper ) {
+				?>
+				</div><!-- .grid__item -->
+				</div><!-- .wpglobus-options-field-wpglobus_sortable -->
+				<?php
 			}
 
-			wp_enqueue_script(
-				'redux-field-wpglobus_sortable-js',
-				plugins_url( '/field_wpglobus_sortable' . WPGlobus::SCRIPT_SUFFIX() . '.js', __FILE__ ),
-				array( 'jquery', 'redux-js', 'jquery-ui-sortable' ),
-				WPGlobus::SCRIPT_VER(),
-				true
-			);
+			return ob_get_clean();
 		}
+
 	}
 }
+/**
+ * @global array $field
+ * @see \WPGlobus_Options::page_options
+ */
+new WPGlobusOptions_wpglobus_sortable( $field );

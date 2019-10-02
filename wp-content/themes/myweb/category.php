@@ -1,5 +1,5 @@
 <?php get_header(); ?>
-
+ 
 <section class="box-container box-release">
 	<div class="container">
 		<h2><?php the_category(); ?></h2>

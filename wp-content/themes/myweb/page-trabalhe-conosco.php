@@ -2,7 +2,7 @@
 
 <?php 
 	$idioma_fale = [];
-	if($idioma == 'pt'){
+	if($idioma == 'pt-br'){
 		$idioma_fale = ['Preencha o formulário abaixo e envie seu currículo para a equipe de RH da Ceramfix. Agradecemos o interesse!','Preenchimento obrigatório','Nome','E-mail','Telefone principal','Telefone secundário','Endereço','Estado','Cidade','Currículo','Apenas arquivo em PDF.','Mensagem','Enviado com sucesso! Obrigado.','Desculpe, não foi possível enviar seu formulário. <br>Por favor, tente novamente mais tarde.','Não foi possível enviar o arquivo, tente novamente.','O arquivo enviado é muito grande, envie arquivos de até 2Mb.','Por favor, envie apenas arquivo em PDF.','ENVIAR!','ENVIANDO!'];
 	}
 

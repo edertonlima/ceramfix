@@ -1,7 +1,7 @@
 <?php 
 	global $idioma;
 	global $url_idioma;
-	$idioma = WPGlobus::Config()->language;
+	//$idioma = WPGlobus::Config()->language;
 	if($idioma == 'en'){
 		$url_idioma = explode('/en',home_url());
 		$url_idioma = $url_idioma[0];
@@ -15,16 +15,16 @@
 	}
 
 	$idioma_single_produto = [];
-	if($idioma == 'pt'){
-		$idioma_single_produto = ['Indicação de uso','Aplicação','FICHA TÉCNICA','SIMULADOR DE CORES','CALCULADORA DE CONSUMO','ENCONTRAR LOJAS PERTO DE MIM','Veja outros produtos'];
+	if($idioma == 'pt-br'){
+		$idioma_single_produto = ['Indicação de uso','Aplicação','FICHA TÉCNICA','SIMULADOR DE CORES','CALCULADORA DE CONSUMO','ENCONTRAR LOJAS PERTO DE MIM','Veja outros produtos','Cores Disponíveis:'];
 	}
 
 	if($idioma == 'en'){
-		$idioma_single_produto = ['Indication of use', 'Application', 'TECHNICAL SHEET', 'COLOR SIMULATOR', 'CONSUMER CALCULATOR', 'FIND SHOPS NEAR ME', 'See other products'];
+		$idioma_single_produto = ['Indication of use', 'Application', 'TECHNICAL SHEET', 'COLOR SIMULATOR', 'CONSUMER CALCULATOR', 'FIND SHOPS NEAR ME', 'See other products','Available Colors:'];
 	}
 
 	if($idioma == 'es'){
-		$idioma_single_produto = ['Indicación de uso', 'Aplicación', 'FICHA TÉCNICA', 'SIMULADOR DE COLORES', 'CALCULADORA DE CONSUMO', 'ENCONTRAR TIENDAS CERCA DE MÍ', 'Vea otros productos'];
+		$idioma_single_produto = ['Indicación de uso', 'Aplicación', 'FICHA TÉCNICA', 'SIMULADOR DE COLORES', 'CALCULADORA DE CONSUMO', 'ENCONTRAR TIENDAS CERCA DE MÍ', 'Vea otros productos','Colores Disponibles:'];
 	}
 ?>
 
@@ -38,18 +38,68 @@
 	<?php } ?>
 
 	<div class="cont-detalhe-produto">
-		<h2 class="tit-det-produto"><?php the_title(); ?></h2>
+		<h2 class="tit-det-produto" style="text-align: left;"><?php the_title(); ?></h2>
 		<p><?php the_field('descrição_produto'); ?></p>
+
+<style type="text/css">
+	.produtos .cores-produto {
+		margin: 30px 0 40px;
+		display: block;
+		overflow: hidden;
+		width: 100%;
+	}
+
+	.produtos .cores-produto h2 {
+		text-transform: none;
+		font-size: 1.15rem;
+		margin-top: 0;
+	}
+
+	.produtos .cores-produto ul {
+		margin-top: 15px;
+	}
+
+	.produtos .cores-produto li {
+		display: inline-block;
+		/*cursor: pointer;*/
+	}
+
+	.produtos .cores-produto li .nome-cor {
+		border: 1px solid #e6e7e8;
+		width: 48px;
+		height: 48px;
+		display: block;
+	}
+
+	.produtos .cores-produto li:hover .nome-cor {
+		/*display: block;*/
+	}
+</style>
+		
+		<?php if( have_rows('cores') ): ?>
+			<div class="cores-produto">
+				<h2><?php echo $idioma_single_produto[7]; ?></h2>
+				<ul>
+													    
+				    <?php while ( have_rows('cores') ) : the_row(); ?>
+
+				    	<li style="background-color: <?php the_sub_field('hexa'); ?>"><a class="nome-cor" title="<?php the_sub_field('nome'); ?>"></a></li>
+
+					<?php endwhile; ?>
+
+				</ul>
+			</div>
+		<?php endif; ?>
 
 		<div class="indicacao">
 			<h2><?php echo $idioma_single_produto[0]; ?></h2>
 			<ul>
 
 				<?php if( have_rows('indicação_produto') ):
-					while ( have_rows('indicação_produto') ) : the_row(); ?>
+					while ( have_rows('indicação_produto') ) : the_row(); //echo get_sub_field('icone_indicacao'); ?>
 
 						<li>
-							<img src="<?php the_sub_field('icone_indicacao'); ?>" alt="<?php the_sub_field('titulo_indicacao'); ?>">
+							<img src="<?php the_sub_field('icone_indicacao'); ?>" alt="<?php //the_sub_field('titulo_indicacao'); ?>">
 							<span><?php the_sub_field('titulo_indicacao'); ?></span>
 						</li>
 
@@ -80,7 +130,7 @@
 				<a href="<?php the_field('ficha_tecnica'); ?>" target="_blank" title="<?php echo $idioma_single_produto[2]; ?>" class="ficha-tecnica"><span class="box-link"><span><span><?php echo $idioma_single_produto[2]; ?></span></span></span></a>
 			<?php } ?>
 			<?php if(get_field('simulacao_cores')){ ?>
-				<a href="<?php echo get_permalink(get_page_by_path('simulador-cores')); ?>" title="<?php echo $idioma_single_produto[3]; ?>" class="simulador"><span class="box-link"><span><span><?php echo $idioma_single_produto[3] ?></span></span></span></a>
+				<a href="<?php echo get_permalink(get_page_by_path('simulador-cores')) . '?prod=' . $post->ID; ?>" title="<?php echo $idioma_single_produto[3]; ?>" class="simulador"><span class="box-link"><span><span><?php echo $idioma_single_produto[3] ?></span></span></span></a>
 			<?php } ?>
 			<?php if(get_field('cr')){ ?>
 				<a href="<?php echo get_permalink(get_page_by_path('calculadora-consumo')); ?>" title="<?php echo $idioma_single_produto[4]; ?>" class="calculadora"><span class="box-link"><span><span><?php echo $idioma_single_produto[4]; ?></span></span></span></a>

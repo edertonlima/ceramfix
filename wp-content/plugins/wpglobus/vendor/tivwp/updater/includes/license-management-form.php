@@ -16,11 +16,13 @@ $_slug = sanitize_title( $this->slug );
 		<div class="tivwp-updater-status"><i class="dashicons-before dashicons-arrow-up-alt"></i>
 			<?php esc_html_e( 'Updates', 'tivwp-updater' ); ?>:
 			<span class="tivwp-updater-status-value">
-				<?php echo esc_html(
+				<?php
+				echo esc_html(
 					TIVWP_Updater::STATUS_ACTIVE === $this->status
 						? _x( 'Active', 'updates-are', 'tivwp-updater' )
 						: _x( 'Inactive', 'updates-are', 'tivwp-updater' )
-				); ?>
+				);
+				?>
 				</span>
 		</div>
 		<div class="tivwp-updater-instance">
@@ -28,11 +30,11 @@ $_slug = sanitize_title( $this->slug );
 			<?php echo esc_html( $this->instance ); ?>
 		</div>
 		<button type="submit"
-		        class="tivwp-updater-action-button"
-		        data-tivwp-updater-slug="<?php echo esc_attr( $_slug ); ?>"
-		        data-tivwp-updater-plugin="<?php echo esc_attr( $this->plugin_name ); ?>"
-		        name="<?php echo esc_attr( $_slug ); ?>_action"
-		        value="status">
+				class="tivwp-updater-action-button"
+				data-tivwp-updater-slug="<?php echo esc_attr( $_slug ); ?>"
+				data-tivwp-updater-plugin="<?php echo esc_attr( $this->plugin_name ); ?>"
+				name="<?php echo esc_attr( $_slug ); ?>_action"
+				value="status">
 			<?php esc_html_e( 'Check Status', 'tivwp-updater' ); ?>
 		</button>
 	</td>
@@ -53,16 +55,16 @@ $_slug = sanitize_title( $this->slug );
 				<?php esc_html_e( 'Key' ); ?>:
 			</label>
 			<input type="text" id="<?php echo esc_attr( $_slug ); ?>_licence_key"
-			       name="<?php echo esc_attr( $_slug ); ?>_licence_key"
-			       value="<?php echo esc_attr( $this->licence_key ); ?>"
+					name="<?php echo esc_attr( $_slug ); ?>_licence_key"
+					value="<?php echo esc_attr( $this->licence_key ); ?>"
 				<?php disabled( TIVWP_Updater::STATUS_ACTIVE === $this->status && $this->licence_key ); ?>
 			/>
 			<label for="<?php echo esc_attr( $_slug ); ?>_email">
 				<?php esc_html_e( 'Email' ); ?>:
 			</label>
 			<input type="email" id="<?php echo esc_attr( $_slug ); ?>_email"
-			       name="<?php echo esc_attr( $_slug ); ?>_email"
-			       value="<?php echo esc_attr( $this->email ); ?>"
+					name="<?php echo esc_attr( $_slug ); ?>_email"
+					value="<?php echo esc_attr( $this->email ); ?>"
 				<?php disabled( TIVWP_Updater::STATUS_ACTIVE === $this->status && $this->email ); ?>
 			/>
 			<?php
@@ -73,23 +75,23 @@ $_slug = sanitize_title( $this->slug );
 			);
 			?>
 			<button type="submit"
-			        class="tivwp-updater-action-button"
-			        data-tivwp-updater-slug="<?php echo esc_attr( $_slug ); ?>"
-			        data-tivwp-updater-plugin="<?php echo esc_attr( $this->plugin_name ); ?>"
-			        name="<?php echo esc_attr( $_slug ); ?>_action"
-			        value="<?php echo esc_attr( $_action ); ?>">
+					class="tivwp-updater-action-button"
+					data-tivwp-updater-slug="<?php echo esc_attr( $_slug ); ?>"
+					data-tivwp-updater-plugin="<?php echo esc_attr( $this->plugin_name ); ?>"
+					name="<?php echo esc_attr( $_slug ); ?>_action"
+					value="<?php echo esc_attr( $_action ); ?>">
 				<?php echo esc_html( $_action_label ); ?>
 			</button>
-			<?php
-
-			?>
 		</div>
 		<?php
 		if ( $this->notifications ) {
 			?>
-			<div class="tivwp-updater-notifications"><?php
-			echo wp_kses( implode( '<br>', $this->notifications ), array( 'br' => array() ) );
-			?></div><?php
+			<div class="tivwp-updater-notifications">
+				<?php
+				echo wp_kses( implode( '<br>', $this->notifications ), array( 'br' => array() ) );
+				?>
+			</div>
+			<?php
 		}
 		?>
 	</td>

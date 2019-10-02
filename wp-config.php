@@ -21,13 +21,13 @@
 // ** Configurações do MySQL - Você pode pegar estas informações
 // com o serviço de hospedagem ** //
 /** O nome do banco de dados do WordPress */
-define('DB_NAME', 'ceramfixsite');
+define('DB_NAME', 'ceramfix_site');
 
 /** Usuário do banco de dados MySQL */
-define('DB_USER', 'ceramfix');
+define('DB_USER', 'root');
 
 /** Senha do banco de dados MySQL */
-define('DB_PASSWORD', 'dFw9LSxrpKWaBHPq');
+define('DB_PASSWORD', '');
 
 /** Nome do host do MySQL */
 define('DB_HOST', 'localhost');

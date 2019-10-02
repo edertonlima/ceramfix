@@ -2,7 +2,7 @@
 
 <?php 
 	$idioma_download = [];
-	if($idioma == 'pt'){
+	if($idioma == 'pt-br'){
 		$idioma_download = ['DOWNLOAD','INSTITUCIONAL','CATÁLOGOS','PRODUTOS','Selecione o arquivo que deseja baixar.<br>Pode selecionar vários arquivos juntos para baixar simultaneamente.','É preciso selecionar um arquivo.','baixar','BAIXAR','Selecione a linha a que o produto e o tipo de material que deseja baixar.<br>Pode selecionar vários materiais juntos para baixar simultaneamente.','ESCOLHA A LINHA DE PRODUTO'];;
 	}
 
