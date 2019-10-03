@@ -1,32 +1,73 @@
 <?php get_header(); ?>
 
+<?php 
+	$query_get_produto = array(
+		'posts_per_page' => 99999,
+		'post_type'   => 'produto',
+		'post_status' => 'any',
+		'orderby' => 'title',
+		'order'   => 'ASC',
+	);
 
-													<?php /* 
-											        $getPosts = array(
-											            'posts_per_page' => 999,
-											            'post_type'   => 'sala',
-											            'post_status' => 'any'/*,
-														'tax_query' => array(
-														    array(
-														        'taxonomy' => 'categoria_produto',
-														        'terms' => $category->term_id,
-														        'include_children' => false,
-														        'operator' => 'IN'
-														    )
-														),*/  /*
-											        );
-											        $posts = new WP_Query( $getPosts );
-												        if(count($posts) > 0){
+	$get_produto = new WP_Query( $query_get_produto );
+	if (have_posts()){
+		while($get_produto->have_posts()) : $get_produto->the_post();
+			$count_amb = 0;
+			$name_amb = array();
 
-															while($posts->have_posts()) : $posts->the_post();
-																		
-																var_dump($post);
-																	
-															endwhile;
+			if(get_field('amb_sala')){
+				$name_amb[] = 'sala';
+				$count_amb = $count_amb+1;
+			}
+			
+			if(get_field('amb_cozinha',$simulacao_prod)){
+				$name_amb[] = 'cozinha';
+				$count_amb = $count_amb+1;
+			}
 
-												        }
-												    wp_reset_postdata(); */
-											        ?>
+			if(get_field('amb_banheiro',$simulacao_prod)){
+				$name_amb[] = 'banheiro';
+				$count_amb = $count_amb+1;
+			}
+
+			if(get_field('amb_piscina',$simulacao_prod)){
+				$name_amb[] = 'piscina';
+				$count_amb = $count_amb+1;
+			}
+
+			if(get_field('amb_fachada',$simulacao_prod)){
+				$name_amb[] = 'fachada';
+				$count_amb = $count_amb+1;
+			}
+
+			if($count_amb > 0){
+				$data  = [ 'ID' => $post->ID ];
+				$data += [ 'post_title' => $post->post_title ];
+				$data += [ 'post_name' => $post->post_name ];
+
+				if( have_rows('cores') ):														    
+				    while ( have_rows('cores') ) : the_row();
+
+				    	$cor  = [ 'hexa' => get_sub_field('hexa') ];
+				    	$cor += [ 'nome' => get_sub_field('nome') ];
+
+				    	$cores[] = $cor;			    	
+
+					endwhile;
+				endif;
+				//var_dump($name_amb);
+				$data += [ 'cores' => $cores ];
+
+				foreach ($name_amb as $key => $nome_ambiente) {
+					$ambiente_prod[$nome_ambiente][] = $data;
+				}
+			}
+
+		endwhile;
+	}
+	wp_reset_postdata();
+	//echo '<pre>', var_dump($ambiente_prod), '</pre>';
+?>
 
 
 <style type="text/css">
@@ -54,8 +95,41 @@
 	/* produto pré-selecionado */
 	if($_GET['prod']){
 		$simulacao_prod = $_GET['prod'];
+		//echo '<pre>', var_dump(get_field('amb_banheiro',$simulacao_prod)), '</pre>';
 
-		$set_prod_amb = false;
+		$prod_set_amb = array();
+		if(get_field('amb_sala',$simulacao_prod)){
+			$prod_set_amb[] = 1;
+		}else{
+			$prod_set_amb[] = 0;
+		}
+		
+		if(get_field('amb_cozinha',$simulacao_prod)){
+			$prod_set_amb[] = 1;
+		}else{
+			$prod_set_amb[] = 0;
+		}
+
+		if(get_field('amb_banheiro',$simulacao_prod)){
+			$prod_set_amb[] = 1;
+		}else{
+			$prod_set_amb[] = 0;
+		}
+
+		if(get_field('amb_piscina',$simulacao_prod)){
+			$prod_set_amb[] = 1;
+		}else{
+			$prod_set_amb[] = 0;;
+		}
+
+		if(get_field('amb_fachada',$simulacao_prod)){
+			$prod_set_amb[] = 1;
+		}else{
+			$prod_set_amb[] = 0;
+		}
+
+		//echo '<pre>', var_dump($prod_set_amb), '</pre>';
+		$set_prod_amb = true;
 	}
 ?>
 
@@ -66,11 +140,336 @@
 
 	<div class="container">
 		<div class="tab">
-			<div class="item item-ambiente active" rel="#sala"><?php echo $idioma_single_produto[0]; ?></div>
-			<div class="item item-ambiente" rel="#cozinha"><?php echo $idioma_single_produto[1]; ?></div>
-			<div class="item item-ambiente" rel="#banheiro"><?php echo $idioma_single_produto[2]; ?></div>
-			<div class="item item-ambiente" rel="#piscina"><?php echo $idioma_single_produto[3]; ?></div>
-			<div class="item item-ambiente" rel="#fachada" style="display: none;"><?php echo $idioma_single_produto[11]; ?></div>
+
+			<?php 
+				if(!empty($ambiente_prod['sala'])){ ?>
+					<div class="item item-ambiente active" rel="#sala"><?php echo $idioma_single_produto[0]; ?></div>
+				<?php }
+
+				if(!empty($ambiente_prod['cozinha'])){ ?>
+					<div class="item item-ambiente" rel="#cozinha"><?php echo $idioma_single_produto[1]; ?></div>
+				<?php }
+
+				if(!empty($ambiente_prod['banheiro'])){ ?>
+					<div class="item item-ambiente" rel="#banheiro"><?php echo $idioma_single_produto[2]; ?></div>
+				<?php }
+
+				if(!empty($ambiente_prod['piscina'])){ ?>
+					<div class="item item-ambiente" rel="#piscina"><?php echo $idioma_single_produto[3]; ?></div>
+				<?php }
+
+				if(!empty($ambiente_prod['fachada'])){ ?>
+					<div class="item item-ambiente" rel="#fachada" style=""><?php echo $idioma_single_produto[11]; ?></div>
+				<?php }
+			?>
+			
+			<?php
+				foreach ($ambiente_prod as $ambiente => $produtos) { //echo '<pre>',var_dump($produtos),'</pre>'; ?>
+				
+					<div class="tab-content <?php if($ambiente == 'sala'): echo 'active'; endif; ?>" id="<?php echo $ambiente; ?>">
+						<div class="simulador base">
+							<div class="cor-parede"></div>
+							<div class="cor-piso"></div>
+							<?php
+								$piso = get_field("piso-{$ambiente}",'option');
+								$parede = get_field("parede-{$ambiente}",'option');
+								$moveis = get_field("moveis-{$ambiente}",'option');
+								$mask = get_field("mask-{$ambiente}",'option');
+							?>
+							<div class="piso" style="background-image: url('<?php echo $piso; ?>">
+								<div class="parede" style="background-image: url('<?php echo $parede; ?>">
+									<?php if(($ambiente != 'piscina') OR ($ambiente != 'fachada')): ?>
+										<div class="moveis" style="background-image: url('<?php echo $moveis; ?>">
+									<?php endif; ?>
+											<div class="mask" style="background-image: url('<?php echo $mask; ?>');"></div>
+									<?php if(($ambiente != 'piscina') OR ($ambiente != 'fachada')): ?>
+										</div>
+									<?php endif; ?>
+								</div>
+							</div>
+						</div>
+
+						<div class="bg-select">
+							<span class="select">
+								<select name="produto" class="select-produto" rel="<?php echo $ambiente; ?>">
+									<option value="null" selected="selected"><?php echo $idioma_single_produto[4]; ?></option>
+									<?php
+										foreach ($produtos as $produto) {
+											echo '<option value="',$produto['ID'],'">',$produto['post_title'],'</option>';
+										}
+									?>
+								</select>
+							</span>
+						</div>
+
+							<?php /*
+							<div class="option-produto esq <?php echo 'id-'.$produto['id']; ?>">			
+								<div class="slide-cor">
+									<span class="tit-cores"><?php echo $idioma_single_produto[5]; ?>:</span>
+									<div class="slide-item-cor slide-simulacao">
+										<?php if(count($produto['rejunte-parede'])):
+											foreach ($produto['rejunte-parede'] as $rejunte_parede){ ?>
+												<div class="item" rel="<?php echo $rejunte_parede['cor']; ?>" ambiente="sala" local="cor-parede">
+													<span class="cor" style="background-color: <?php echo $rejunte_parede['cor']; ?>"></span>
+													<span class="nome-cor"><?php echo $rejunte_parede['nome']; ?></span>
+												</div>
+											<?php }
+										endif; ?>
+									</div>
+								</div>		
+							</div>
+							*/ ?>
+							<?php /*
+							<div class="option-produto dir <?php echo 'id-'.$produto['id']; ?>"">			
+								<div class="slide-cor">
+									<span class="tit-cores"><?php echo $idioma_single_produto[6]; ?>:</span>
+									<div class="slide-item-cor slide-simulacao">
+										<?php if(count($produto['rejunte-piso'])):
+											foreach ($produto['rejunte-piso'] as $rejunte){ ?>
+												<div class="item" rel="<?php echo $rejunte['cor']; ?>" ambiente="sala" local="cor-piso">
+													<span class="cor" style="background-color: <?php echo $rejunte['cor']; ?>"></span>
+													<span class="nome-cor"><?php echo $rejunte['nome']; ?></span>
+												</div>
+											<?php }
+										endif; ?>
+									</div>
+								</div>		
+							</div>
+							*/ ?>   	
+
+<?php /*
+							<div class="option-produto esq select-parede show">			
+								<div class="slide-cor">
+									<span class="tit-cores"><?php echo $idioma_single_produto[7]; ?>:</span>
+									<div class="slide-item-cor slide-simulacao item-simulacao">
+
+										<?php
+											if( have_rows("parede-simulacao-ambiente-{$ambiente}",'option') ):														    
+											    while ( have_rows("parede-simulacao-ambiente-{$ambiente}",'option') ) : the_row(); ?>
+
+													<div class="item" rel="<?php the_sub_field('imagem-imagem-parede'); ?>" ambiente="<?php echo $ambiente; ?>" local="parede">
+														<span class="cor" style="background-image: url('<?php the_sub_field('miniatura-imagem-parede'); ?>');"></span>
+														<span class="nome-cor"><?php the_sub_field('nome-imagem-parede'); ?></span>
+													</div>
+
+												<?php endwhile;
+											endif;
+										?>
+									</div>
+								</div>
+							</div>
+*/ ?>
+
+							<div class="option-produto esq select-piso show">			
+								<div class="slide-cor">
+									<span class="tit-cores"><?php echo $idioma_single_produto[8]; ?>:</span>
+									<div class="item-simulacao">
+
+										<div class="carousel-itens owl-carousel owl-theme owl-loaded itens-simulacao">
+											<div class="owl-stage-outer">
+												<div class="owl-stage">
+
+													<?php
+														if( have_rows("piso-simulacao-ambiente-{$ambiente}",'option') ):														    
+														    while ( have_rows("piso-simulacao-ambiente-{$ambiente}",'option') ) : the_row(); ?>
+
+														    <div class="owl-item">
+																<div class="item-simulacao" rel="<?php the_sub_field('imagem-imagem-parede'); ?>" ambiente="<?php echo $ambiente; ?>" local="piso">
+																	<span class="cor" style="background-image: url('<?php the_sub_field('miniatura-imagem-parede'); ?>');"></span>
+																	<span class="nome-cor"><?php the_sub_field('nome-imagem-parede'); ?></span>
+																</div>
+															</div>
+
+															<?php endwhile;
+														endif;
+													?>
+
+												</div>
+											</div>
+										</div>	
+
+									</div>
+								</div>		
+							</div>
+
+							<div class="option-produto dir select-parede show">			
+								<div class="slide-cor">
+									<span class="tit-cores"><?php echo $idioma_single_produto[7]; ?>:</span>
+									<div class="item-simulacao">
+
+										<div class="carousel-itens owl-carousel owl-theme owl-loaded itens-simulacao">
+											<div class="owl-stage-outer">
+												<div class="owl-stage">
+
+													<?php
+														if( have_rows("parede-simulacao-ambiente-{$ambiente}",'option') ):														    
+														    while ( have_rows("parede-simulacao-ambiente-{$ambiente}",'option') ) : the_row(); ?>
+
+														    <div class="owl-item">
+																<div class="item-simulacao" rel="<?php the_sub_field('imagem-imagem-parede'); ?>" ambiente="<?php echo $ambiente; ?>" local="parede">
+																	<span class="cor" style="background-image: url('<?php the_sub_field('miniatura-imagem-parede'); ?>');"></span>
+																	<span class="nome-cor"><?php the_sub_field('nome-imagem-parede'); ?></span>
+																</div>
+															</div>
+
+															<?php endwhile;
+														endif;
+													?>
+
+												</div>
+											</div>
+										</div>	
+
+									</div>
+								</div>		
+							</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+							<?php /*
+							<div class="option-produto dir <?php echo 'id-'.$produto['id']; ?> select-piso">			
+								<div class="slide-cor">
+									<span class="tit-cores"><?php echo $idioma_single_produto[8]; ?>:</span>
+									<div class="slide-item-cor slide-simulacao">
+										<?php if(count($produto['piso'])):
+											$i = 0;
+											foreach ($produto['piso'] as $piso){ 
+												$i = $i+1; ?>
+												<div class="item item-<?php echo $i; ?>" rel="<?php echo $piso['imagem']; ?>" ambiente="sala" local="piso">
+													<span class="cor" style="background-image: url('<?php echo $piso['miniatura']; ?>');"></span>
+													<span class="nome-cor"><?php echo $piso['nome']; ?></span>
+												</div>
+											<?php }
+										endif; ?>
+									</div>
+								</div>		
+							</div>
+							*/ ?>
+					</div>
+
+				<?php }
+			?>
+			
+			<div style="height: 200vh; display: block;"></div>
 
 			<!-- #sala -->
 			<div class="tab-content active" id="sala">
@@ -1223,7 +1622,7 @@
 								</div>		
 							</div>
 
-							<div class="option-produto dir <?php echo 'id-'.$produto['id']; ?>"">			
+							<div class="option-produto dir <?php echo 'id-'.$produto['id']; ?>">			
 								<div class="slide-cor">
 									<span class="tit-cores"><?php echo $idioma_single_produto[9]; ?>:</span>
 									<div class="slide-item-cor slide-simulacao">
@@ -1254,161 +1653,18 @@
 <?php get_footer(); ?>
 
 <script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/assets/js/owl.carousel.min.js"></script>
-<script>
-	
+<!-- CAROUSEL -->
+<script type="text/javascript">
+
 	jQuery.noConflict();
-	var owl = jQuery('.slide-simulacao');
-	owl.owlCarousel({
-		margin: 5,
-		//autoWidth:true,
+	jQuery('.itens-simulacao').owlCarousel({
+		loop:false,
+		margin:5,
+		autoWidth:true,
+		//responsive:false,
+		//responsiveClass:true,
 		nav:true,
-		loop: false
-	});
+		navText: ['<i class="fa fa-chevron-left"></i>','<i class="fa fa-chevron-right"></i>']
+	})
 
-	/*jQuery('.cor-rejunte .item').click(function(){
-		jQuery('.cor-rejunte .item').removeClass('active');
-		jQuery(this).addClass('active');
-	});*/
-
-	<?php if($simulacao_prod){ ?>
-		jQuery(document).ready(function(){	
-
-			<?php /*if($prod_sala){ ?>
-				prod_selecionado = jQuery('select.select-produto').find('option[value=<?php echo $prod_sala; ?>]');
-				id_ambiente = '#sala';
-			<?php }else{
-				if($prod_cozinha){ ?>
-					prod_selecionado = jQuery('select.select-produto').find('option[value=<?php echo $prod_cozinha; ?>]');
-					id_ambiente = '#sala';
-				<?php }
-			} */?>
-
-			//alert(<?php echo $set_prod_amb; ?>);
-
-				<?php if($set_prod_amb){ ?>
-					prod_selecionado = jQuery('select.select-produto').find('option[value=<?php echo $id_pro_amb; ?>]');
-					id_ambiente = '<?php echo $set_amb; ?>'; 
-					//alert(id_ambiente);
-
-																//$id_pro_amb
-																//$set_amb;
-
-		jQuery('select.select-produto').val("null").change();
-		jQuery('.tab .item-ambiente').removeClass('active');
-
-		jQuery('.item.item-ambiente[rel="'+id_ambiente+'"]').addClass('active');
-		jQuery('.tab-content').removeClass('active');
-		jQuery(id_ambiente).addClass('active');
-
-					prod_selecionado.attr("selected",true);
-
-					option_produto = id_ambiente+' .id-'+(prod_selecionado.val());
-					jQuery(option_produto).show();	
-
-					piso = prod_selecionado.attr('piso');
-					imagemPiso = "url('"+piso+"')";
-					jQuery(id_ambiente+' .simulador .piso').css('background-image',imagemPiso);
-					
-					parede = prod_selecionado.attr('parede');
-					imagemParede = "url('"+parede+"')";
-					jQuery(id_ambiente+' .simulador .parede').css('background-image',imagemParede);
-
-					jQuery(option_produto+'.select-piso .item-1').addClass('active');
-					jQuery(option_produto+'.select-parede .item-1').addClass('active');
-															
-				<?php } ?>
-
-
-		
-			/*cleanAmbiente();
-			if((jQuery(this).val()) != 'null'){			
-				option_produto = '#'+(jQuery(this).attr('rel'))+' .id-'+(jQuery(this).val());
-				jQuery(option_produto).show();	
-
-				piso = jQuery('option:selected',this).attr('piso');
-				imagemPiso = "url('"+piso+"')";
-				jQuery('#'+(jQuery(this).attr('rel'))+' .simulador .piso').css('background-image',imagemPiso);
-				parede = jQuery('option:selected',this).attr('parede');
-				imagemParede = "url('"+parede+"')";
-				jQuery('#'+(jQuery(this).attr('rel'))+' .simulador .parede').css('background-image',imagemParede);
-
-				jQuery(option_produto+'.select-piso .item-1').addClass('active');
-				jQuery(option_produto+'.select-parede .item-1').addClass('active');
-			}*/
-		
-		});
-	<?php } ?>
-
-	function cleanAmbiente(){
-		jQuery('.option-produto').hide();
-		jQuery('.simulador .cor-piso').css('background-color','');
-		jQuery('.simulador .cor-parede').css('background-color','');
-		jQuery('.slide-item-cor .item').removeClass('active');
-	}
-
-	jQuery('.slide-item-cor .item').click(function(){
-		ambiente = jQuery(this).attr('ambiente');
-		local = jQuery(this).attr('local');
-		rel = jQuery(this).attr('rel');
-		simulador = '#'+ambiente+' .'+local;
-		jQuery(this).parent().siblings().find('.item').removeClass('active');
-		jQuery(this).addClass('active');
-		if((local == 'cor-parede') || (local == 'cor-piso')){
-			jQuery(simulador).css('background-color',rel);
-		}
-		if((local == 'parede') || (local == 'piso')){
-			rel = "url('"+rel+"')";
-			jQuery(simulador).css('background-image',rel);
-		}
-	});
-
-	jQuery('.tab .item-ambiente').click(function(){
-		cleanAmbiente();
-		jQuery('select.select-produto').val("null").change();
-		jQuery('.tab .item-ambiente').removeClass('active');
-		jQuery(this).addClass('active');
-		jQuery('.tab-content').removeClass('active');
-		jQuery(jQuery(this).attr('rel')).addClass('active');
-	});
-
-	jQuery('select.select-produto').change(function(){
-		cleanAmbiente();
-		if((jQuery(this).val()) != 'null'){			
-			option_produto = '#'+(jQuery(this).attr('rel'))+' .id-'+(jQuery(this).val());
-			jQuery(option_produto).show();	
-
-			piso = jQuery('option:selected',this).attr('piso');
-			imagemPiso = "url('"+piso+"')";
-			jQuery('#'+(jQuery(this).attr('rel'))+' .simulador .piso').css('background-image',imagemPiso);
-			parede = jQuery('option:selected',this).attr('parede');
-			imagemParede = "url('"+parede+"')";
-			jQuery('#'+(jQuery(this).attr('rel'))+' .simulador .parede').css('background-image',imagemParede);
-
-			jQuery(option_produto+'.select-piso .item-1').addClass('active');
-			jQuery(option_produto+'.select-parede .item-1').addClass('active');
-		}
-	});
-
-	<?php /*
-		if($simulacao_prod){ ?>
-			jQuery(document).ready(function(){
-				cleanAmbiente();
-				if((jQuery(this).val()) != 'null'){			
-					option_produto = '#'+(jQuery(this).attr('rel'))+' .id-'+(jQuery(this).val());
-					jQuery(option_produto).show();	
-
-					piso = jQuery('option:selected',this).attr('piso');
-					imagemPiso = "url('"+piso+"')";
-					jQuery('#'+(jQuery(this).attr('rel'))+' .simulador .piso').css('background-image',imagemPiso);
-					parede = jQuery('option:selected',this).attr('parede');
-					imagemParede = "url('"+parede+"')";
-					jQuery('#'+(jQuery(this).attr('rel'))+' .simulador .parede').css('background-image',imagemParede);
-
-					jQuery(option_produto+'.select-piso .item-1').addClass('active');
-					jQuery(option_produto+'.select-parede .item-1').addClass('active');
-				}
-			});
-
-		<?php } */
-	?>
 </script>

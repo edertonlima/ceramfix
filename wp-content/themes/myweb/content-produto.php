@@ -20,7 +20,7 @@
 	}
 
 	if($idioma == 'en'){
-		$idioma_single_produto = ['Indication of use', 'Application', 'TECHNICAL SHEET', 'COLOR SIMULATOR', 'CONSUMER CALCULATOR', 'FIND SHOPS NEAR ME', 'See other products','Available Colors:'];
+		$idioma_single_produto = ['Indication of use', 'Application', 'TECHNICAL SHEET', 'COLOR SIMULATOR', 'CONSUMER CALCULATOR', 'FIND SHOPS NEAR ME', 'See other products','Available Colors:']; 
 	}
 
 	if($idioma == 'es'){
@@ -129,9 +129,15 @@
 			<?php if(get_field('ficha_tecnica')){ ?>
 				<a href="<?php the_field('ficha_tecnica'); ?>" target="_blank" title="<?php echo $idioma_single_produto[2]; ?>" class="ficha-tecnica"><span class="box-link"><span><span><?php echo $idioma_single_produto[2]; ?></span></span></span></a>
 			<?php } ?>
-			<?php if(get_field('simulacao_cores')){ ?>
+
+			<?php /*if(get_field('simulacao_cores')){ ?>
+				<a href="<?php echo get_permalink(get_page_by_path('simulador-cores')) . '?prod=' . $post->ID; ?>" title="<?php echo $idioma_single_produto[3]; ?>" class="simulador"><span class="box-link"><span><span><?php echo $idioma_single_produto[3] ?></span></span></span></a>
+			<?php } */?>
+
+			<?php if((get_field('amb_sala')) OR (get_field('amb_cozinha')) OR (get_field('amb_banheiro')) OR (get_field('amb_piscina')) OR (get_field('amb_fachada'))){ ?>
 				<a href="<?php echo get_permalink(get_page_by_path('simulador-cores')) . '?prod=' . $post->ID; ?>" title="<?php echo $idioma_single_produto[3]; ?>" class="simulador"><span class="box-link"><span><span><?php echo $idioma_single_produto[3] ?></span></span></span></a>
 			<?php } ?>
+
 			<?php if(get_field('cr')){ ?>
 				<a href="<?php echo get_permalink(get_page_by_path('calculadora-consumo')); ?>" title="<?php echo $idioma_single_produto[4]; ?>" class="calculadora"><span class="box-link"><span><span><?php echo $idioma_single_produto[4]; ?></span></span></span></a>
 			<?php } ?>

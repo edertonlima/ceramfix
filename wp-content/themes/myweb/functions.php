@@ -1301,5 +1301,4 @@ add_action('wp_print_styles', 'jeherve_remove_all_jp_css' );
 */
 
 
-
 ?>
