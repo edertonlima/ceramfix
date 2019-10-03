@@ -115,7 +115,11 @@
 <link rel="stylesheet" type="text/css" href="<?php echo get_template_directory_uri(); ?>/assets/css/fancybox.css" media="screen" />
 <link rel="stylesheet" type="text/css" href="<?php echo get_template_directory_uri(); ?>/assets/css/style.css" media="screen" />
 
-<?php if((is_singular('produto')) OR (is_page('simulador-cores'))){ ?>
+<?php if(is_singular('produto')){ ?>
+	<link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/assets/css/owl.carousel.min.css" type="text/css" media="screen" />
+<?php } ?>
+
+<?php if(is_page('simulador-cores')){ ?>
 	<link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/assets/css/owl.theme.default.css" type="text/css" media="screen" />
 <?php } ?>
 
