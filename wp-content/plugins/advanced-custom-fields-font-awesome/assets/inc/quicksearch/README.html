@@ -1,0 +1,137 @@
+<html>
+      <head>
+        <meta charset="UTF-8">
+        <title>README.markdown</title>
+      </head>
+      <body>
+        <p>THIS PROJECT IS VERY MUCH DEAD AND NOT MAINTAINED. IT&#39;S BEEN 6+ YEARS SINCE THE LAST UPDATES. DON&#39;T EXPECT THIS TO WORK.</p>
+<h1 id="jquery-quicksearch-plug-in">jQuery quicksearch plug-in</h1>
+<p>A <a href="http://www.jquery.com">jQuery</a> based plug-in for filtering large data sets with user input</p>
+<h2 id="examples">Examples</h2>
+<ul>
+<li><a href="http://www.lomalogue.com/jquery/quicksearch/">http://www.lomalogue.com/jquery/quicksearch/</a></li>
+<li><a href="http://www.lomalogue.com/jquery/quicksearch/super_table.html">http://www.lomalogue.com/jquery/quicksearch/super_table.html</a></li>
+</ul>
+<h2 id="usage">Usage</h2>
+<p>Note that the usage has changed in the latest version of quicksearch, the code is <em>not</em> backwards compatible,
+the form and input are not build by the script any more.</p>
+<pre><code>$(input_selector).quicksearch(elements_to_search, options);
+</code></pre><h4 id="example-on-table-rows">Example on table rows</h4>
+<pre><code>/* Example form */
+&lt;form&gt;
+    &lt;input type=&quot;text&quot; id=&quot;search&quot;&gt;
+&lt;/form&gt;
+
+/* Example table */
+&lt;table&gt;
+    &lt;tbody&gt;
+        &lt;tr&gt;
+            &lt;td&gt;Test cell&lt;/td&gt;
+            &lt;td&gt;Another test cell&lt;/td&gt;
+        &lt;/tr&gt;
+    &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;script type=&quot;text/javascript&quot; src=&quot;jquery.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;jquery.quicksearch.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+    $(&#39;input#search&#39;).quicksearch(&#39;table tbody tr&#39;);
+&lt;/script&gt;
+</code></pre><h4 id="example-on-the-th-elements-on-a-table-row">Example on the <code>&lt;th&gt;</code> elements on a table row</h4>
+<pre><code>$(&#39;input#search&#39;).quicksearch(&#39;table tbody tr&#39;, {
+    selector: &#39;th&#39;
+});
+</code></pre><h4 id="example-of-how-to-use-with-js">Example of how to use with JS</h4>
+<pre><code>var qs = $(&#39;input#id_search_list&#39;).quicksearch(&#39;ul#list_example li&#39;);
+$(&#39;ul#list_example&#39;).append(&#39;&lt;li&gt;Loaded with Ajax&lt;/li&gt;&#39;);
+qs.cache();
+</code></pre><h4 id="example-of-how-to-use-with-ajax">Example of how to use with Ajax</h4>
+<pre><code>var qs = $(&#39;input#search&#39;).quicksearch(&#39;table tbody tr&#39;);
+$.ajax({
+    &#39;type&#39;: &#39;GET&#39;,
+    &#39;url&#39;: &#39;index.html&#39;,
+    &#39;success&#39;: function (data) {
+        $(&#39;table tbody tr&#39;).append(data);
+        qs.cache();
+    }
+});
+</code></pre><h2 id="options">Options</h2>
+<ul>
+<li><h4 id="delay">delay</h4>
+Delay of trigger in milliseconds</li>
+<li><h4 id="selector">selector</h4>
+A query selector on sibling elements to test</li>
+<li><h4 id="striperows">stripeRows</h4>
+An array of class names to go on each row</li>
+<li><h4 id="loader">loader</h4>
+A query selector to find a loading element</li>
+<li><h4 id="noresults">noResults</h4>
+A query selector to show if there&#39;s no results for the search</li>
+<li><h4 id="bind">bind</h4>
+Event that the trigger is tied to</li>
+<li><h4 id="onbefore">onBefore</h4>
+Function to call before trigger is called</li>
+<li><h4 id="onafter">onAfter</h4>
+Function to call after trigger is called</li>
+<li><h4 id="show">show</h4>
+Function that will add styles to matched elements</li>
+<li><h4 id="hide">hide</h4>
+Function that will add styles to unmatched elements</li>
+<li><h4 id="preparequery">prepareQuery</h4>
+Function that transforms text from input_selector into query used by &#39;testQuery&#39; function</li>
+<li><h4 id="testquery">testQuery</h4>
+Function that tells if a given item should be hidden
+It takes 3 arguments:<ul>
+<li>query prepared by &#39;prepareQuery&#39;</li>
+<li>stripped text from &#39;selector&#39;</li>
+<li>element to be potentially hidden</li>
+</ul>
+</li>
+</ul>
+<p>For example:</p>
+<pre><code>$(&#39;input#search&#39;).quicksearch(&#39;table tbody tr&#39;, {
+    &#39;delay&#39;: 100,
+    &#39;selector&#39;: &#39;th&#39;,
+    &#39;stripeRows&#39;: [&#39;odd&#39;, &#39;even&#39;],
+    &#39;loader&#39;: &#39;span.loading&#39;,
+    &#39;noResults&#39;: &#39;tr#noresults&#39;,
+    &#39;bind&#39;: &#39;keyup keydown&#39;,
+    &#39;onBefore&#39;: function () {
+        console.log(&#39;on before&#39;);
+    },
+    &#39;onAfter&#39;: function () {
+        console.log(&#39;on after&#39;);
+    },
+    &#39;show&#39;: function () {
+        $(this).addClass(&#39;show&#39;);
+    },
+    &#39;hide&#39;: function () {
+        $(this).removeClass(&#39;show&#39;);
+    }
+    &#39;prepareQuery&#39;: function (val) {
+        return new RegExp(val, &quot;i&quot;);
+    },
+    &#39;testQuery&#39;: function (query, txt, _row) {
+        return query.test(txt);
+    }
+});
+</code></pre><h2 id="help-make-quicksearch-better-">Help make quicksearch better!</h2>
+<p>If you have a bug fix, the best way to help would be to:</p>
+<ul>
+<li>Fork the project by clicking &quot;Fork this project&quot; at the top of this page</li>
+<li>Clone your version of quicksearch from your Github account to your computer</li>
+<li>Fix and commit the bugs, then push your version to your Github account</li>
+<li>Click &quot;pull request&quot; at the top of my Github page</li>
+</ul>
+<p>I can&#39;t promise to answer every question about quicksearch, 
+but please do <a href="http://github.com/riklomas/quicksearch/issues">report bugs here</a> or <a href="http://github.com/inbox/new/riklomas">send me a message on Github</a>. </p>
+<p>You can <a href="http://github.com/riklomas/quicksearch/toggle_watch">watch quicksearch</a> for updates or <a href="http://github.com/users/follow?target=riklomas">follow me on Github</a> 
+and <a href="http://twitter.com/riklomas">on Twitter</a>.</p>
+<h2 id="license">License</h2>
+<p>Under the same licenses as the jQuery library itself: <a href="http://docs.jquery.com/License">http://docs.jquery.com/License</a></p>
+<h2 id="credits">Credits</h2>
+<p>jQuery quicksearch is made by <a href="http://www.riklomas.co.uk">Rik Lomas</a> at <a href="http://www.lomalogue.com">Lomalogue</a></p>
+<p>Thanks to <a href="http://github.com/thelizardreborn">Seth F.</a> for fixes and <a href="http://github.com/goj">Krzysiek Goj</a> for the  testQuery and prepareQuery option updates</p>
+
+      </body>
+    </html>
