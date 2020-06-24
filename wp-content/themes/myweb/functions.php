@@ -619,6 +619,11 @@ function smashing_fachada_column( $column, $post_id ) {
 
 
 
+if((wp_get_current_user()->user_login == 'ederton')){
+	$producao = false;
+}else{
+	$producao = true;
+}
 
 if($producao){
 	add_action('admin_head', 'my_custom_fonts');
@@ -801,11 +806,18 @@ if( function_exists('acf_add_options_page') ) {
 	));
 
 	acf_add_options_sub_page(array(
-		'page_title' 	=> 'Imagem Categoria de Produto',
-		'menu_title'	=> 'Imagem Categoria de Produto',
+		'page_title' 	=> 'Imagem Categoria',
+		'menu_title'	=> 'Imagem Categoria',
 		'menu_slug' 	=> 'imagem-categoria-produto',
 		'parent_slug'	=> 'configuracoes-geral',
 	));
+
+	acf_add_options_sub_page(array(
+		'page_title' 	=> 'Imagem Soluções',
+		'menu_title'	=> 'Imagem Soluções',
+		'menu_slug' 	=> 'imagem-solucoes',
+		'parent_slug'	=> 'configuracoes-geral',
+	));	
 
 	acf_add_options_sub_page(array(
 		'page_title' 	=> 'Configurações de Lojas',

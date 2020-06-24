@@ -112,7 +112,8 @@
 <title><?php echo $titulo; ?></title>
 
 <!-- CSS -->
-<link rel="stylesheet" type="text/css" href="<?php echo get_template_directory_uri(); ?>/assets/css/fancybox.css" media="screen" />
+<!--<link rel="stylesheet" type="text/css" href="<?php echo get_template_directory_uri(); ?>/assets/css/fancybox.css" media="screen" />-->
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" media="screen" />
 <link rel="stylesheet" type="text/css" href="<?php echo get_template_directory_uri(); ?>/assets/css/style.css" media="screen" />
 
 <?php if(is_singular('produto')){ ?>
@@ -126,6 +127,94 @@
 <!-- JQUERY -->
 <script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/assets/js/jquery.min.js"></script>
 <script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/assets/js/bootstrap.min.js"></script>
+
+<style type="text/css">
+	.header .nav ul li.nav-pesquisa {
+		display: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	.header .nav ul li.nav-pesquisa ul {
+		display: block;
+		background-color: #0077C8!important;
+		height: 120px;
+	}
+
+	.header .nav ul li.nav-pesquisa ul li {
+		max-width: 980px;
+		width: 80%;
+		display: block;
+		margin: 0 auto;
+	}
+
+	.header .nav ul li.nav-pesquisa ul li #searchform {
+		margin: 0;
+		position: relative;
+		height: 120px;
+	}
+
+	.nav-pesquisa #searchsubmit {
+		display: none;
+	}
+
+	.nav-pesquisa #searchform input {
+		/*background-color: #0068af;*/
+		width: 100%;
+		line-height: 73px;
+		padding: 0px;
+		margin-top: 21px;
+		color: #fff;
+	}
+
+	.nav-pesquisa #searchform input::-webkit-input-placeholder {
+		color: #fff;
+		opacity: 0.75;
+	}
+	.nav-pesquisa #searchform input:-moz-placeholder           {
+		color: #fff;
+		opacity: 0.75;
+	}
+	.nav-pesquisa #searchform input::-moz-placeholder          {
+		color: #fff;
+		opacity: 0.75;
+	}
+	.nav-pesquisa #searchform input:-ms-input-placeholder      {
+		color: #fff;
+		opacity: 0.75;
+	}
+
+	.nav-pesquisa #searchform i {
+		position: absolute;
+		right: 0;
+		color: #ffffff;
+		font-size: 2rem;
+		opacity: 0.75;
+		top: 50%;
+		margin-top: -16px;
+		cursor: pointer;
+	}
+
+	.nav-pesquisa #searchform i:hover {
+		opacity: 1;
+		text-transform: uppercase;
+		text-decoration: none;
+		-moz-transition: all .2s ease 0s;
+		-webkit-transition: all .2s ease 0s;
+		-o-transition: all .2s ease 0s;
+	}
+
+	@media (max-width:800px) {
+		.header .nav ul li.nav-pesquisa {
+			left: 0;
+			position: fixed;
+			top: 79px;
+			width: 100%;
+			z-index: 9999;
+		}
+	}
+
+</style>
 
 
 <script type="text/javascript">
@@ -195,13 +284,13 @@
 <body <?php body_class(); ?>>
 
 <script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  /*(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
   ga('create', 'UA-100022583-1', 'auto');
-  ga('send', 'pageview');
+  ga('send', 'pageview');*/
 
 </script>
 
@@ -233,13 +322,13 @@
 								if($idioma == 'en'){
 									$class_en = 'ativo';
 									$on_en = '';
-									$menu_idioma = ['Products','Simulators','Color Simulator','Consumption Calculator','Company','Matrix and Units','Work with us','Awards & Reviews','Corporate Ideology','Contact','Contact us','Media','Releases','In the Media','Download'];
+									$menu_idioma = ['Products','Simulators','Color Simulator','Consumption Calculator','Company','Matrix and Units','Work with us','Awards & Reviews','Corporate Ideology','Contact','Contact us','Media','Releases','In the Media','Download',''];
 								}
 
 								if($idioma == 'pt-br'){
 									$class_pt = 'ativo';
 									$on_pt = '';
-									$menu_idioma = ['Produtos','Simuladores','Simulador de Cores','Calculadora de Consumo','Empresa','Matriz e Unidades','Trabalhe Conosco','Prêmios','Ideologia Corporativa','Contato','Fale Conosco','Mídia','Releases','Na Mídia','Download'];
+									$menu_idioma = ['Produtos','Simuladores','Simulador de Cores','Calculadora de Consumo','Empresa','Matriz e Unidades','Trabalhe Conosco','Prêmios','Ideologia Corporativa','Contato','Fale Conosco','Mídia','Releases','Na Mídia','Download','Soluções'];
 								}
 
 									if(is_front_page()){
@@ -251,7 +340,7 @@
 								if($idioma == 'es'){
 									$class_es = 'ativo';
 									$on_es = '';
-									$menu_idioma = ['Productos','Simuladores','Simulador de color','Calculadora de Consumo','Empresa','Matriz y unidades','Trabaja con nosotros','Premios','Ideología Corporativa','Contacto','Hable con nosotros','Medios','Noticias','En los medios','Descargar'];
+									$menu_idioma = ['Productos','Simuladores','Simulador de color','Calculadora de Consumo','Empresa','Matriz y unidades','Trabaja con nosotros','Premios','Ideología Corporativa','Contacto','Hable con nosotros','Medios','Noticias','En los medios','Descargar',''];
 								}
 						 	?>
 
@@ -298,7 +387,26 @@
 					<nav class="nav">
 						<ul class="menu-principal">
 
-							<li class="<?php if((is_post_type_archive('lojas')) or (is_post_type_archive('produto')) or (is_tax('categoria_produto')) or (is_tag()) or (is_singular('produto'))){ echo 'active'; } ?>">
+							<li class="nav-solucoes<?php if((is_post_type_archive('lojas')) or (is_post_type_archive('produto')) or (is_tax('categoria_produto')) or (is_tag()) or (is_singular('produto'))){ echo 'active'; } ?>">
+								<a href="javascript:" title="<?php echo $menu_idioma[15]; ?>" class=""><?php echo $menu_idioma[15]; ?></a>
+								<ul class="submenu">
+									<?php if( have_rows('ico-solucoes','option') ):
+										while ( have_rows('ico-solucoes','option') ) : the_row(); 
+
+											$term = get_term( get_sub_field('tag-solucoes','option'), 'post_tag' ); ?>
+
+											<li>
+												<a href="<?php echo get_term_link($term->term_id); ?>" title="<?php echo $term->name; ?>" class="<?php if(is_tax('categoria_produto',$term->slug)){ echo 'active'; } ?>" style="background-image: url('<?php the_sub_field('icone-solucoes','option'); ?>');">
+													<?php echo $term->name; ?>
+												</a>
+											</li>
+
+										<?php endwhile;
+									endif; ?>
+								</ul>
+							</li>
+
+							<li class="nav-produtos <?php if((is_post_type_archive('lojas')) or (is_post_type_archive('produto')) or (is_tax('categoria_produto')) or (is_tag()) or (is_singular('produto'))){ echo 'active'; } ?>">
 								<a href="<?php echo get_home_url(); ?>/produto" title="<?php echo $menu_idioma[0]; ?>" class=""><?php echo $menu_idioma[0]; ?></a>
 								<ul class="submenu">
 									<?php if( have_rows('imagem_categoria_produto','option') ):
@@ -317,24 +425,25 @@
 								</ul>
 							</li>
 
-							<li class="<?php if((is_page('simulador-cores')) or (is_page('calculadora-consumo'))){ echo 'active'; } ?>">
+							<li class="nav-simuladores <?php if((is_page('simulador-cores')) or (is_page('calculadora-consumo'))){ echo 'active'; } ?>">
 								<a href="<?php echo get_permalink(get_page_by_path('simulador-cores')); ?>" title="<?php echo $menu_idioma[1]; ?>"><?php echo $menu_idioma[1]; ?></a>
 								<ul class="submenu">
-									<li><a href="<?php echo get_permalink(get_page_by_path('simulador-cores')); ?>" title="<?php echo $menu_idioma[2]; ?>" class="<?php if(is_page('simulador-cores')){ echo 'active'; } ?>"><?php echo $menu_idioma[2]; ?></a></li>		
-									<li><a href="<?php echo get_permalink(get_page_by_path('calculadora-consumo')); ?>" title="<?php echo $menu_idioma[3]; ?>" class="<?php if(is_page('calculadora-consumo')){ echo 'active'; } ?>"><?php echo $menu_idioma[3]; ?></a></li>	
+									<li class="nav-simuladores-simulador"><a href="<?php echo get_permalink(get_page_by_path('simulador-cores')); ?>" title="<?php echo $menu_idioma[2]; ?>" class="<?php if(is_page('simulador-cores')){ echo 'active'; } ?>"><?php echo $menu_idioma[2]; ?></a></li>		
+									<li class="nav-simuladores-calculadora"><a href="<?php echo get_permalink(get_page_by_path('calculadora-consumo')); ?>" title="<?php echo $menu_idioma[3]; ?>" class="<?php if(is_page('calculadora-consumo')){ echo 'active'; } ?>"><?php echo $menu_idioma[3]; ?></a></li>	
 								</ul>
 							</li>
 
-							<li class="<?php if((is_page('empresa'))){ echo 'active'; } ?>">
+							<li class="nav-empresa <?php if((is_page('empresa'))){ echo 'active'; } ?>">
 								<a href="<?php echo get_permalink(get_page_by_path('empresa')); ?>" title="<?php echo $menu_idioma[4]; ?>"><?php echo $menu_idioma[4]; ?></a>
 								<ul class="submenu">
-									<li><a href="<?php echo get_home_url(); ?>/matriz_filiais" title="<?php echo $menu_idioma[5]; ?>" class="<?php if(is_post_type_archive('matriz_filiais')){ echo 'active'; } ?>"><?php echo $menu_idioma[5]; ?></a></li>		
-									<li><a href="<?php echo get_permalink(get_page_by_path('trabalhe-conosco')); ?>" title="<?php echo $menu_idioma[6]; ?>" class="<?php if(is_page('trabalhe-conosco')){ echo 'active'; } ?>"><?php echo $menu_idioma[6]; ?></a></li>		
-									<li><a href="<?php echo get_permalink(get_page_by_path('empresa')); ?>#premios" title="<?php echo $menu_idioma[7]; ?>" class=""><?php echo $menu_idioma[7]; ?></a></li>				
-									<li><a href="<?php echo get_permalink(get_page_by_path('empresa')); ?>#ideologia-corporativa" title="<?php echo $menu_idioma[8]; ?>" class=""><?php echo $menu_idioma[8]; ?></a></li>
+									<li class="nav-empresa-matriz"><a href="<?php echo get_home_url(); ?>/matriz_filiais" title="<?php echo $menu_idioma[5]; ?>" class="<?php if(is_post_type_archive('matriz_filiais')){ echo 'active'; } ?>"><?php echo $menu_idioma[5]; ?></a></li>		
+									<li class="nav-empresa-trabalhe"><a href="<?php echo get_permalink(get_page_by_path('trabalhe-conosco')); ?>" title="<?php echo $menu_idioma[6]; ?>" class="<?php if(is_page('trabalhe-conosco')){ echo 'active'; } ?>"><?php echo $menu_idioma[6]; ?></a></li>		
+									<li class="nav-empresa-empresa"><a href="<?php echo get_permalink(get_page_by_path('empresa')); ?>#premios" title="<?php echo $menu_idioma[7]; ?>" class=""><?php echo $menu_idioma[7]; ?></a></li>				
+									<li class="nav-empresa-ideologia"><a href="<?php echo get_permalink(get_page_by_path('empresa')); ?>#ideologia-corporativa" title="<?php echo $menu_idioma[8]; ?>" class=""><?php echo $menu_idioma[8]; ?></a></li>
 								</ul>
 							</li>
-							<li class="<?php if((is_post_type_archive('matriz_filiais')) or (is_page('trabalhe-conosco')) or (is_page('fale-conosco'))){ echo 'active'; } ?>">
+
+							<li class="nav-contato <?php if((is_post_type_archive('matriz_filiais')) or (is_page('trabalhe-conosco')) or (is_page('fale-conosco'))){ echo 'active'; } ?>">
 								<a href="javascript:" title="<?php echo $menu_idioma[9]; ?>"><?php echo $menu_idioma[9]; ?></a>
 								<ul class="submenu">
 									<li><a href="<?php echo get_home_url(); ?>/matriz_filiais" title="<?php echo $menu_idioma[5]; ?>" class="<?php if(is_post_type_archive('matriz_filiais')){ echo 'active'; } ?>"><?php echo $menu_idioma[5]; ?></a></li>		
@@ -342,12 +451,27 @@
 									<li><a href="<?php echo get_permalink(get_page_by_path('trabalhe-conosco')); ?>" title="<?php echo $menu_idioma[6]; ?>" class="<?php if(is_page('trabalhe-conosco')){ echo 'active'; } ?>"><?php echo $menu_idioma[6]; ?></a></li>
 								</ul>
 							</li>
-							<li class="<?php if((is_category('release')) or (is_category('na-midia')) or (is_page('downloads')) or (is_singular('post'))){ echo 'active'; } ?>">
+							<li class="nav-midia <?php if((is_category('release')) or (is_category('na-midia')) or (is_page('downloads')) or (is_singular('post'))){ echo 'active'; } ?>">
 								<a href="javascript:" title="<?php echo $menu_idioma[11]; ?>"><?php echo $menu_idioma[11]; ?></a>
 								<ul class="submenu">
-									<li><a href="<?php echo get_home_url(); ?>/midia/release" title="<?php echo $menu_idioma[12]; ?>" class="<?php if(is_category('release')){ echo 'active'; } ?>"><?php echo $menu_idioma[12]; ?></a></li>		
-									<li><a href="<?php echo get_home_url(); ?>/midia/na-midia" title="<?php echo $menu_idioma[13]; ?>" class="<?php if(is_category('na-midia')){ echo 'active'; } ?>"><?php echo $menu_idioma[13]; ?></a></li>		
-									<li><a href="<?php echo get_permalink(get_page_by_path('downloads')); ?>" title="<?php echo $menu_idioma[14]; ?>" class="<?php if(is_page('downloads')){ echo 'active'; } ?>"><?php echo $menu_idioma[14]; ?></a></li>				
+									<li class="nav-midia-release"><a href="<?php echo get_home_url(); ?>/midia/release" title="<?php echo $menu_idioma[12]; ?>" class="<?php if(is_category('release')){ echo 'active'; } ?>"><?php echo $menu_idioma[12]; ?></a></li>		
+									<li class="nav-midia-namidia"><a href="<?php echo get_home_url(); ?>/midia/na-midia" title="<?php echo $menu_idioma[13]; ?>" class="<?php if(is_category('na-midia')){ echo 'active'; } ?>"><?php echo $menu_idioma[13]; ?></a></li>		
+									<li class="nav-midia-dowloads"><a href="<?php echo get_permalink(get_page_by_path('downloads')); ?>" title="<?php echo $menu_idioma[14]; ?>" class="<?php if(is_page('downloads')){ echo 'active'; } ?>"><?php echo $menu_idioma[14]; ?></a></li>				
+								</ul>
+							</li>
+
+
+							<li class="nav-pesquisa">
+								<ul class="" style="">
+									<li>
+										<form role="search" method="get" id="searchform" class="searchform" action="<?php echo get_home_url(); ?>">
+											<div>
+												<input type="text" value="" name="s" id="s" placeholder="Pesquisar por:">
+												<button type="submit" id="searchsubmit"></button>
+												<i class="fa fa-close" id="close-search"></i>
+											</div>
+										</form>
+									</li>
 								</ul>
 							</li>
 						</ul>

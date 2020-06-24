@@ -447,3 +447,238 @@
 		}
 	}
 }
+
+
+
+// MENU 
+.header {
+	.nav {
+		ul {
+
+			li.nav-solucoes {
+				&:hover {
+					a {
+						border-color: #0077C8;
+					}
+				}
+
+				ul {
+					background-color: #0077C8;
+
+					li {
+						a {
+							&:hover {
+								background-color: #0068af;
+							}
+						}
+					}
+				}
+			}
+
+			li.nav-produtos {
+				&:hover {
+					a {
+						border-color: #0077C8;
+					}
+				}
+
+				ul {
+					background-color: #0077C8;
+
+					li {
+						a {
+							&:hover {
+								background-color: #0068af;
+							}
+						}
+					}
+				}
+			}
+
+			li.nav-simuladores {
+				&:hover {
+					a {
+						border-color: #d31f3a;
+					}
+				}
+
+				ul {
+					background-color: #d31f3a;
+
+					li {
+						a {
+							&:hover {
+								background-color: #bd1c34;
+							}
+						}
+
+						&.nav-simuladores-simulador {
+							a {
+								background-image:url(../images/icon/menu/simuladores/simulador-cores.png);
+							}
+						}
+
+						&.nav-simuladores-calculadora {
+							a {
+								background-image:url(../images/icon/menu/simuladores/calculadora-consumo.png);
+							}
+						}
+					}
+				}
+			}
+
+			li.nav-empresa {
+				&:hover {
+					a {
+						border-color: #e55a24;
+					}
+				}
+
+				ul {
+					background-color: #e55a24;
+
+					li {
+						a {
+							&:hover {
+								background-color: #d64e19;
+							}
+						}
+
+						&.nav-empresa-matriz {
+							a {
+								background-image:url(../images/icon/menu/empresa/matriz-filiais.png);
+							}
+						}
+
+						&.nav-empresa-trabalhe {
+							a {
+								background-image:url(../images/icon/menu/empresa/trabalhe-conosco.png);
+							}
+						}
+
+						&.nav-empresa-empresa {
+							a {
+								background-image:url(../images/icon/menu/empresa/premios.png);
+							}
+						}
+
+						&.nav-empresa-ideologia {
+							a {
+								background-image:url(../images/icon/menu/empresa/ideologia-corporativa.png);
+							}
+						}
+					}
+				}
+			}
+
+			li.nav-contato {
+				&:hover {
+					a {
+						border-color: #319b42;
+					}
+				}
+
+				ul {
+					background-color: #319b42;
+
+					li {
+						a {
+							&:hover {
+								background-color: #2b883a;
+							}
+						}
+
+						&.nav-contato-release {
+							a {
+								background-image: url(../images/icon/menu/midia/release.png);
+							}
+						}
+
+						&.nav-contato-namidia {
+							a {
+								background-image: url(../images/icon/menu/midia/namidia.png);
+							}
+						}
+
+						&.nav-contato-dowloads {
+							a {
+								background-image: url(../images/icon/menu/midia/download.png);
+							}
+						}
+					}
+				}
+			}
+
+			li.nav-midia {
+				&:hover {
+					a {
+						border-color: #8C4799;
+					}
+				}
+
+				ul {
+					background-color: #8C4799;
+
+					li {
+						a {
+							&:hover {
+								background-color: #7c3f88;
+							}
+						}
+
+						&.nav-midia-release {
+							a {
+								background-image: url(../images/icon/menu/midia/release.png);
+							}
+						}
+
+						&.nav-midia-namidia {
+							a {
+								background-image: url(../images/icon/menu/midia/namidia.png);
+							}
+						}
+
+						&.nav-midia-dowloads {
+							a {
+								background-image: url(../images/icon/menu/midia/download.png);
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+
+
+.teste {
+
+
+
+
+.header .nav ul li:nth-child(3)>a{cursor:default}
+
+	.header .nav ul li:nth-child(3).active-trail a,.header .nav ul li:nth-child(3).active a,.header .nav ul li:nth-child(3):hover a{border-color:#e55a24}
+
+	.header .nav ul li:nth-child(3) ul{background-color:#e55a24}
+
+.header .nav ul li:nth-child(4)>a{cursor:default}.header .nav ul li:nth-child(4).active-trail a,.header .nav ul li:nth-child(4).active a,.header .nav ul li:nth-child(4):hover a{border-color:#319b42}
+
+	.header .nav ul li:nth-child(4) ul{background-color:#319b42}
+
+.header .nav ul li:nth-child(4) ul li a{cursor:pointer}
+
+.header .nav ul li:nth-child(4) ul li a.active,.header .nav ul li:nth-child(4) ul li a:hover{background-color:#2b883a}
+
+
+.header .nav ul li:nth-child(4) ul li:first-child a{background-image:url(../images/icon/menu/contato/matriz-filiais.png)}
+
+
+
+.header .nav ul li:nth-child(4) ul li:nth-child(2) a{background-image:url(../images/icon/menu/contato/fale-conosco.png)}
+
+.header .nav ul li:nth-child(4) ul li:nth-child(3) a{background-image:url(../images/icon/menu/contato/trabalhe-conosco.png)}
+
+.header .nav ul li:nth-child(5)>a{cursor:default}.header .nav ul li:nth-child(5).active-trail a,.header .nav ul li:nth-child(5).active a,.header .nav ul li:nth-child(5):hover a{border-color:#8C4799}
+}
