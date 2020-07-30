@@ -322,7 +322,7 @@
 								if($idioma == 'en'){
 									$class_en = 'ativo';
 									$on_en = '';
-									$menu_idioma = ['Products','Simulators','Color Simulator','Consumption Calculator','Company','Matrix and Units','Work with us','Awards & Reviews','Corporate Ideology','Contact','Contact us','Media','Releases','In the Media','Download',''];
+									$menu_idioma = ['Products','Simulators','Color Simulator','Consumption Calculator','Company','Matrix and Units','Work with us','Awards & Reviews','Corporate Ideology','Contact','Contact us','Media','Releases','In the Media','Download','Solutions'];
 								}
 
 								if($idioma == 'pt-br'){
@@ -340,7 +340,7 @@
 								if($idioma == 'es'){
 									$class_es = 'ativo';
 									$on_es = '';
-									$menu_idioma = ['Productos','Simuladores','Simulador de color','Calculadora de Consumo','Empresa','Matriz y unidades','Trabaja con nosotros','Premios','Ideología Corporativa','Contacto','Hable con nosotros','Medios','Noticias','En los medios','Descargar',''];
+									$menu_idioma = ['Productos','Simuladores','Simulador de color','Calculadora de Consumo','Empresa','Matriz y unidades','Trabaja con nosotros','Premios','Ideología Corporativa','Contacto','Hable con nosotros','Medios','Noticias','En los medios','Descargar','Soluciones'];
 								}
 						 	?>
 
@@ -387,7 +387,7 @@
 					<nav class="nav">
 						<ul class="menu-principal">
 
-							<li class="nav-solucoes<?php if((is_post_type_archive('lojas')) or (is_post_type_archive('produto')) or (is_tax('categoria_produto')) or (is_tag()) or (is_singular('produto'))){ echo 'active'; } ?>">
+							<li class="nav-solucoes <?php if(is_tag()){ echo 'active'; } ?>">
 								<a href="javascript:" title="<?php echo $menu_idioma[15]; ?>" class=""><?php echo $menu_idioma[15]; ?></a>
 								<ul class="submenu">
 									<?php if( have_rows('ico-solucoes','option') ):
@@ -396,7 +396,7 @@
 											$term = get_term( get_sub_field('tag-solucoes','option'), 'post_tag' ); ?>
 
 											<li>
-												<a href="<?php echo get_term_link($term->term_id); ?>" title="<?php echo $term->name; ?>" class="<?php if(is_tax('categoria_produto',$term->slug)){ echo 'active'; } ?>" style="background-image: url('<?php the_sub_field('icone-solucoes','option'); ?>');">
+												<a href="<?php echo get_term_link($term->term_id); ?>" title="<?php echo $term->name; ?>" class="<?php if(is_tag($term->slug)){ echo 'active'; } ?>" style="background-image: url('<?php the_sub_field('icone-solucoes','option'); ?>');">
 													<?php echo $term->name; ?>
 												</a>
 											</li>
@@ -406,7 +406,7 @@
 								</ul>
 							</li>
 
-							<li class="nav-produtos <?php if((is_post_type_archive('lojas')) or (is_post_type_archive('produto')) or (is_tax('categoria_produto')) or (is_tag()) or (is_singular('produto'))){ echo 'active'; } ?>">
+							<li class="nav-produtos <?php if( is_post_type_archive('produto') and !is_tag() ){ echo 'active'; } ?>">
 								<a href="<?php echo get_home_url(); ?>/produto" title="<?php echo $menu_idioma[0]; ?>" class=""><?php echo $menu_idioma[0]; ?></a>
 								<ul class="submenu">
 									<?php if( have_rows('imagem_categoria_produto','option') ):
@@ -446,9 +446,9 @@
 							<li class="nav-contato <?php if((is_post_type_archive('matriz_filiais')) or (is_page('trabalhe-conosco')) or (is_page('fale-conosco'))){ echo 'active'; } ?>">
 								<a href="javascript:" title="<?php echo $menu_idioma[9]; ?>"><?php echo $menu_idioma[9]; ?></a>
 								<ul class="submenu">
-									<li><a href="<?php echo get_home_url(); ?>/matriz_filiais" title="<?php echo $menu_idioma[5]; ?>" class="<?php if(is_post_type_archive('matriz_filiais')){ echo 'active'; } ?>"><?php echo $menu_idioma[5]; ?></a></li>		
-									<li><a href="<?php echo get_permalink(get_page_by_path('fale-conosco')); ?>" title="<?php echo $menu_idioma[10]; ?>" class="<?php if(is_page('fale-conosco')){ echo 'active'; } ?>"><?php echo $menu_idioma[10]; ?></a></li>		
-									<li><a href="<?php echo get_permalink(get_page_by_path('trabalhe-conosco')); ?>" title="<?php echo $menu_idioma[6]; ?>" class="<?php if(is_page('trabalhe-conosco')){ echo 'active'; } ?>"><?php echo $menu_idioma[6]; ?></a></li>
+									<li><a href="<?php echo get_home_url(); ?>/matriz_filiais" title="<?php echo $menu_idioma[5]; ?>" class="nav-contato-matriz <?php if(is_post_type_archive('matriz_filiais')){ echo 'active'; } ?>"><?php echo $menu_idioma[5]; ?></a></li>		
+									<li><a href="<?php echo get_permalink(get_page_by_path('fale-conosco')); ?>" title="<?php echo $menu_idioma[10]; ?>" class="nav-contato-fale <?php if(is_page('fale-conosco')){ echo 'active'; } ?>"><?php echo $menu_idioma[10]; ?></a></li>		
+									<li><a href="<?php echo get_permalink(get_page_by_path('trabalhe-conosco')); ?>" title="<?php echo $menu_idioma[6]; ?>" class="nav-contato-trabalhe <?php if(is_page('trabalhe-conosco')){ echo 'active'; } ?>"><?php echo $menu_idioma[6]; ?></a></li>
 								</ul>
 							</li>
 							<li class="nav-midia <?php if((is_category('release')) or (is_category('na-midia')) or (is_page('downloads')) or (is_singular('post'))){ echo 'active'; } ?>">
