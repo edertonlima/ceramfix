@@ -3,15 +3,15 @@
 <?php 
 	$idioma_download = [];
 	if($idioma == 'pt-br'){
-		$idioma_download = ['DOWNLOAD','INSTITUCIONAL','CATÁLOGOS','PRODUTOS','Selecione o arquivo que deseja baixar.<br>Pode selecionar vários arquivos juntos para baixar simultaneamente.','É preciso selecionar um arquivo.','baixar','BAIXAR','Selecione a linha a que o produto e o tipo de material que deseja baixar.<br>Pode selecionar vários materiais juntos para baixar simultaneamente.','ESCOLHA A LINHA DE PRODUTO'];;
+		$idioma_download = ['DOWNLOAD','INSTITUCIONAL','CATÁLOGOS','PRODUTOS','Selecione o arquivo que deseja baixar.<br>Pode selecionar vários arquivos juntos para baixar simultaneamente.','É preciso selecionar um arquivo.','baixar','BAIXAR','Selecione a linha a que o produto e o tipo de material que deseja baixar.<br>Pode selecionar vários materiais juntos para baixar simultaneamente.','ESCOLHA A LINHA DE PRODUTO','MANUAIS TÉCNICOS','MANUAIS CFX FERRAMENTAS'];
 	}
 
 	if($idioma == 'es'){
-		$idioma_download = ['DESCARGAR','INSTITUCIONAL','CATÁLOGOS','PRODUCTOS','Seleccione el archivo que desea descargar.<br>Puede seleccionar varios archivos juntos para descargar simultáneamente. ',' Debe seleccionar un archivo. ','bajar ','BAJAR ',' la línea a la que el producto y el tipo de material que desea descargar. <br> Puede seleccionar varios materiales juntos para descargar simultáneamente. ',' SELECCIÓN DE LA LÍNEA DE PRODUCTO '];
+		$idioma_download = ['DESCARGAR','INSTITUCIONAL','CATÁLOGOS','PRODUCTOS','Seleccione el archivo que desea descargar.<br>Puede seleccionar varios archivos juntos para descargar simultáneamente. ',' Debe seleccionar un archivo. ','bajar ','BAJAR ',' la línea a la que el producto y el tipo de material que desea descargar. <br> Puede seleccionar varios materiales juntos para descargar simultáneamente. ',' SELECCIÓN DE LA LÍNEA DE PRODUCTO ','MANUALES TÉCNICOS','MANUALES CFX HERRAMIENTAS'];
 	}
 
 	if($idioma == 'en'){
-		$idioma_download = ['DOWNLOAD','INSTITUTIONAL','CATALOG', 'PRODUCTS', 'Select the file you want to download.<br>You can select multiple files together to download simultaneously. ',' You must select a file. ','download','DOWNLOAD',' line to which the product and the type of material you want to download. <br> You can select multiple materials together to download simultaneously. ',' CHOOSE THE PRODUCT LINE '];
+		$idioma_download = ['DOWNLOAD','INSTITUTIONAL','CATALOG', 'PRODUCTS', 'Select the file you want to download.<br>You can select multiple files together to download simultaneously. ',' You must select a file. ','download','DOWNLOAD',' line to which the product and the type of material you want to download. <br> You can select multiple materials together to download simultaneously. ',' CHOOSE THE PRODUCT LINE ','TECHNICAL MANUALS','MANUALS CFX TOOLS'];
 	}
 ?>
 
@@ -25,6 +25,8 @@
 		<div class="tab">
 			<div class="item" rel="#anuncios"><?php echo $idioma_download[1]; ?></div>
 			<div class="item" rel="#catalogos"><?php echo $idioma_download[2]; ?></div>
+			<div class="item" rel="#manuais-tecnicos"><?php echo $idioma_download[10]; ?></div>
+			<div class="item" rel="#manuais-tecnicos-cfx"><?php echo $idioma_download[11]; ?></div>			
 			<div class="item active" rel="#produtos"><?php echo $idioma_download[3]; ?></div>
 
 			<!-- ANUNCIOS -->
@@ -106,6 +108,89 @@
 
 				</form>
 			</div>	
+
+
+			<!-- Manuais Técnicos -->
+			<div class="tab-content" id="manuais-tecnicos">
+				<form action="<?php echo get_template_directory_uri(); ?>/compactar.php" method="post" id="form-manuais-tecnicos">
+
+					<p class="desc-donwload"><?php echo $idioma_download[4]; ?></p>
+
+					<?php if( have_rows('manuais-tecnicos','option') ): ?>
+						<h3 class="tit-baixar" style="display: block;">
+							<span id="tit-manuais-tecnicos"></span>
+							<span class="erro-download"><?php echo $idioma_download[5]; ?></span>
+							<a class="baixar-produto" rel="#form-manuais-tecnicos"><?php echo $idioma_download[6]; ?></a>
+						</h3>
+
+						<div class="row list-download">
+
+							<?php $itemManuais_tecnicos = 0; while ( have_rows('manuais-tecnicos','option') ) : the_row(); ?>
+
+								<div class="col-12 item-download <?php if(!get_sub_field('imagem','option')){ echo 'no-image'; } ?>">
+									<?php if(get_sub_field('imagem','option')){ ?>
+										<img src="<?php the_sub_field('imagem','option'); ?>" alt="<?php the_sub_field('titulo','option'); ?>">
+									<?php } ?>
+									<h4><span><?php the_sub_field('titulo','option'); ?></span></h4>
+									<div class="mockups">
+										<fieldset class="arteFinal">
+											<label>
+												<input type="checkbox" name="arteFinal-<?php echo $itemManuais_tecnicos; ?>" value="<?php the_sub_field('arquivo','option'); ?>">
+												<span class="checkbox"></span>
+												<?php echo $idioma_download[7]; ?>
+											</label>
+										</fieldset>
+									</div>
+								</div>
+
+							<?php $itemManuais_tecnicos = $itemManuais_tecnicos+1; endwhile; ?>
+						</div>
+					<?php endif; ?>
+
+				</form>
+			</div>	
+
+
+			<!-- Manuais CFX Ferramentas -->
+			<div class="tab-content" id="manuais-tecnicos-cfx">
+				<form action="<?php echo get_template_directory_uri(); ?>/compactar.php" method="post" id="form-manuais-tecnicos-cfx">
+
+					<p class="desc-donwload"><?php echo $idioma_download[4]; ?></p>
+
+					<?php if( have_rows('manuais-tecnicos-cfx','option') ): ?>
+						<h3 class="tit-baixar" style="display: block;">
+							<span id="tit-manuais-tecnicos"></span>
+							<span class="erro-download"><?php echo $idioma_download[5]; ?></span>
+							<a class="baixar-produto" rel="#form-manuais-tecnicos-cfx"><?php echo $idioma_download[6]; ?></a>
+						</h3>
+
+						<div class="row list-download">
+
+							<?php $itemManuais_tecnicos_cfx = 0; while ( have_rows('manuais-tecnicos-cfx','option') ) : the_row(); ?>
+
+								<div class="col-12 item-download <?php if(!get_sub_field('imagem','option')){ echo 'no-image'; } ?>">
+									<?php if(get_sub_field('imagem','option')){ ?>
+										<img src="<?php the_sub_field('imagem','option'); ?>" alt="<?php the_sub_field('titulo','option'); ?>">
+									<?php } ?>
+									<h4><span><?php the_sub_field('titulo','option'); ?></span></h4>
+									<div class="mockups">
+										<fieldset class="arteFinal">
+											<label>
+												<input type="checkbox" name="arteFinal-<?php echo $itemManuais_tecnicos_cfx; ?>" value="<?php the_sub_field('arquivo','option'); ?>">
+												<span class="checkbox"></span>
+												<?php echo $idioma_download[7]; ?>
+											</label>
+										</fieldset>
+									</div>
+								</div>
+
+							<?php $itemManuais_tecnicos_cfx = $itemManuais_tecnicos_cfx+1; endwhile; ?>
+						</div>
+					<?php endif; ?>
+
+				</form>
+			</div>
+
 
 			<!-- PRODUTOS -->
 			<div class="tab-content active" id="produtos">

@@ -204,6 +204,61 @@
 		-o-transition: all .2s ease 0s;
 	}
 
+	.footer .info {
+		display: inline-block;
+		position: relative;
+		top: -4px;
+	}
+	.footer .info .info-tel {
+		font-weight: 700;
+		font-size: 1.25rem;
+		color: #ffffff;
+		display: inline-block;
+		margin-left: 20px;
+		-moz-transition: all .2s ease 0s;
+		-webkit-transition: all .2s ease 0s;
+		-o-transition: all .2s ease 0s;
+	}
+
+	.tecnologia-ardex {
+		display: flex;
+		width: 260px;
+		align-items: center;
+		color: #ffffff;
+		text-transform: uppercase;
+		font-weight: 300;
+		float: left;
+		margin-right: 20px;
+		padding: 2px 10px;
+		box-sizing: content-box;
+		margin-top: -2px;
+		-moz-transition: all .2s ease 0s;
+		-webkit-transition: all .2s ease 0s;
+		-o-transition: all .2s ease 0s;
+	}
+	.tecnologia-ardex:hover {
+		text-decoration: navajowhite;
+		background: #e55a24;
+		color: #ffffff;
+	}
+	.tecnologia-ardex img {
+		margin-left: auto;
+	}
+	.nav-tecnologia-ardex {
+		display: none!important;
+	}
+
+	.header .nav ul li a {
+		padding: 0px 10px 5px;
+	}
+
+	@media all and (min-width: 801px) and (max-width: 1080px) {
+		.header .nav ul li a {
+			padding: 0 5px 5px;
+			font-size: 13px;
+		}
+	}
+
 	@media (max-width:800px) {
 		.header .nav ul li.nav-pesquisa {
 			left: 0;
@@ -211,6 +266,47 @@
 			top: 79px;
 			width: 100%;
 			z-index: 9999;
+		}
+
+		.tecnologia-ardex {
+			display: none;
+		}
+		.nav-tecnologia-ardex {
+			display: block!important;
+		}
+		.nav-tecnologia-ardex .tecnologia-ardex {
+			display: flex;
+			margin-right: 0;
+			width: 145px;
+			padding: 0;
+		}
+		.nav-tecnologia-ardex .tecnologia-ardex:hover {
+			background: transparent;
+		}
+	}
+
+	@media (max-width:770px) {
+		.footer {
+			height: auto;
+		}
+		.footer .row { 
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
+
+		.footer a.social i {
+			margin: 0 5px;
+		}
+		.footer .info .info-tel  {
+			margin: 20px 0 0;
+		}
+		.footer .outros-icones {
+			position: relative;
+			right: 0;
+			margin: 20px 0;
+			padding: 0;
+			border: none;
 		}
 	}
 
@@ -283,15 +379,14 @@
 </head>
 <body <?php body_class(); ?>>
 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-2608499-26"></script>
 <script>
-  /*(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
 
-  ga('create', 'UA-100022583-1', 'auto');
-  ga('send', 'pageview');*/
-
+	gtag('config', 'UA-2608499-26');
 </script>
 
 	<header class="header">
@@ -308,7 +403,31 @@
 					<a href="javascript:" class="menu-mobile"><span><em>X</em></span></a>
 
 					<div class="info">
-						<span class="info-tel"><?php the_field('telefone','option'); ?></span>
+						<?php
+							$ardex_idioma[0];
+							if($idioma == 'en'){
+								$ardex_idioma = ['DISCOVER ARDEX TECHNOLOGY',' Solutions ',' Company'];
+							}
+
+							if($idioma == 'pt-br'){
+								$ardex_idioma = ['CONHEÇA A TECNOLOGIA ARDEX','Soluções','Empresa'];
+							}
+
+							if($idioma == 'es'){
+								$ardex_idioma = ['DESCUBRA TECNOLOGÍA ARDEX',' Soluciones ',' Empresa'];
+							}
+						?>
+
+						<?php 
+							$status_page = get_post_status('35648');
+							if($status_page == 'publish'){ ?>
+								<a href="<?php echo get_home_url(); ?>/ardex" class="tecnologia-ardex" title="<?php echo $ardex_idioma[0]; ?> Ardex">
+									<?php echo $ardex_idioma[0]; ?> <img src="<?php echo get_template_directory_uri(); ?>/assets/images/ardex_logo.png" alt="<?php echo $ardex_idioma[0]; ?> Ardex">
+								</a>
+							<?php  }
+						?>
+
+						<span class="info-tel" style="display: none;"><?php the_field('telefone','option'); ?></span>
 						<div class="region">
 							<?php 
 								$class_en = '';
@@ -322,13 +441,13 @@
 								if($idioma == 'en'){
 									$class_en = 'ativo';
 									$on_en = '';
-									$menu_idioma = ['Products','Simulators','Color Simulator','Consumption Calculator','Company','Matrix and Units','Work with us','Awards & Reviews','Corporate Ideology','Contact','Contact us','Media','Releases','In the Media','Download','Solutions'];
+									$menu_idioma = ['Products','Simulators','Color Simulator','Consumption Calculator','Company','Matrix and Units','Work with us','Awards & Reviews','Corporate Ideology','Contact','Contact us','DOWNLOADS','Releases','In the Media','Download','Solutions'];
 								}
 
 								if($idioma == 'pt-br'){
 									$class_pt = 'ativo';
 									$on_pt = '';
-									$menu_idioma = ['Produtos','Simuladores','Simulador de Cores','Calculadora de Consumo','Empresa','Matriz e Unidades','Trabalhe Conosco','Prêmios','Ideologia Corporativa','Contato','Fale Conosco','Mídia','Releases','Na Mídia','Download','Soluções'];
+									$menu_idioma = ['Produtos','Simuladores','Simulador de Cores','Calculadora de Consumo','Empresa','Matriz e Unidades','Trabalhe Conosco','Prêmios','Ideologia Corporativa','Contato','Fale Conosco','DOWNLOADS','Releases','Na Mídia','Download','Soluções'];
 								}
 
 									if(is_front_page()){
@@ -340,7 +459,7 @@
 								if($idioma == 'es'){
 									$class_es = 'ativo';
 									$on_es = '';
-									$menu_idioma = ['Productos','Simuladores','Simulador de color','Calculadora de Consumo','Empresa','Matriz y unidades','Trabaja con nosotros','Premios','Ideología Corporativa','Contacto','Hable con nosotros','Medios','Noticias','En los medios','Descargar','Soluciones'];
+									$menu_idioma = ['Productos','Simuladores','Simulador de color','Calculadora de Consumo','Empresa','Matriz y unidades','Trabaja con nosotros','Premios','Ideología Corporativa','Contacto','Hable con nosotros','DESCARGAR','Noticias','En los medios','Descargar','Soluciones'];
 								}
 						 	?>
 
@@ -377,7 +496,6 @@
 						?>
 
 							<!-- IDIOMAS -->
-
 							<a href="javascript:" class="search" style="" title="BUSCAR" id="btn-buscar">
 								<i class="fa fa-search"></i>
 							</a>
@@ -405,7 +523,7 @@
 									endif; ?>
 								</ul>
 							</li>
-
+<?php //or (is_singular('produto')) is_tax('categoria_produto') ?>
 							<li class="nav-produtos <?php if( is_post_type_archive('produto') and !is_tag() ){ echo 'active'; } ?>">
 								<a href="<?php echo get_home_url(); ?>/produto" title="<?php echo $menu_idioma[0]; ?>" class=""><?php echo $menu_idioma[0]; ?></a>
 								<ul class="submenu">
@@ -424,6 +542,38 @@
 									endif; ?>
 								</ul>
 							</li>
+
+							<li class="nav-tecnologia-ardex">
+								<a href="#" title="<?php echo $ardex_idioma[0]; ?> Ardex">
+									<span class="tecnologia-ardex">
+										<?php echo $ardex_idioma[0]; ?> <img src="<?php echo get_template_directory_uri(); ?>/assets/images/ardex_logo.png" alt="<?php echo $ardex_idioma[0]; ?> Ardex">
+									</span>
+								</a>
+								<ul class="submenu">
+									<li class=""><a href="<?php echo get_permalink(get_page_by_path('simulador-cores')); ?>" title="<?php echo $ardex_idioma[1]; ?>" class="<?php if(is_page('simulador-cores')){ echo 'active'; } ?>"><?php echo $ardex_idioma[1]; ?></a></li>		
+									<li class=""><a href="<?php echo get_permalink(get_page_by_path('calculadora-consumo')); ?>" title="<?php echo $ardex_idioma[2]; ?>" class="<?php if(is_page('calculadora-consumo')){ echo 'active'; } ?>"><?php echo $ardex_idioma[2]; ?></a></li>	
+								</ul>
+							</li>
+							<?php if($status_page == 'publish'){ ?>
+								<li class="nav-cfxferramentas">
+									<a>CFX Ferramentas</a>
+									<ul class="submenu">
+										<?php if( have_rows('ico-cfx-ferramentas','option') ):
+											while ( have_rows('ico-cfx-ferramentas','option') ) : the_row(); 
+
+												$term = get_term( get_sub_field('categoria-cfx-ferramentas','option'), 'categoria_cfx_ferramentas' ); ?>
+
+												<li>
+													<a href="<?php echo get_term_link($term->term_id); ?>" title="<?php echo $term->name; ?>" class="<?php if(is_tax('categoria_produto',$term->slug)){ echo 'active'; } ?>" style="background-image: url('<?php the_sub_field('icone-cfx-ferramentas','option'); ?>');">
+														<?php echo $term->name; ?>
+													</a>
+												</li>
+
+											<?php endwhile;
+										endif; ?>
+									</ul>
+								</li>
+							<?php } ?>
 
 							<li class="nav-simuladores <?php if((is_page('simulador-cores')) or (is_page('calculadora-consumo'))){ echo 'active'; } ?>">
 								<a href="<?php echo get_permalink(get_page_by_path('simulador-cores')); ?>" title="<?php echo $menu_idioma[1]; ?>"><?php echo $menu_idioma[1]; ?></a>
@@ -452,12 +602,14 @@
 								</ul>
 							</li>
 							<li class="nav-midia <?php if((is_category('release')) or (is_category('na-midia')) or (is_page('downloads')) or (is_singular('post'))){ echo 'active'; } ?>">
-								<a href="javascript:" title="<?php echo $menu_idioma[11]; ?>"><?php echo $menu_idioma[11]; ?></a>
+								<a href="<?php echo get_permalink(get_page_by_path('downloads')); ?>" title="<?php echo $menu_idioma[11]; ?>"><?php echo $menu_idioma[11]; ?></a>
+								<?php /*
 								<ul class="submenu">
 									<li class="nav-midia-release"><a href="<?php echo get_home_url(); ?>/midia/release" title="<?php echo $menu_idioma[12]; ?>" class="<?php if(is_category('release')){ echo 'active'; } ?>"><?php echo $menu_idioma[12]; ?></a></li>		
 									<li class="nav-midia-namidia"><a href="<?php echo get_home_url(); ?>/midia/na-midia" title="<?php echo $menu_idioma[13]; ?>" class="<?php if(is_category('na-midia')){ echo 'active'; } ?>"><?php echo $menu_idioma[13]; ?></a></li>		
 									<li class="nav-midia-dowloads"><a href="<?php echo get_permalink(get_page_by_path('downloads')); ?>" title="<?php echo $menu_idioma[14]; ?>" class="<?php if(is_page('downloads')){ echo 'active'; } ?>"><?php echo $menu_idioma[14]; ?></a></li>				
 								</ul>
+								*/ ?>
 							</li>
 
 

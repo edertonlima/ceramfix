@@ -1,5 +1,17 @@
 <?php get_header(); ?>
 
+<style>
+.search .paginacao a, .search .paginacao span {
+    color: #e55a24;
+}
+.search .paginacao a i, .search .paginacao span i {
+    color: #e55a24;
+}
+.search .paginacao a.current, .search .paginacao a.current:hover, .search .paginacao span.current, .search .paginacao span.current:hover, .search .paginacao a:hover {
+    background-color: #e55a24;
+}
+</style>
+
 <?php 
 	$idioma_busca = [];
 	if($idioma == 'pt-br'){
@@ -23,15 +35,18 @@
 			Buscando por: <strong><?php echo get_search_query(); ?></strong>
 
 			<br>
-			<span class="count-busca">
+			<span class="count-busca" style="display: none;">
 				<?php
 					global $wp_query;
+
+					//$wp_query->found_posts;
+					//$wp_query->post_count;
 					
-					if($wp_query->found_posts > 0){
-						if($wp_query->found_posts == 1){
+					if($wp_query->post_count > 0){
+						if($wp_query->post_count == 1){
 							echo '1 item encontrado';
 						}else{
-							echo $wp_query->found_posts.' itens encontrados';
+							echo $wp_query->post_count.' itens encontrados';
 						}
 					}else{
 						echo 'Nenhum item encontrado';
@@ -47,7 +62,8 @@
 	<?php
 	// Start the loop.
 	while ( have_posts() ) : the_post();
-		//var_dump($post);
+		//var_dump($post->ID);
+		//the_title(); echo '<br>';
 
 		switch ( $post->post_type ) {
 			case 'lojas':
@@ -222,5 +238,7 @@
 	<?php } ?>
 
 </section>
+
+<?php paginacao(); ?>
 
 <?php get_footer(); ?>

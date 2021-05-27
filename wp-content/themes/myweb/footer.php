@@ -11,6 +11,10 @@
 					<?php endwhile;
 				endif; ?>
 
+				<div class="info">
+					<span class="info-tel"><?php the_field('telefone','option'); ?></span>
+				</div>				
+
 
 				<div class="outros-icones">
 					<?php if( have_rows('outros_icones','option') ):
@@ -56,13 +60,19 @@
 
 <script type="text/javascript">
 	jQuery('#btn-buscar').click(function(){
-		jQuery('#search').show();
-		jQuery('.text-search').val('').focus();
+		//jQuery('#search').show();
+		jQuery('.nav-pesquisa').toggle();
+		jQuery('#s').focus();
 	});
 
 	jQuery('#close-search').click(function(){
-		jQuery('#search').hide();
+		//jQuery('#search').hide();
+		jQuery('.nav-pesquisa').hide();
 	});
+
+	/*jQuery('.menu-principal li').hover(function(){
+		jQuery('.nav-pesquisa').hide();
+	});*/
 
 	jQuery(document).ready(function(){
 		jQuery('#searchform').submit(function(){

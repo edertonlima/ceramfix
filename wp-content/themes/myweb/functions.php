@@ -361,6 +361,155 @@
 	};
 
 
+
+		// cfx_ferramentas
+		add_action( 'init', 'create_post_type_cfx_ferramentas' );
+		function create_post_type_cfx_ferramentas() {
+	
+			$labels = array(
+				'name' => _x('CFX Ferramentas', 'post type general name'),
+				'singular_name' => _x('CFX Ferramentas', 'post type singular name'),
+				'add_new' => _x('Adicionar Nova', 'CFX Ferramentas'),
+				'add_new_item' => __('Add New CFX Ferramentas'),
+				'edit_item' => __('Edit CFX Ferramentas'),
+				'new_item' => __('New CFX Ferramentas'),
+				'all_items' => __('Todas as CFX Ferramentas'),
+				'view_item' => __('View CFX Ferramentas'),
+				'search_items' => __('Search CFX Ferramentas'),
+				'not_found' =>  __('No CFX Ferramentas found'),
+				'not_found_in_trash' => __('No CFX Ferramentas found in Trash'),
+				'parent_item_colon' => '',
+				'menu_name' => 'CFX Ferramentas'
+			);
+			$args = array(
+				'labels' => $labels,
+				'public' => true,
+				'publicly_queryable' => true,
+				'show_ui' => true,
+				'show_in_menu' => true,
+				'rewrite' => true,
+				'capability_type' => 'post',
+				'has_archive' => true,
+				'hierarchical' => false,
+				'menu_position' => null,
+				'menu_icon' => 'dashicons-tag',
+				'supports' => array('title','thumbnail')
+			  );
+	
+			register_post_type( 'cfx-ferramentas', $args );
+		}
+	
+		add_action( 'init', 'create_taxonomy_categoria_cfx_ferramentas' );
+		function create_taxonomy_categoria_cfx_ferramentas() {
+	
+			$labels = array(
+				'name' => _x( 'Categorias de CFX Ferramentas', 'taxonomy general name' ),
+				'singular_name' => _x( 'Categorias', 'taxonomy singular name' ),
+				'search_items' =>  __( 'Search Categorias' ),
+				'all_items' => __( 'All Categories' ),
+				'parent_item' => __( 'Parent Categorias' ),
+				'parent_item_colon' => __( 'Parent Categorias:' ),
+				'edit_item' => __( 'Edit Categorias' ),
+				'update_item' => __( 'Update Categorias' ),
+				'add_new_item' => __( 'Add New Categorias' ),
+				'new_item_name' => __( 'New Categorias Name' ),
+				'menu_name' => __( 'Categorias' ),
+			);
+	
+			register_taxonomy( 'categoria_cfx_ferramentas', array( 'cfx-ferramentas' ), array(
+				'hierarchical' => true,
+				'labels' => $labels,
+				'show_ui' => true,
+				'show_in_tag_cloud' => true,
+				'query_var' => true,
+				'has_archive' => 'cfx-ferramentas',
+				'rewrite' => array(
+					'slug' => 'cfx-ferramentas',
+					'with_front' => false,
+					),
+				)
+			);
+		}
+
+
+
+		// solucoes-ardex
+		add_action( 'init', 'create_post_type_ardex' );
+		function create_post_type_ardex() {
+	
+			$labels = array(
+				'name' => _x('Soluções Ardex', 'post type general name'),
+				'singular_name' => _x('Soluções Ardex', 'post type singular name'),
+				'add_new' => _x('Adicionar Nova', 'Soluções Ardex'),
+				'add_new_item' => __('Add New Soluções Ardex'),
+				'edit_item' => __('Edit Soluções Ardex'),
+				'new_item' => __('New Soluções Ardex'),
+				'all_items' => __('Todas as Soluções Ardex'),
+				'view_item' => __('View Soluções Ardex'),
+				'search_items' => __('Search Soluções Ardex'),
+				'not_found' =>  __('No Soluções Ardex found'),
+				'not_found_in_trash' => __('No Soluções Ardex found in Trash'),
+				'parent_item_colon' => '',
+				'menu_name' => 'Soluções Ardex'
+			);
+			$args = array(
+				'labels' => $labels,
+				'public' => true,
+				'publicly_queryable' => true,
+				'show_ui' => true,
+				'show_in_menu' => true,
+				'rewrite' => true,
+				'capability_type' => 'post',
+				'has_archive' => true,
+				'hierarchical' => false,
+				'menu_position' => null,
+				'menu_icon' => 'dashicons-tag',
+				'supports' => array('title','thumbnail')
+			  );
+	
+			register_post_type( 'solucoes-ardex', $args );
+		}
+	
+		add_action( 'init', 'create_taxonomy_categoria_solucoes_ardex' );
+		function create_taxonomy_categoria_solucoes_ardex() {
+	
+			$labels = array(
+				'name' => _x( 'Categorias de Soluções Ardex', 'taxonomy general name' ),
+				'singular_name' => _x( 'Categorias', 'taxonomy singular name' ),
+				'search_items' =>  __( 'Search Categorias' ),
+				'all_items' => __( 'All Categories' ),
+				'parent_item' => __( 'Parent Categorias' ),
+				'parent_item_colon' => __( 'Parent Categorias:' ),
+				'edit_item' => __( 'Edit Categorias' ),
+				'update_item' => __( 'Update Categorias' ),
+				'add_new_item' => __( 'Add New Categorias' ),
+				'new_item_name' => __( 'New Categorias Name' ),
+				'menu_name' => __( 'Categorias' ),
+			);
+	
+			register_taxonomy( 'categoria_solucoes_ardex', array( 'solucoes-ardex' ), array(
+				'hierarchical' => true,
+				'labels' => $labels,
+				'show_ui' => true,
+				'show_in_tag_cloud' => true,
+				'query_var' => true,
+				'has_archive' => 'solucoes-ardex',
+				'rewrite' => array(
+					'slug' => 'solucoes-ardex',
+					'with_front' => false,
+					),
+				)
+			);
+		}
+	
+		/*add_action( 'init', 'gp_register_taxonomy_for_object_type_cfx_ferramentas' );
+		function gp_register_taxonomy_for_object_type_cfx_ferramentas() {
+			register_taxonomy_for_object_type( 'post_tag', 'cfx_ferramentas' );
+		};*/
+
+
+
+
 	// matriz e filiais
 	add_action('init', 'type_post_matriz_filiais');
 	function type_post_matriz_filiais() {
@@ -775,6 +924,18 @@ if( function_exists('acf_add_options_page') ) {
 		'parent_slug'	=> 'downloads',
 	));
 
+	acf_add_options_sub_page(array(
+		'page_title' 	=> 'Manuais Técnicos',
+		'menu_title'	=> 'Manuais Técnicos',
+		'parent_slug'	=> 'downloads',
+	));
+
+	acf_add_options_sub_page(array(
+		'page_title' 	=> 'Manuais CFX Ferramentas',
+		'menu_title'	=> 'Manuais CFX Ferramentas',
+		'parent_slug'	=> 'downloads',
+	));
+
 	acf_add_options_page(array(
 		'page_title' 	=> 'Formulários',
 		'menu_title'	=> 'Formulários',
@@ -816,6 +977,20 @@ if( function_exists('acf_add_options_page') ) {
 		'page_title' 	=> 'Imagem Soluções',
 		'menu_title'	=> 'Imagem Soluções',
 		'menu_slug' 	=> 'imagem-solucoes',
+		'parent_slug'	=> 'configuracoes-geral',
+	));	
+
+	acf_add_options_sub_page(array(
+		'page_title' 	=> 'Imagem CFX Ferramentas',
+		'menu_title'	=> 'Imagem CFX Ferramentas',
+		'menu_slug' 	=> 'imagem-cfx-ferramentas',
+		'parent_slug'	=> 'configuracoes-geral',
+	));	
+
+	acf_add_options_sub_page(array(
+		'page_title' 	=> 'Imagem Soluções Ardex',
+		'menu_title'	=> 'Imagem Soluções Ardex',
+		'menu_slug' 	=> 'imagem-solucoes-ardex',
 		'parent_slug'	=> 'configuracoes-geral',
 	));	
 

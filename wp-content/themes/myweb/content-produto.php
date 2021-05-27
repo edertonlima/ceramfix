@@ -16,15 +16,15 @@
 
 	$idioma_single_produto = [];
 	if($idioma == 'pt-br'){
-		$idioma_single_produto = ['Indicação de uso','Aplicação','FICHA TÉCNICA','SIMULADOR DE CORES','CALCULADORA DE CONSUMO','ENCONTRAR LOJAS PERTO DE MIM','Veja outros produtos','Cores Disponíveis:'];
+		$idioma_single_produto = ['Indicação de uso','Aplicação','FICHA TÉCNICA','SIMULADOR DE CORES','CALCULADORA DE CONSUMO','ENCONTRAR LOJAS PERTO DE MIM','Veja outros produtos','Cores Disponíveis:','Cor Referencial','FICHA FISPQ'];
 	}
 
 	if($idioma == 'en'){
-		$idioma_single_produto = ['Indication of use', 'Application', 'TECHNICAL SHEET', 'COLOR SIMULATOR', 'CONSUMER CALCULATOR', 'FIND SHOPS NEAR ME', 'See other products','Available Colors:']; 
+		$idioma_single_produto = ['Indication of use', 'Application', 'TECHNICAL SHEET', 'COLOR SIMULATOR', 'CONSUMER CALCULATOR', 'FIND SHOPS NEAR ME', 'See other products','Available Colors:','Reference Color','FISPQ SHEET']; 
 	}
 
 	if($idioma == 'es'){
-		$idioma_single_produto = ['Indicación de uso', 'Aplicación', 'FICHA TÉCNICA', 'SIMULADOR DE COLORES', 'CALCULADORA DE CONSUMO', 'ENCONTRAR TIENDAS CERCA DE MÍ', 'Vea otros productos','Colores Disponibles:'];
+		$idioma_single_produto = ['Indicación de uso', 'Aplicación', 'FICHA TÉCNICA', 'SIMULADOR DE COLORES', 'CALCULADORA DE CONSUMO', 'ENCONTRAR TIENDAS CERCA DE MÍ', 'Vea otros productos','Colores Disponibles:','Color de referencia','FICHA FISPQ'];
 	}
 ?>
 
@@ -71,14 +71,136 @@
 		display: block;
 	}
 
-	.produtos .cores-produto li:hover .nome-cor {
-		/*display: block;*/
+	.view-cores {
+		text-decoration: none;
+		color: #0077c8;
+		display: inline-block;
+		height: 45px;
+		line-height: 45px;
+		border: 1px solid #0077c8;
+		background-color: transparent;
+		color: #0077c8;
+		font-weight: 300;
+		font-size: 1rem;
+		text-align: center;
+		-moz-transition: all .2s ease 0s;
+		-webkit-transition: all .2s ease 0s;
+		-o-transition: all .2s ease 0s;
+		padding: 0 15px;
+		border-radius: 5px;
+	}
+
+	.view-cores:hover {
+		background-color: #0077c8;
+		color: #ffffff;
+		text-decoration: none;
+	}
+	.view-cores:focus {
+		text-decoration: none;
+	}
+
+	.view-cores i {
+		color: #0077c8;
+		font-size: .8rem;
+		opacity: .75;
+		margin-left: 5px;
+		-moz-transition: all .2s ease 0s;
+		-webkit-transition: all .2s ease 0s;
+		-o-transition: all .2s ease 0s;
+	}
+
+	.view-cores:hover i {
+		color: #ffffff;
+	}
+
+	#view-cores {
+		display: none;
+		width: 80%;
+		max-width: 770px;
+		padding: 50px 40px 50px 50px;
+		box-sizing: content-box;
+		margin: 0;
+	}
+
+	#view-cores li {
+		float: left;
+		margin-right: 10px;
+	}
+
+	#view-cores span {
+		display: block;
+		width: 100px;
+
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+	}
+
+	#view-cores .cor {
+		border: 1px solid #e6e7e8;
+		height: 100px;
+	}
+
+	#view-cores .nome {
+		font-size: .756rem; 
+		font-weight: 300;
+		padding: 5px;
+		height: 36px;
+		overflow: hidden;
+		margin-bottom: 10px;
+		line-height: .85rem;
+	}
+
+	#view-cores h2 {
+		font-size: 1.75rem;
+		margin-bottom: 40px;
+		color: #0077c8;
+		font-weight: 300;
+		text-align: center;
+		text-transform: uppercase;
+	}
+
+	.fancybox-slide::before {
+		height: auto;
+	}
+
+	@media (max-width: 1000px) {
+		#view-cores {
+			max-width: 550px;
+		}
+	}
+
+	@media (max-width: 700px) {
+		#view-cores {
+			max-width: 330px;
+		}
+	}
+
+	@media (max-width: 450px) {
+		#view-cores {
+			padding: 5% 3% 5% 5%;
+		}
+
+		#view-cores li {
+			width: 48%;
+			margin-right: 2%;
+		}
+
+		#view-cores li span {
+			width: 100%;
+		}
 	}
 </style>
 		
 		<?php if( have_rows('cores') ): ?>
 			<div class="cores-produto">
-				<h2><?php echo $idioma_single_produto[7]; ?></h2>
+				<a data-fancybox="" href="#view-cores" class="view-cores" title="<?php echo $idioma_single_produto[8]; ?>">
+					<?php echo $idioma_single_produto[8]; ?>
+					<i class="fa fa-chevron-right"></i>
+				</a>
+				<!--<button class="view-cores"> </button>
+				<h2><?php echo $idioma_single_produto[7]; ?></h2>-->
+				<?php /*
 				<ul>
 													    
 				    <?php while ( have_rows('cores') ) : the_row(); ?>
@@ -88,14 +210,16 @@
 					<?php endwhile; ?>
 
 				</ul>
+				*/ ?>
 			</div>
 		<?php endif; ?>
-
+		
+		<?php if( have_rows('indicação_produto') ): ?>
 		<div class="indicacao">
 			<h2><?php echo $idioma_single_produto[0]; ?></h2>
 			<ul>
 
-				<?php if( have_rows('indicação_produto') ):
+				<?php 
 					while ( have_rows('indicação_produto') ) : the_row(); //echo get_sub_field('icone_indicacao'); ?>
 
 						<li>
@@ -104,10 +228,11 @@
 						</li>
 
 					<?php endwhile;
-				endif; ?>
+				?>
 
 			</ul>
 		</div>
+		<?php endif; ?>
 	</div>
 
 	<div class="link-prod<?php if((!get_field('ficha_tecnica')) and (!get_field('simulacao_cores')) and (!get_field('cr'))){ echo ' no-button'; } if(!((get_field('video_youtube_aplicacao')) or (get_field('imagem_aplicacao')))){ echo ' no-aplicacao'; } ?>">
@@ -128,6 +253,10 @@
 		<div class="col-link">
 			<?php if(get_field('ficha_tecnica')){ ?>
 				<a href="<?php the_field('ficha_tecnica'); ?>" target="_blank" title="<?php echo $idioma_single_produto[2]; ?>" class="ficha-tecnica"><span class="box-link"><span><span><?php echo $idioma_single_produto[2]; ?></span></span></span></a>
+			<?php } ?>
+
+			<?php if(get_field('ficha_fispq')){ ?>
+				<a href="<?php the_field('ficha_fispq'); ?>" target="_blank" title="<?php echo $idioma_single_produto[9]; ?>" class="ficha-tecnica"><span class="box-link"><span><span><?php echo $idioma_single_produto[9]; ?></span></span></span></a>
 			<?php } ?>
 
 			<?php /*if(get_field('simulacao_cores')){ ?>
@@ -214,6 +343,36 @@
 	</section>
 
 <?php endif; ?>
+
+
+<?php if( have_rows('cores') ): ?>
+<div class="produto" id="view-cores">
+	<div class="detalhe-produto">
+
+
+			<div class="cores-produto">
+				<h2 class="tit-det-produto" style="text-align: left;"><?php echo $idioma_single_produto[7]; ?></h2>
+				
+				<ul>
+													    
+				    <?php while ( have_rows('cores') ) : the_row(); ?>
+
+				    	<li>
+				    		<span class="cor" style="background-color: <?php the_sub_field('hexa'); ?>"></span>
+				    		<span class="nome"><?php the_sub_field('nome'); ?></span>
+				    	</li>
+
+					<?php endwhile; ?>
+
+				</ul>
+				
+			</div>
+
+
+	</div>	
+</div>
+<?php endif; ?>
+
 
 
 <script type="text/javascript">
@@ -342,9 +501,21 @@
 	})
 </script>
 
-<script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/assets/js/fancybox/fancybox.js"></script>
+<!--<script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/assets/js/fancybox/fancybox.js"></script>-->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
 <script type="text/javascript">
 	jQuery(document).ready(function() {		
 		jQuery('.fancybox').fancybox();	
 	});
+</script>
+
+
+<script type="text/javascript">
+	/*jQuery('.view-cores').click(function(){
+		jQuery('#view-cores').show();
+	});
+
+	jQuery('#close-view-cores').click(function(){
+		jQuery('#view-cores').hide();
+	});*/
 </script>
