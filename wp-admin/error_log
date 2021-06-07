@@ -1,1 +1,0 @@
-[24-Jul-2019 12:39:02 UTC] Erro de banco de dados do WordPress Query execution was interrupted para a consulta SHOW FULL COLUMNS FROM `wp_options` feita por require_once('wp-load.php'), require_once('wp-config.php'), require_once('wp-settings.php'), do_action('wp_loaded'), WP_Hook->do_action, WP_Hook->apply_filters, call_user_func_array, WP_Rewrite->flush_rules, update_option
