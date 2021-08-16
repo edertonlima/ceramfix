@@ -124,6 +124,10 @@
 	<link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/assets/css/owl.theme.default.css" type="text/css" media="screen" />
 <?php } ?>
 
+<?php if(is_page('argamassas')){ ?>
+	<link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/assets/css/page-argamassas.css" type="text/css" media="screen" />
+<?php } ?>
+
 <!-- JQUERY -->
 <script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/assets/js/jquery.min.js"></script>
 <script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/assets/js/bootstrap.min.js"></script>

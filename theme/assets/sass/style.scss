@@ -438,3 +438,24 @@
 		font-weight: 300;
 	}
 }
+
+
+// politicas de privacidade
+.wt-cli-ckyes-footer-section {
+    display: none!important;
+}
+.cli-tab-footer .wt-cli-privacy-accept-btn {
+	background-color: #e55a24!important;
+}
+.cli-style-v2 .cli-bar-message {
+	font-size: .75rem;
+
+	a {
+		color: #e55a24;
+		text-decoration: underline;
+
+		&:hover {
+			text-decoration: none;
+		}
+	}
+}

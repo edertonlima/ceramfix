@@ -1,0 +1,146 @@
+
+@mixin gradiente($angulo,$c1,$c2) {
+	$angulo: $angulo+deg;
+	background: $c1;
+	background: -webkit-linear-gradient($angulo,$c1,$c2);
+	background: -o-linear-gradient($angulo,$c1,$c2);
+	background: -moz-linear-gradient($angulo,$c1,$c2);
+	background: linear-gradient($angulo,$c1,$c2);
+}
+
+@mixin gradiente3($angulo,$c1,$c2,$c3) {
+	$angulo: $angulo+deg;
+	background: $c1;
+	background: -webkit-linear-gradient($angulo,$c1,$c2,$c3);
+	background: -o-linear-gradient($angulo,$c1,$c2,$c3);
+	background: -moz-linear-gradient($angulo,$c1,$c2,$c3);
+	background: linear-gradient($angulo,$c1,$c2,$c3);
+}
+
+@mixin gradiente4($angulo,$c1,$c2,$c3,$c4) {
+	$angulo: $angulo+deg;
+	background: $c1;
+	background: -webkit-linear-gradient($angulo,$c1,$c2,$c3,$c4);
+	background: -o-linear-gradient($angulo,$c1,$c2,$c3,$c4);
+	background: -moz-linear-gradient($angulo,$c1,$c2,$c3,$c4);
+	background: linear-gradient($angulo,$c1,$c2,$c3,$c4);
+}
+
+@mixin background-size($value) {
+	-webkit-background-size: $value;
+	-moz-background-size: $value;
+	-o-background-size: $value;
+	background-size: $value;
+}
+
+@mixin rotacao($value) {
+	@if $value == '' {
+		$value: -45deg;
+	}@else{
+		$value: $value+deg;
+	}
+	-webkit-transform: rotate($value);
+	-moz-transform: rotate($value);
+	-o-transform: rotate($value);
+	-ms-transform: rotate($value);
+	transform: rotate($value);
+}
+
+@mixin scale() {
+	$value: 1.05;
+	-webkit-transform: scale($value);
+	-moz-transform: scale($value);
+	-o-transform: scale($value);
+	-ms-transform: scale($value);
+	transform: scale($value);
+}
+
+@mixin scale-rotate() {
+	$scale: 1.1;
+	$rotate: -3deg;
+	-webkit-transform: scale($scale) rotate($rotate);
+	-moz-transform: scale($scale) rotate($rotate);
+	-o-transform: scale($scale) rotate($rotate);
+	-ms-transform: scale($scale) rotate($rotate);
+	transform: scale($scale) rotate($rotate);
+}
+
+@mixin box-sizing() {
+	$value: border-box;
+	-webkit-box-sizing: $value;
+	-moz-box-sizing: $value;
+	box-sizing: $value;
+}
+
+@mixin animacao() {
+	$value1: 0.3;
+	$value2: 0;
+	$valueIni: $value1+s;
+	$valueEnd: $value2+s;
+	-moz-transition: all $valueIni ease $valueEnd;
+	-webkit-transition: all $valueIni ease $valueEnd;
+	-o-transition: all $valueIni ease $valueEnd;
+}
+
+@mixin animacao-slow() {
+	/*$value1: 0.4;
+	$value2: 0;
+	$valueIni: $value1+s;
+	$valueEnd: $value2+s;
+	-moz-transition: all $valueIni ease $valueEnd;
+	-webkit-transition: all $valueIni ease $valueEnd;
+	-o-transition: all $valueIni ease $valueEnd;*/
+
+	transition: all 1s;
+}
+
+@mixin animacao-off() {
+	-moz-transition: none;
+	-webkit-transition: none;   
+	-o-transition: none;
+}
+
+@mixin clear() {
+	clear: both;
+
+    &:before, &:after {
+        display: table;
+        content: ''; 
+    }
+
+    &:after {
+        clear: both;
+    }
+}
+
+@mixin media($value: $mobile-init) {
+	@media all and(max-width: #{$value}px) {
+		@content
+	}
+}
+
+@mixin media-min-max($min,$max) {
+	@media all and (min-width: #{$min}px) and (max-width: #{$max}px) {
+		@content
+	}
+}
+
+@mixin placeholder {
+	&::-webkit-input-placeholder {@content}
+	&:-moz-placeholder           {@content}
+	&::-moz-placeholder          {@content}
+	&:-ms-input-placeholder      {@content}
+}
+
+@mixin grayscale($value) {
+    -webkit-filter: #{"grayscale(#{$value})"};
+    -moz-filter: #{"grayscale(#{$value})"};
+    filter:#{"grayscale(#{$value})"};
+}
+
+
+@mixin m420 {
+	@media all and (max-width: 420px){
+		@content
+	}
+}
