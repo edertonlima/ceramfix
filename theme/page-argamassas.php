@@ -51,46 +51,18 @@
 
                     <?php
                         foreach($argamassas as $row => $argamassa){
-                            $cont_argamassa = $argamassa['conteudo-argamassa'];
-                            //$argamassa = $r_argamassa[0];
-                            //var_dump($cont_argamassa); echo '<br><br>'; ?>
+                            $cont_argamassa = $argamassa['conteudo-argamassa']; ?>
 
-                            <ol>
-                                <li>
-                                    <h4><?php echo $argamassa['titulo-principal']; ?></h4>
-                                    <ul>
-                                        <?php foreach($cont_argamassa as $row_cont => $cont_argamassa_item){ ?>
-                                            <li><a href="#argamassa-<?php echo $row . '.' . $row_cont; ?>"><?php echo $cont_argamassa_item['titulo-conteudo']; ?></a></li>
-                                        <?php } ?>
-                                    </ul>
-                                </li>                        
-                            </ol>
+                            <h4><?php echo $argamassa['titulo-principal']; ?></h4>
+                            <ul>
+                                <?php foreach($cont_argamassa as $row_cont => $cont_argamassa_item){ ?>
+                                    <li><a href="#argamassa-<?php echo $row . '.' . $row_cont; ?>"><?php echo $cont_argamassa_item['titulo-conteudo']; ?></a></li>
+                                <?php } ?>
+                            </ul>
 
                         <?php }
                     ?>
-                    <?php /*<h4>I. ARGAMASSAS</h4>
-                    <ul>
-                        <li><a href="#">O que são Argamassas</a></li>
-                        <li><a href="#">O que são Argamassas piso sobre piso</a></li>
-                    </ul>
 
-                    <h4>II. ARGAMASSAS COLANTE</h4>
-                    <ul>
-                        <li><a href="#">O que são Argamassas</li>
-                        <li><a href="#">O que são Argamassas piso sobre piso</a></li>
-                    </ul>
-
-                    <h4>III. CHAPISCO ROLADO E COLANTE CERAMFIX</h4>
-                    <ul>
-                        <li><a href="#">O que são Argamassas</a></li>
-                        <li><a href="#">O que são Argamassas piso sobre piso</a></li>
-                    </ul>
-
-                    <h4>IV. O QUE É REJUNTE</h4>
-                    <ul>
-                        <li><a href="#">O que são Argamassas</a></li>
-                        <li><a href="#">O que são Argamassas piso sobre piso</a></li>
-                    </ul> */?>
                 </nav>
             </div>
         </section>
@@ -113,6 +85,101 @@
             </div>
         </section>
 
+        <?php
+            if (have_rows('itens-argamassa')):
+                while ( have_rows('itens-argamassa') ) : the_row();
+
+            //foreach($argamassas as $row => $argamassa){
+                //$cont_argamassa = $argamassa['conteudo-argamassa'];
+                //$argamassa = $r_argamassa[0];
+                //var_dump($cont_argamassa); echo '<br><br>'; ?>
+
+                    <section class="box-home slide-simuladores slide-secundario">
+                        <div class="slide sub-item">
+                            <div class="carousel slide sub-item" data-ride="carousel" data-interval="10000" id="simuladores">
+                                <div class="carousel-inner" role="listbox">
+                                    <div class="item active" style="background-image: url('<?php the_sub_field('imagem-principal'); ?>');">
+                                        <div class="tit-box-destaque left">
+                                            <h2><?php the_sub_field('titulo-principal'); ?></h2>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <?php 
+                        if (have_rows('conteudo-argamassa')):
+                            while ( have_rows('conteudo-argamassa') ) : the_row(); ?>
+
+                                <section class="box-container cont-flex-argamassa cont-interno-argamassa">
+                                    <div class="container">
+                                        <h4><?php the_sub_field('titulo-conteudo'); ?></h4>
+                                    </div>
+
+                                    <?php    
+                                        if( have_rows('flex-argamassa') ):
+                                            while ( have_rows('flex-argamassa') ) : the_row();
+
+                                                if( get_row_layout() == 'texto-flex-argamassa' ):
+                                                    echo '<div class="container">';
+                                                        the_sub_field('texto-texto-flex-argamassa');
+                                                    echo '</div>';
+
+                                                elseif( get_row_layout() == 'imagem-flex-argamassa' ):
+                                                    echo '<div class="container">';
+                                                        echo '<img src="' . get_sub_field('img-imagem-flex-argamassa') . '" alt="">';
+                                                    echo '</div>';
+
+                                                elseif( get_row_layout() == 'produto-flex-argamassa' ): ?>
+            <div class="produtos">
+                <div class="container">
+                    <ul class="list-produto">
+
+                        <?php
+                            $query = array(
+                                    'posts_per_page' => 4,
+                                    'post_type' 	 => 'produto'
+                                );
+                            query_posts( $query ); 
+
+                            while ( have_posts() ) : the_post();
+                                get_template_part( 'content-produto_list', get_post_format() );
+                            endwhile;
+                            wp_reset_query();
+                        ?>
+
+                    </ul>
+                </dv>
+            </div>
+                                                <?php endif;
+                                            endwhile;
+                                        endif;
+                                    ?>
+
+
+                                    <div class="container">
+                                        
+                                    </div>
+                                </section>
+
+                            <?php endwhile;
+                        endif;
+                    ?>  
+
+                <?php //foreach($cont_argamassa as $row_cont => $cont_argamassa_item){ ?>
+
+
+
+                <?php endwhile;
+            endif;
+        ?>        
+
+
+
+
+
+<?php /*
         <section class="box-home slide-simuladores">
             <div class="slide sub-item">
                 <div class="carousel slide sub-item" data-ride="carousel" data-interval="10000" id="simuladores">
