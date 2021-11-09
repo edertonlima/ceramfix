@@ -558,6 +558,26 @@
 					}
 				}
 
+				&.nav-cfxferramentas {
+					&.active, &:hover {
+						a {
+							border-color: #e55a24;
+						}
+					}
+
+					ul {
+						background-color: #e55a24;
+
+						li {
+							a {
+								&.active, &:hover {
+									background-color: #d64e19;
+								}
+							}
+						}
+					}
+				}
+
 				&.nav-simuladores {
 					&.active, &:hover {
 						a {
