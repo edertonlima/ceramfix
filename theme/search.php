@@ -78,6 +78,14 @@
 			$search_produto[] = $post;
 			break;
 
+			case 'cfx-ferramentas':
+				$search_ferramentas[] = $post;
+				break;
+
+			case 'solucoes-ardex':
+				$search_ardex[] = $post;
+				break;
+
 			case 'page':
 			$search_page[] = $post;
 			break;
@@ -145,6 +153,44 @@
 
 					<ul class="list-produto">
 						<?php foreach ($search_produto as $key => $post) {
+							get_template_part( 'content-produto_list', get_post_format() );
+						} ?>
+					</ul>
+
+				</div>
+			</section>
+		</div>
+	<?php } ?>
+
+	
+	<?php if(count($search_ferramentas)){ ?>
+		<div class="page item-busca">
+			<section class="produtos">
+				<div class="container">
+
+					<h2>CFX FERRAMENTAS</h2>
+
+					<ul class="list-produto">
+						<?php foreach ($search_ferramentas as $key => $post) {
+							get_template_part( 'content-produto_list', get_post_format() );
+						} ?>
+					</ul>
+
+				</div>
+			</section>
+		</div>
+	<?php } ?>
+
+
+	<?php if(count($search_ardex)){ ?>
+		<div class="page item-busca">
+			<section class="produtos">
+				<div class="container">
+
+					<h2>SOLUÇÕES ARDEX</h2>
+
+					<ul class="list-produto">
+						<?php foreach ($search_ardex as $key => $post) {
 							get_template_part( 'content-produto_list', get_post_format() );
 						} ?>
 					</ul>
