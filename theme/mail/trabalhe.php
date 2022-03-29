@@ -5,6 +5,12 @@
 		include 'anexo.php';
 
 		$anexo = anexo( $_POST['nome'],$_FILES['anexo'] );
+		/*if($anexo['error']){
+			$msg_error = $anexo['error'];
+			$header_url = "Location: http://www.ceramfix.com.br/?page_id=152&form=error&msg={$msg_error}"
+			header($header_url);
+			exit;
+		}*/
 			
 		$mail = new PHPMailer();
 		$mail->IsSMTP();

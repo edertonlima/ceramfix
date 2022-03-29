@@ -168,6 +168,11 @@ Li e concordo com a <a style="color: #319b42" href="https://www.ceramfix.com.br/
 
 		if(anexo == ''){
 			jQuery('#arquivo').parent().addClass('erro');
+		}else{
+			if((anexo.split('.').pop()) != 'pdf'){
+				jQuery('#arquivo').parent().addClass('erro');
+				jQuery('.msg-form').html('Somente arquivos do tipo PDF são aceitos');
+			}
 		}
 
 		if(mensagem == ''){
@@ -215,50 +220,6 @@ Li e concordo com a <a style="color: #319b42" href="https://www.ceramfix.com.br/
 		});
 	})
 </script>
-
-<?php /*
-<script type="text/javascript">
-	jQuery(".enviar").click(function(){
-		jQuery('.enviar').html('ENVIANDO').prop( "disabled", true );
-		jQuery('.msg-form').removeClass('erro ok').html('');
-		var nome = jQuery('#nome').val();
-		var email = jQuery('#email').val();
-		var tel_princ = jQuery('#tel_princ').val();
-		var tel_sec = jQuery('#tel_sec').val();
-		var endereco = jQuery('#endereco').val();
-		var estado = jQuery('#estado').val();
-		var cidade = jQuery('#cidade').val();
-		var mensagem = jQuery('#mensagem').val();
-		var para = '<?php the_field('email', 'option'); ?>';
-		var nome_site = '<?php bloginfo('name'); ?>';
-
-	    var form;
-	    $('#curriculo').change(function (event) {
-	        form = new FormData();
-	        form.append('curriculo', event.target.files[0]); // para apenas 1 arquivo
-	        //var name = event.target.files[0].content.name; // para capturar o nome do arquivo com sua extenção
-	    });
-
-		if(email!=''){
-			jQuery.getJSON("<?php echo get_template_directory_uri(); ?>/mail_trabalhe.php", { nome:nome, email:email, tel_princ:tel_princ, tel_sec:tel_sec, endereco:endereco, estado:estado, cidade:cidade, mensagem:mensagem, para:para, nome_site:nome_site, form:form }, function(result){		
-				if(result=='ok'){
-					resultado = 'Enviado com sucesso! Obrigado.';
-					classe = 'ok';
-				}else{
-					resultado = result;
-					classe = 'erro';
-				}
-				jQuery('.msg-form').addClass(classe).html(resultado);
-				jQuery('.news form').trigger("reset");
-				jQuery('.enviar').html('CADASTRAR').prop( "disabled", false );
-			});
-		}else{
-			jQuery('.msg-form').addClass('erro').html('Por favor, digite um e-mail válido.');
-			jQuery('.enviar').html('CADASTRAR').prop( "disabled", false );
-		}
-	});
-</script>
-*/ ?>
 
 <script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/assets/js/maskedinput.js"></script>
 <script type="text/javascript">

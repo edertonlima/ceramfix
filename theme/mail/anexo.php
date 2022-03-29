@@ -9,6 +9,7 @@
 		$_UP['erros'][2] = 'O arquivo ultrapassa o limite de tamanho especifiado no HTML';
 		$_UP['erros'][3] = 'O upload do arquivo foi feito parcialmente';
 		$_UP['erros'][4] = 'Não foi feito o upload do arquivo';
+		//$_UP['erros'][5] = 'Somente arquivos do tipo PDF são aceitos';
 	
 		if ($file['error'] != 0) {
 			$anexo['error'] = $_UP['erros'][$file['error']];
@@ -17,11 +18,13 @@
 		
 		$extensao = strtolower(end(explode('.', $file['name'])));
 		$name_file = strtolower(explode('.', $file['name'])[0]);
+		
 		/*
 		if (array_search($extensao, $_UP['extensoes']) === false) {
-		echo "Por favor, envie apenas arquivo em PDF";
-		header("Location: http://200.41.114.26/?page_id=23&form=error-extensao");
-		exit;
+			$anexo['error'] = $_UP['erros'][5];
+			//echo "Por favor, envie apenas arquivo em PDF";
+			//header("Location: http://200.41.114.26/?page_id=23&form=error-extensao");
+			exit;
 		}
 		*/
 	
