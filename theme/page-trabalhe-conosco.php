@@ -172,6 +172,7 @@ Li e concordo com a <a style="color: #319b42" href="https://www.ceramfix.com.br/
 			if((anexo.split('.').pop()) != 'pdf'){
 				jQuery('#arquivo').parent().addClass('erro');
 				jQuery('.msg-form').html('<?php echo $idioma_fale[10]; ?>');
+				return false;
 			}
 		}
 
