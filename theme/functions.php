@@ -90,6 +90,7 @@
 
 	/* SIMULADORES DE CORES */
 		// SALA
+        /*
 		add_action( 'init', 'create_sala' );
 		function create_sala() {
 
@@ -125,9 +126,11 @@
 
 		    register_post_type( 'sala', $args );
 		}	
+        */
 
 
 		// COZINHA
+        /*
 		add_action( 'init', 'create_cozinha' );
 		function create_cozinha() {
 
@@ -163,11 +166,13 @@
 
 		    register_post_type( 'cozinha', $args );
 		}
+        */
 
 
 
 
 		// BANHEIRO
+        /*
 		add_action( 'init', 'create_banheiro' );
 		function create_banheiro() {
 
@@ -203,11 +208,13 @@
 
 		    register_post_type( 'banheiro', $args );
 		}
+        */
 
 
 
 
 		// PISCINA
+        /*
 		add_action( 'init', 'create_piscina' );
 		function create_piscina() {
 
@@ -243,10 +250,12 @@
 
 		    register_post_type( 'piscina', $args );
 		}
+        */
 
 
 
 		// FACHADA
+        /*
 		add_action( 'init', 'create_fachada' );
 		function create_fachada() {
 
@@ -282,6 +291,7 @@
 
 		    register_post_type( 'fachada', $args );
 		}
+        */
 
 	/* FIM - SIMULADORES DE CORES */
 
@@ -819,6 +829,10 @@ if($producao){
 				jQuery("#toplevel_page_wpglobus_options").remove();
 				jQuery("#commentstatusdiv").remove();
 				jQuery("#commentsdiv").remove();
+                jQuery("#toplevel_page_wp-mail-smtp").remove(); // WP mail SMTP
+                jQuery("#toplevel_page_wp_file_manager").remove(); // WP File
+                jQuery("#toplevel_page_sitepress-multilingual-cms-menu-languages").remove(); // WPML
+                jQuery("#menu-posts-cookielawinfo").remove(); // LGPD
 
 				jQuery("#toplevel_page_delete_all_posts").detach().insertBefore("#toplevel_page_pmxi-admin-home");
 				jQuery("#toplevel_page_delete_all_posts .wp-menu-name").html("Apagar Lojas");
@@ -846,7 +860,8 @@ function gera_url_encurtada($url){
 
 if( function_exists('acf_add_options_page') ) {
 
-	acf_add_options_page(array(
+	/*
+    acf_add_options_page(array(
 		'page_title' 	=> 'Slide Home',
 		'menu_title'	=> 'Slide Home',
 		'menu_slug' 	=> 'slide-home',
@@ -854,6 +869,7 @@ if( function_exists('acf_add_options_page') ) {
 		'redirect'		=> false,
 		'icon_url' 		=> 'dashicons-admin-collapse'
 	));
+    */
 
 	acf_add_options_page(array(
 		'page_title' 	=> 'Simuladores',

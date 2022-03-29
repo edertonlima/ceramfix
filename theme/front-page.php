@@ -1,17 +1,29 @@
 <?php get_header(); ?>
 
+<style>
+	.slide-home .item {
+    	
+    }
+    .slide-home .item picture, .slide-home .item img {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+        object-position: center;
+    }
+</style>
+
 <?php 
 	$idioma_front_page = [];
 	if($idioma == 'pt-br'){
-		$idioma_front_page = ['PRÊMIOS','CENTRAL DE RELACIONAMENTO CERAMFIX','Você também pode enviar suas críticas, sugestões ou dúvidas preenchendo os campos abaixo:','Nome','E-mail','Telefone principal','Mensagem','Enviar!','ENVIANDO!','Enviado com sucesso! Obrigado.','Por favor, digite um e-mail válido.','Estado','Cidade','Campos obrigatórios não podem estar vazios.'];
+		$idioma_front_page = ['PRÊMIOS','CENTRAL DE RELACIONAMENTO CERAMFIX','Você também pode enviar suas críticas, sugestões ou dúvidas preenchendo os campos abaixo:','Nome','E-mail','Telefone principal','Mensagem','Enviar!','ENVIANDO!','Enviado com sucesso! Obrigado.','Por favor, digite um e-mail válido.','Estado','Cidade','Campos obrigatórios não podem estar vazios.','Enviado com sucesso! Obrigado.'];
 	}
 
 	if($idioma == 'en'){
-		$idioma_front_page = ['AWARDS','CENTRAL RELATIONSHIP CERAMFIX','You can also send your criticisms, suggestions or questions by filling out the fields below:','Name','Email','Primary Phone','Message','TO SEND!','SENDING!','Sent with success! Thank you.','Please, type a valid email.','State','City','Required fields can not be empty.'];
+		$idioma_front_page = ['AWARDS','CENTRAL RELATIONSHIP CERAMFIX','You can also send your criticisms, suggestions or questions by filling out the fields below:','Name','Email','Primary Phone','Message','TO SEND!','SENDING!','Sent with success! Thank you.','Please, type a valid email.','State','City','Required fields can not be empty.','Successfully Sent! Thanks.'];
 	}
 
 	if($idioma == 'es'){
-		$idioma_front_page = ['PREMIOS','CENTRAL DE RELACIÓN CERAMFIX','Usted también puede enviar sus críticas, sugerencias o dudas rellenando los campos abajo:','Nombre','E-mail','Teléfono de línea directa','Mensaje','¡ENVIAR!','¡ENVIANDO!','¡Enviado con éxito! Gracias.','Por favor, introduzca un e-mail válido.','Estado','Ciudad','Los campos obligatorios no pueden estar vacíos.'];
+		$idioma_front_page = ['PREMIOS','CENTRAL DE RELACIÓN CERAMFIX','Usted también puede enviar sus críticas, sugerencias o dudas rellenando los campos abajo:','Nombre','E-mail','Teléfono de línea directa','Mensaje','¡ENVIAR!','¡ENVIANDO!','¡Enviado con éxito! Gracias.','Por favor, introduzca un e-mail válido.','Estado','Ciudad','Los campos obligatorios no pueden estar vacíos.','Enviado con éxito! Gracias.'];
 	}
 ?>
 
@@ -47,9 +59,16 @@
 							if(get_sub_field('imagem')){
 								$slide = $slide+1; ?>
 
-								<div class="item <?php if($slide == 1){ echo 'active'; } ?>" style="background-image: url('<?php the_sub_field('imagem'); ?>');">
+								<div class="item <?php if($slide == 1){ echo 'active'; } ?>" style="background-image: url('<?php //the_sub_field('imagem'); ?>');">
 
-									<?php if((get_sub_field('titulo')) or (get_sub_field('subtitulo'))){ ?>
+                                    <a href="<?php the_sub_field('link'); ?>" title="<?php the_sub_field('titulo_link'); ?>">
+                                        <picture>
+                                            <source media="(max-width:800px)" srcset="<?php the_sub_field('imagem-mobile'); ?>">
+                                            <img src="<?php the_sub_field('imagem'); ?>" alt="">
+                                        </picture>
+                                    </a>
+                            
+                                    <?php if((get_sub_field('titulo')) or (get_sub_field('subtitulo'))){ ?>
 										<div class="tit-box-destaque right">
 											
 											<?php if(get_sub_field('subtitulo')){ ?>
@@ -190,7 +209,24 @@
 					<textarea name="mensagem" id="mensagem" cols="30" rows="10" placeholder="<?php echo $idioma_front_page[6]; ?>: *"></textarea>
 				</fieldset>
 				<fieldset class="col-12">
-					<p class="msg-form"></p>
+					<label id="label-politica" for="politica-privacidade" style="display: block;">
+						<input type="checkbox" value="aceito" name="politica-privacidade" id="politica-privacidade" style="width: auto;">
+						Li e concordo com a <a style="color: #319b42" href="https://www.ceramfix.com.br/politica-de-privacidade" title="Política de Privacidade">Política de Privacidade</a> da Ceramfix, que pode usar as informações aqui fornecidas por mim para entrar em contato comigo, via e-mail, telefone ou WhatsApp, para ações de natureza comercial. Também estou ciente que posso revogar meu consentimento sobre o tratamento dos meus dados pessoais a qualquer momento enviando um e-mail para <a style="color: #319b42" href="mailto:dpo@ceramfix.com.br" title="dpo@ceramfix.com.br">dpo@ceramfix.com.br</a>
+					</label>
+				</fieldset>
+                <fieldset class="col-12">
+                	<div style="display: flex;justify-content: center;" class="g-recaptcha" data-sitekey="6LfOteMcAAAAAC8HnFEU-wZ33hZCrz6h4KIcC6CL"></div>
+                </fieldset>
+				<fieldset class="col-12">
+					<p class="msg-form">
+						<?php 
+							if($_GET['form']){
+								if($_GET['form'] == 'success'){
+                                    echo $idioma_front_page[14];
+								}
+							}
+						?>
+                    </p>
 					<button class="enviar"><?php echo $idioma_front_page[7]; ?></button>
 				</fieldset>
 			</form>
@@ -263,6 +299,11 @@
 			var para = '<?php the_field('email', 'option'); ?>';
 			var nome_site = '<?php bloginfo('name'); ?>';
             var subject = '<?php the_title(); ?>';
+            
+			if(!jQuery('#politica-privacidade').prop('checked')){
+				jQuery('#label-politica').css('border-bottom','2px solid red');
+				jQuery('#label-politica').css('padding-bottom','10px');
+			}
 
 			if(nome == ''){
 				jQuery('#nome').parent().addClass('erro');
@@ -290,21 +331,32 @@
 
 			if((nome == '') || (email == '') || (telefone == '') || (cidade == '') || (estado == '') || (mensagem == '')){
 				jQuery('.msg-form').html('<?php echo $idioma_front_page[13]; ?>');
-
 				jQuery('.enviar').html('<?php echo $idioma_front_page[7]; ?>').prop( "disabled", false );
-			}else{
-				jQuery.getJSON("<?php echo get_template_directory_uri(); ?>/mail/mail.php", { nome:nome, email:email, telefone:telefone, cidade:cidade, estado:estado, mensagem:mensagem, para:para, nome_site:nome_site, subject:subject }, function(result){		
-					if(result=='ok'){
-						resultado = '<?php echo $idioma_front_page[9]; ?>';
-						classe = 'ok';
-					}else{
-						resultado = result;
-						classe = 'erro';
-					}
-					jQuery('.msg-form').addClass(classe).html(resultado);
-					jQuery('.contato-home').trigger("reset");
-					jQuery('.enviar').html('<?php echo $idioma_front_page[7]; ?>').prop( "disabled", false );
-				});
+			}else{ 
+                if(!jQuery('#politica-privacidade').is(':checked')){
+                    jQuery('.msg-form').html('Você precisa confirmar a política de privacidade.');
+                    jQuery('.enviar').html('<?php echo $idioma_front_page[7]; ?>').prop( "disabled", false );
+                }else{   
+                    response = grecaptcha.getResponse();
+                    if(response.length == 0){
+                        jQuery('.msg-form').html('Você precisa confirmar que não é um robô.');
+                        jQuery('.enviar').html('<?php echo $idioma_front_page[7]; ?>').prop( "disabled", false );
+                    }else{                    
+                        jQuery.getJSON("<?php echo get_template_directory_uri(); ?>/mail/mail.php", { nome:nome, email:email, telefone:telefone, cidade:cidade, estado:estado, mensagem:mensagem, para:para, nome_site:nome_site, subject:subject }, function(result){
+                            if(result=='ok'){
+                                resultado = '<?php echo $idioma_front_page[9]; ?>';
+                                classe = 'ok';
+                                window.location.href = "<?php echo home_url(); ?>?form=success";
+                            }else{
+                                resultado = result;
+                                classe = 'erro';
+                            }
+                            jQuery('.msg-form').addClass(classe).html(resultado);
+                            jQuery('.contato-home').trigger("reset");
+                            jQuery('.enviar').html('<?php echo $idioma_front_page[7]; ?>').prop( "disabled", false );
+                        });
+                    }
+                }
 			}
 		});
 
@@ -331,3 +383,5 @@
 	   jQuery(".mask-telefone").mask("(99) 9999-9999?9");
 	});
 </script>
+
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>

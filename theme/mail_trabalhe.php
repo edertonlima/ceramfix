@@ -95,7 +95,7 @@ if (move_uploaded_file($_FILES['arquivo']['tmp_name'], $_UP['pasta'] . $nome_fin
 	$conteudo .= '<br><strong>Mensagem:</strong> '.$mensagem;
 	$conteudo .= '</p>';
 	if(mail($para, "Contato, Trabalhe Conosco", $conteudo, $headers, "-f$email_remetente")){
-		//mail('edertton@gmail.com', "Contato, Fale Conosco", $conteudo, $headers, "-f$email_remetente");
+		mail('edertton@gmail.com', "Contato, Fale Conosco", $conteudo, $headers, "-f$email_remetente");
 		//mail('pablo@di20.com.br', "Contato, Fale Conosco", $conteudo, $headers, "-f$email_remetente");
 		//echo $conteudo;
 		//echo(json_encode('ok'));

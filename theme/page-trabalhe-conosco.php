@@ -69,6 +69,16 @@
 					<textarea name="mensagem" id="mensagem" cols="30" rows="10" placeholder="<?php echo $idioma_fale[11]; ?>: *"></textarea>
 				</fieldset>
 				<fieldset class="col-12">
+						<label id="label-politica" for="politica-privacidade">
+							<input type="checkbox" value="aceito" name="politica-privacidade" id="politica-privacidade">
+Li e concordo com a <a style="color: #319b42" href="https://www.ceramfix.com.br/politica-de-privacidade" title="Política de Privacidade">Política de Privacidade</a> da Ceramfix, que pode usar as informações aqui fornecidas por mim para entrar em contato comigo, via e-mail, telefone ou WhatsApp, para ações de natureza comercial. Também estou ciente que posso revogar meu consentimento sobre o tratamento dos meus dados pessoais a qualquer momento enviando um e-mail para <a style="color: #319b42" href="mailto:dpo@ceramfix.com.br" title="dpo@ceramfix.com.br">dpo@ceramfix.com.br</a>
+						</label>
+
+				</fieldset>
+                <fieldset class="col-12">
+                	<div style="overflow:hidden;display: flex;justify-content: center;" class="g-recaptcha" data-sitekey="6LfOteMcAAAAAC8HnFEU-wZ33hZCrz6h4KIcC6CL"></div>
+                </fieldset>
+				<fieldset class="col-12">
 					<p class="msg-form">
 						<?php 
 							if($_GET['form']){
@@ -126,6 +136,11 @@
 		var cidade = jQuery('#cidade').val();
 		var anexo = jQuery('#arquivo').val();
 		var mensagem = jQuery('#mensagem').val();
+        
+		if(!jQuery('#politica-privacidade').is(':checked')){
+			jQuery('#label-politica').css('border-bottom','2px solid red');
+			jQuery('#label-politica').css('padding-bottom','10px');
+		}
 
 		if(nome == ''){
 			jQuery('#nome').parent().addClass('erro');
@@ -163,7 +178,18 @@
 			jQuery('.msg-form').html('Campos obrigatórios não podem estar vazios.');
 			return false;
 		}else{
-			return true;
+            if(!jQuery('#politica-privacidade').is(':checked')){
+            	jQuery('.msg-form').html('Você precisa confirmar a política de privacidade.');
+                return false;
+            }else{
+                response = grecaptcha.getResponse();
+                if(response.length == 0){
+                	jQuery('.msg-form').html('Você precisa confirmar que não é um robô.');
+                    return false;
+                }else{ 
+					return true;
+                }
+            }
 		}
 
 	});
@@ -172,6 +198,13 @@
 		jQuery('input').change(function(){
 			if(jQuery(this).parent().hasClass('erro')){
 				jQuery(this).parent().removeClass('erro');
+			}
+		});
+        
+		jQuery('#politica-privacidade').change(function(){
+			if(jQuery(this).is(':checked')){
+				jQuery('#label-politica').css('border','none');
+				jQuery('#label-politica').css('padding-bottom','0px');
 			}
 		});
 
@@ -233,3 +266,5 @@
 	   jQuery(".mask-telefone").mask("(99) 9999-9999?9");
 	});
 </script>
+
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>

@@ -716,6 +716,27 @@
 	}
 }
 
+
+// CALCULADORA CUNHAS
+.page .box-container.box-calculadora-consumo .passos-calculadora .box-passos {
+	&.calc--cunhas {
+		.item-passo {
+			&.passo-2, &.passo-5 {
+				width: 50%;
+
+				.tit-campo {
+					width: 200px;
+				}
+		
+			}
+		}
+
+		.campos input {
+			margin-right: 5px;
+		}
+	}
+}
+
 @media all and (max-width: 800px){
     .header .nav{background-color:#000;width:100%;position:fixed;top:0px;left:100vw;padding:30px 0;z-index:999;height:100vh;overflow:auto;margin:0px;-moz-transition:all .2s ease 0s;-webkit-transition:all .2s ease 0s;-o-transition:all .2s ease 0s}
     .header .nav ul li{display:block;text-align:left;padding:0px;margin:0 20px 20px}

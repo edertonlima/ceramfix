@@ -3,15 +3,15 @@
 <?php
 	$idioma_single_produto = [];
 	if($idioma == 'pt-br'){
-		$idioma_single_produto = ['CENTRAL DE RELACIONAMENTO CERAMFIX','Nome','E-mail','Telefone principal','Mensagem','ENVIAR!','ENVIANDO!','Enviado com sucesso! Obrigado.','Você também pode enviar suas críticas, sugestões ou dúvidas preenchendo os campos abaixo:','Estado','Cidade','Campos obrigatórios não podem estar vazios.'];
+		$idioma_single_produto = ['CENTRAL DE RELACIONAMENTO CERAMFIX','Nome','E-mail','Telefone principal','Mensagem','ENVIAR!','ENVIANDO!','Enviado com sucesso! Obrigado.','Você também pode enviar suas críticas, sugestões ou dúvidas preenchendo os campos abaixo:','Estado','Cidade','Campos obrigatórios não podem estar vazios.','Enviado com sucesso! Obrigado.'];
 	}
 
 	if($idioma == 'en'){
-		$idioma_single_produto = ['CERAMFIX RELATIONSHIP CENTER', 'Name', 'Email', 'Home Phone', 'Message', 'SEND!', 'SENDING!', 'Successfully Sent! Thank you.','You can also send your criticisms, suggestions or questions by filling out the fields below:','State','City','Required fields can not be empty.'];
+		$idioma_single_produto = ['CERAMFIX RELATIONSHIP CENTER', 'Name', 'Email', 'Home Phone', 'Message', 'SEND!', 'SENDING!', 'Successfully Sent! Thank you.','You can also send your criticisms, suggestions or questions by filling out the fields below:','State','City','Required fields can not be empty.','Successfully Sent! Thanks.'];
 	}
 
 	if($idioma == 'es'){
-		$idioma_single_produto = ['CENTRAL DE RELACIÓN CERAMFIX', 'Nombre', 'E-mail', 'Teléfono principal', 'Mensaje', 'ENVIAR!', 'ENVIANDO!', 'Enviado con éxito! Gracias. ','Usted también puede enviar sus críticas, sugerencias o dudas rellenando los campos abajo:','Estado','Ciudad','Los campos obligatorios no pueden estar vacíos.'];
+		$idioma_single_produto = ['CENTRAL DE RELACIÓN CERAMFIX', 'Nombre', 'E-mail', 'Teléfono principal', 'Mensaje', 'ENVIAR!', 'ENVIANDO!', 'Enviado con éxito! Gracias. ','Usted también puede enviar sus críticas, sugerencias o dudas rellenando los campos abajo:','Estado','Ciudad','Los campos obligatorios no pueden estar vacíos.','Enviado con éxito! Gracias.'];
 	}
 ?>
 
@@ -67,8 +67,25 @@
 					<textarea name="mensagem" id="mensagem" cols="30" rows="10" placeholder="<?php echo $idioma_single_produto[4]; ?>: *"></textarea>
 				</fieldset>
 				<fieldset class="col-12">
-					<p class="msg-form"></p>
-					<button class="enviar"><?php echo $idioma_single_produto[5]; ?></button>
+					<label id="label-politica" for="politica-privacidade">
+						<input type="checkbox" value="aceito" name="politica-privacidade" id="politica-privacidade">
+						Li e concordo com a <a style="color: #319b42" href="https://www.ceramfix.com.br/politica-de-privacidade" title="Política de Privacidade">Política de Privacidade</a> da Ceramfix, que pode usar as informações aqui fornecidas por mim para entrar em contato comigo, via e-mail, telefone ou WhatsApp, para ações de natureza comercial. Também estou ciente que posso revogar meu consentimento sobre o tratamento dos meus dados pessoais a qualquer momento enviando um e-mail para <a style="color: #319b42" href="mailto:dpo@ceramfix.com.br" title="dpo@ceramfix.com.br">dpo@ceramfix.com.br</a>
+					</label>
+				</fieldset>
+                <fieldset class="col-12">
+                	<div style="display: flex;justify-content: center;" class="g-recaptcha" data-sitekey="6LfOteMcAAAAAC8HnFEU-wZ33hZCrz6h4KIcC6CL"></div>
+                </fieldset>
+				<fieldset class="col-12">
+					<p class="msg-form">
+						<?php 
+							if($_GET['form']){
+								if($_GET['form'] == 'success'){
+                                    echo $idioma_single_produto[12];
+								}
+							}
+						?>
+                    </p>
+					<button class="enviar"><?php echo $idioma_single_produto[5]; ?></button>        
 				</fieldset>
 			</form>
 		</div>
@@ -91,6 +108,11 @@
 			var para = '<?php the_field('email', 'option'); ?>';
 			var nome_site = '<?php bloginfo('name'); ?>';
             var subject = '<?php the_title(); ?>';
+            
+			if(!jQuery('#politica-privacidade').prop('checked')){
+				jQuery('#label-politica').css('border-bottom','2px solid red');
+				jQuery('#label-politica').css('padding-bottom','10px');
+			}
 
 			if(nome == ''){
 				jQuery('#nome').parent().addClass('erro');
@@ -118,21 +140,32 @@
 
 			if((nome == '') || (email == '') || (telefone == '') || (cidade == '') || (estado == '') || (mensagem == '')){
 				jQuery('.msg-form').html('<?php echo $idioma_single_produto[11]; ?>');
-
 				jQuery('.enviar').html('<?php echo $idioma_single_produto[5]; ?>').prop( "disabled", false );
 			}else{
-				jQuery.getJSON("<?php echo get_template_directory_uri(); ?>/mail/mail.php", { nome:nome, email:email, telefone:telefone, mensagem:mensagem, cidade:cidade, estado:estado, para:para, nome_site:nome_site, subject:subject }, function(result){		
-					if(result=='ok'){
-						resultado = '<?php echo $idioma_single_produto[7]; ?>';
-						classe = 'ok';
-					}else{
-						resultado = result;
-						classe = 'erro';
+                if(!jQuery('#politica-privacidade').is(':checked')){
+                    jQuery('.msg-form').html('Você precisa confirmar a política de privacidade.');
+                    jQuery('.enviar').html('<?php echo $idioma_single_produto[5]; ?>').prop( "disabled", false );
+                }else{   
+                    response = grecaptcha.getResponse();
+                    if(response.length == 0){
+                        jQuery('.msg-form').html('Você precisa confirmar que não é um robô.');
+                        jQuery('.enviar').html('<?php echo $idioma_single_produto[5]; ?>').prop( "disabled", false );
+                    }else{    
+                        jQuery.getJSON("<?php echo get_template_directory_uri(); ?>/mail/mail.php", { nome:nome, email:email, telefone:telefone, mensagem:mensagem, cidade:cidade, estado:estado, para:para, nome_site:nome_site, subject:subject }, function(result){		
+                            if(result=='ok'){
+                                resultado = '<?php echo $idioma_single_produto[7]; ?>';
+                                classe = 'ok';
+                                window.location.href = "<?php echo $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']; ?>?form=success";
+                            }else{
+                                resultado = result;
+                                classe = 'erro';
+                            }
+                            jQuery('.msg-form').addClass(classe).html(resultado);
+                            jQuery('.contato-home').trigger("reset");
+                            jQuery('.enviar').html('<?php echo $idioma_single_produto[5]; ?>').prop( "disabled", false );
+                        });
 					}
-					jQuery('.msg-form').addClass(classe).html(resultado);
-					jQuery('.contato-home').trigger("reset");
-					jQuery('.enviar').html('<?php echo $idioma_single_produto[5]; ?>').prop( "disabled", false );
-				});
+            	}
 			}
 		});
 
@@ -140,6 +173,13 @@
 		jQuery('input').change(function(){
 			if(jQuery(this).parent().hasClass('erro')){
 				jQuery(this).parent().removeClass('erro');
+			}
+		});
+        
+		jQuery('#politica-privacidade').change(function(){
+			if(jQuery(this).prop('checked')){
+				jQuery('#label-politica').css('border','none');
+				jQuery('#label-politica').css('padding-bottom','0px');
 			}
 		});
 
@@ -157,3 +197,5 @@
 	   jQuery(".mask-telefone").mask("(99) 9999-9999?9");
 	});
 </script>
+
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>

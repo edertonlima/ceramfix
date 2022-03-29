@@ -33,6 +33,9 @@
 
 		<a href="#" class="seta" rel="body"><i class="fa fa-angle-up" aria-hidden="true"></i></a>
 	</footer>
+	
+    <!-- Inclusão RD Station -->
+	<script type="text/javascript" async src="https://eur02.safelinks.protection.outlook.com/?url=https%3A%2F%2Fd335luupugsy2.cloudfront.net%2Fjs%2Floader-scripts%2F193c6361-3087-42d5-bb14-459a6c167e4f-loader.js&amp;data=04%7C01%7Cfelipe.wilwert%40ceramfix.com.br%7Ca014b5e2e26548badd1008d993064342%7Ca58418612bbb4fdb8658afcae426b642%7C0%7C0%7C637702477814946646%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C3000&amp;sdata=rZPhFpn1zc5RV0qehaChjcD9F96a0r3xW3acDZFfxck%3D&amp;reserved=0" ></script>
 
 </body>
 
@@ -57,6 +60,8 @@
 
 	</div>	
 </div>
+
+<?php wp_footer(); ?>
 
 <script type="text/javascript">
 	jQuery('#btn-buscar').click(function(){
