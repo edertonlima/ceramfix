@@ -404,7 +404,7 @@
 
 				<h1>
 					<a href="<?php echo get_home_url(); ?>" title="<?php bloginfo('name'); ?>">
-						<img src="<?php echo get_template_directory_uri(); ?>/assets/images/logo-ceramfix-2022.png" alt="<?php bloginfo('name'); ?>">
+						<img src="https://www.ceramfix.com.br/wp-content/uploads/2022/03/Sem-Slogan_fundo-escuro-e1648733125322.png" alt="<?php bloginfo('name'); ?>">
 					</a>
 				</h1>
 
