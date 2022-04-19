@@ -125,7 +125,7 @@
 					<span><?php echo $idioma_single_produto[8]; ?></span>
 					<h2><?php the_field('telefone','option'); ?></h2>
 					<a href="<?php echo get_home_url(); ?>"><?php echo get_home_url(); ?></a>
-					<a href="mailto:<?php the_field('telefone','option'); ?>"><?php the_field('email','option'); ?></a>
+					<?php /*<a href="mailto:<?php the_field('email','option'); ?>"><?php the_field('email','option'); ?></a>*/ ?>
 				</div>
 			</div>
 		</div>

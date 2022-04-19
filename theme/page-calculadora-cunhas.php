@@ -3,15 +3,15 @@
 <?php
 	$idioma_single_produto = [];
 	if($idioma == 'pt-br'){
-		$idioma_single_produto = ['Calcule a quantidade e evite desperdício','ESCOLHA UM PRODUTO','DIMENSÕES DO PISO/PORCELANATO','LARGURA DA JUNTA','ESPESSURA DO REVESTIMENTO','ÁREA TOTAL DO AMBIENTE A SER CALCULADO','CALCULAR!','O seu consumo médio de cunhas e espaçadores será de <br><span></span> unidades. <p>Obs: Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>','CENTRAL DE RELACIONAMENTO CERAMFIX'];
+		$idioma_single_produto = ['Calcule a quantidade e evite desperdício','ESCOLHA UM PRODUTO','DIMENSÕES DO PISO/PORCELANATO','LARGURA DA JUNTA','ESPESSURA DO REVESTIMENTO','ÁREA TOTAL DO AMBIENTE A SER CALCULADO','CALCULAR!','O seu consumo médio de Cunhas e Niveladores será de <br><span></span> unidades.','CENTRAL DE RELACIONAMENTO CERAMFIX'];
 	}
 
 	if($idioma == 'en'){
-		$idioma_single_produto = ['Calculate quantity and avoid waste', 'CHOOSE A PRODUCT', 'COATING DIMENSIONS', 'BOARD WIDTH', 'COATING THICKNESS', 'TOTAL AREA TO BE COATED', 'CALCULATE!', 'Your Average consumption for grouting will be <span> </ span> Kg. <p> Note: To calculate the setting of tablets and coatings consumption is available on the product page. </ p> ',' CERAMFIX RELATIONSHIP CENTER '];
+		$idioma_single_produto = ['Calculate quantity and avoid waste', 'CHOOSE A PRODUCT', 'COATING DIMENSIONS', 'BOARD WIDTH', 'COATING THICKNESS', 'TOTAL AREA TO BE COATED', 'CALCULATE!', 'Your average consumption of Wedges and Levelers will be <br><span></span> units.',' CERAMFIX RELATIONSHIP CENTER '];
 	}
 
 	if($idioma == 'es'){
-		$idioma_single_produto = ['Calcule la cantidad y evite desperdicio', 'ELEGIR UN PRODUCTO', 'DIMENSIONES DEL REVESTIMIENTO', 'ANCHO DE LA JUNTA', 'ESPESOR DEL REVESTIMIENTO', 'ÁREA TOTAL QUE SE REVESTIDA', 'CALCULAR!', 'Su El consumo medio para rejuntar será de <span> </ span> Kg. <p> Obs: Para calculo del asentamiento de pastillas y revestimientos el consumo está disponible en la página del producto. </ p> ',' CENTRAL DE RELACIÓN CERAMFIX '];
+		$idioma_single_produto = ['Calcule la cantidad y evite desperdicio', 'ELEGIR UN PRODUCTO', 'DIMENSIONES DEL REVESTIMIENTO', 'ANCHO DE LA JUNTA', 'ESPESOR DEL REVESTIMIENTO', 'ÁREA TOTAL QUE SE REVESTIDA', 'CALCULAR!', 'Su consumo promedio de Cuñas y Niveladores será de <br><span></span> unidades.',' CENTRAL DE RELACIÓN CERAMFIX '];
 	}
 ?>
 
@@ -81,7 +81,12 @@
 
 		<button class="calcular"><?php echo $idioma_single_produto[6]; ?></button>
 
-		<h2 id="resultado"><?php echo $idioma_single_produto[7]; ?></h2>
+		<h2 id="resultado">
+			<?php echo $idioma_single_produto[7]; ?>
+			<?php if (get_field('info-calculadora')) { ?>
+				<p><?php the_field('info-calculadora'); ?></p>
+			<?php } ?>
+		</h2>
 
 	</div>
 </section>	
@@ -95,7 +100,7 @@
 					<span><?php echo $idioma_single_produto[8]; ?></span>
 					<h2><?php the_field('telefone','option'); ?></h2>
 					<a href="<?php echo get_home_url(); ?>"><?php echo get_home_url(); ?></a>
-					<a href="mailto:<?php the_field('telefone','option'); ?>"><?php the_field('email','option'); ?></a>
+					<?php /*<a href="mailto:<?php the_field('email','option'); ?>"><?php the_field('email','option'); ?></a>*/ ?>
 				</div>
 			</div>
 		</div>

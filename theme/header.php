@@ -404,7 +404,7 @@
 
 				<h1>
 					<a href="<?php echo get_home_url(); ?>" title="<?php bloginfo('name'); ?>">
-						<img src="https://www.ceramfix.com.br/wp-content/uploads/2022/03/Sem-Slogan_fundo-escuro-e1648733125322.png" alt="<?php bloginfo('name'); ?>">
+						<img src="<?php the_field('logo-header','option'); ?>" alt="<?php bloginfo('name'); ?>">
 					</a>
 				</h1>
 
@@ -450,13 +450,13 @@
 								if($idioma == 'en'){
 									$class_en = 'ativo';
 									$on_en = '';
-									$menu_idioma = ['Products','Simulators','Color Simulator','Consumption Calculator','Company','Matrix and Units','Work with us','Awards & Reviews','Corporate Ideology','Contact','Contact us','DOWNLOADS','Releases','In the Media','Download','Solutions','Privacy Policy'];
+									$menu_idioma = ['Products','Simulators','Color Simulator','Consumption Calculator','Company','Matrix and Units','Work with us','Awards & Reviews','Corporate Ideology','Contact','Contact us','DOWNLOADS','Releases','In the Media','Download','Solutions','Privacy Policy','Wedge Calculator'];
 								}
 
 								if($idioma == 'pt-br'){
 									$class_pt = 'ativo';
 									$on_pt = '';
-									$menu_idioma = ['Produtos','Simuladores','Simulador de Cores','Calculadora de Consumo','Empresa','Matriz e Unidades','Trabalhe Conosco','Prêmios','Ideologia Corporativa','Contato','Fale Conosco','DOWNLOADS','Releases','Na Mídia','Download','Soluções','Política de Privacidade'];
+									$menu_idioma = ['Produtos','Simuladores','Simulador de Cores','Calculadora de Consumo','Empresa','Matriz e Unidades','Trabalhe Conosco','Prêmios','Ideologia Corporativa','Contato','Fale Conosco','DOWNLOADS','Releases','Na Mídia','Download','Soluções','Política de Privacidade','Calculadora de Cunhas'];
 								}
 
 									if(is_front_page()){
@@ -468,7 +468,7 @@
 								if($idioma == 'es'){
 									$class_es = 'ativo';
 									$on_es = '';
-									$menu_idioma = ['Productos','Simuladores','Simulador de color','Calculadora de Consumo','Empresa','Matriz y unidades','Trabaja con nosotros','Premios','Ideología Corporativa','Contacto','Hable con nosotros','DESCARGAR','Noticias','En los medios','Descargar','Soluciones','Política de privacidad'];
+									$menu_idioma = ['Productos','Simuladores','Simulador de color','Calculadora de Consumo','Empresa','Matriz y unidades','Trabaja con nosotros','Premios','Ideología Corporativa','Contacto','Hable con nosotros','DESCARGAR','Noticias','En los medios','Descargar','Soluciones','Política de privacidad','Calculadora de Cuña'];
 								}
 						 	?>
 
@@ -584,11 +584,12 @@
 								</li>
 							<?php } ?>
 
-							<li class="nav-simuladores <?php if((is_page('simulador-cores')) or (is_page('calculadora-consumo'))){ echo 'active'; } ?>">
+							<li class="nav-simuladores <?php if((is_page('simulador-cores')) or (is_page('calculadora-consumo')) or (is_page('calculadora-cunhas'))){ echo 'active'; } ?>">
 								<a href="<?php echo get_permalink(get_page_by_path('simulador-cores')); ?>" title="<?php echo $menu_idioma[1]; ?>"><?php echo $menu_idioma[1]; ?></a>
 								<ul class="submenu">
 									<li class="nav-simuladores-simulador"><a href="<?php echo get_permalink(get_page_by_path('simulador-cores')); ?>" title="<?php echo $menu_idioma[2]; ?>" class="<?php if(is_page('simulador-cores')){ echo 'active'; } ?>"><?php echo $menu_idioma[2]; ?></a></li>		
 									<li class="nav-simuladores-calculadora"><a href="<?php echo get_permalink(get_page_by_path('calculadora-consumo')); ?>" title="<?php echo $menu_idioma[3]; ?>" class="<?php if(is_page('calculadora-consumo')){ echo 'active'; } ?>"><?php echo $menu_idioma[3]; ?></a></li>	
+									<li class="nav-simuladores-calculadora"><a href="<?php echo get_permalink(get_page_by_path('calculadora-cunhas')); ?>" title="<?php echo $menu_idioma[17]; ?>" class="<?php if(is_page('calculadora-cunhas')){ echo 'active'; } ?>"><?php echo $menu_idioma[17]; ?></a></li>
 								</ul>
 							</li>
 
