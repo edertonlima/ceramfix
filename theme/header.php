@@ -552,15 +552,15 @@
 								</ul>
 							</li>
 
-							<li class="nav-tecnologia-ardex">
-								<a href="#" title="<?php echo $ardex_idioma[0]; ?> Ardex">
+							<li class="nav-tecnologia-ardex">					
+								<a <?php if($status_page == 'publish'){ echo 'href="'.get_home_url().'/ardex"'; } ?> title="<?php echo $ardex_idioma[0]; ?> Ardex">
 									<span class="tecnologia-ardex">
 										<?php echo $ardex_idioma[0]; ?> <img src="<?php echo get_template_directory_uri(); ?>/assets/images/ardex_logo.png" alt="<?php echo $ardex_idioma[0]; ?> Ardex">
 									</span>
 								</a>
 								<ul class="submenu">
-									<li class=""><a href="<?php echo get_permalink(get_page_by_path('simulador-cores')); ?>" title="<?php echo $ardex_idioma[1]; ?>" class="<?php if(is_page('simulador-cores')){ echo 'active'; } ?>"><?php echo $ardex_idioma[1]; ?></a></li>		
-									<li class=""><a href="<?php echo get_permalink(get_page_by_path('calculadora-consumo')); ?>" title="<?php echo $ardex_idioma[2]; ?>" class="<?php if(is_page('calculadora-consumo')){ echo 'active'; } ?>"><?php echo $ardex_idioma[2]; ?></a></li>	
+									<li class=""><a href="<?php echo get_term_link(62); ?>" title="<?php echo $ardex_idioma[1]; ?>" class="<?php if(is_page('simulador-cores')){ echo 'active'; } ?>"><?php echo $ardex_idioma[1]; ?></a></li>		
+									<li class=""><a href="<?php echo get_permalink(get_page_by_path('sobre-a-ardex')); ?>" title="<?php echo $ardex_idioma[2]; ?>" class="<?php if(is_page('calculadora-consumo')){ echo 'active'; } ?>"><?php echo $ardex_idioma[2]; ?></a></li>	
 								</ul>
 							</li>
 							<?php if($status_page == 'publish'){ ?>
